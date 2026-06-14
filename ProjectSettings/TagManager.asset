@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -11,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Gound
+  - Entity
   - 
   - 
   - 
@@ -38,6 +39,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2954914605
+    locked: 0
+  - name: Ground
+    uniqueID: 3866422857
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Entity
+    uniqueID: 425435009
+    locked: 0
+  - name: Projectile
+    uniqueID: 2879679269
+    locked: 0
+  - name: Effect
+    uniqueID: 2456687871
+    locked: 0
+  - name: UI
+    uniqueID: 3515030289
     locked: 0
