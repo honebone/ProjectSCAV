@@ -62,5 +62,5 @@ Material:
     - _EmitIntensity: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
-    - _EmissionColor: {r: 16, g: 16, b: 16, a: 0}
+    - _EmissionColor: {r: 16.94838, g: 16.94838, b: 16.94838, a: 1}
   m_BuildTextureStacks: []
