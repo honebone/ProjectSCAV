@@ -17,11 +17,11 @@ public class Props_FlickeringLight : Props_Light
     [SerializeField] private float _sparkChance = 50;
 
     [Header("Intensity")]
-    [SerializeField] private float _baseIntensity = 1.0f;
-    [SerializeField] private float _fadeDuration = 0.05f; // 残光の速さ
+    [SerializeField] private float _fadeDuration = 0.1f; // 残光の速さ
 
     private Material _targetMaterial;
     private float _dutyCycle = 0.5f;
+    private float _baseIntensity = 1.0f;
     private bool _isEmitting = false;
     private bool _isAvailable = true;
     private Tween _intensityTween;
@@ -32,11 +32,13 @@ public class Props_FlickeringLight : Props_Light
         _baseIntensity=_light.intensity;
         _dutyCycle = _dutyCycles.Choice();
 
-        if(_dutyCycle == 0)
+        if (_dutyCycle == 0)
         {
+            _targetMaterial.SetInt("_Emit", 0);
+            _light.enabled = false;
             _isAvailable = false;
         }
-        else
+        else if (_dutyCycle < 1)
         {
             // 最初のコルーチンを開始
             StartCoroutine(FlickerRoutine());
@@ -64,14 +66,14 @@ public class Props_FlickeringLight : Props_Light
     {
         _isEmitting = on;
 
-        // 既存のTweenがあれば止める
-        _intensityTween?.Kill();
-
         if (on)
         {
             // --- 点灯時 ---
             _targetMaterial.SetInt("_Emit", 1);
             _light.enabled = true;
+
+            // 既存のTweenがあれば止める
+            _intensityTween?.Kill();
 
             // DOTweenで瞬時に（またはわずかに遊びを持って）明るくする
             _intensityTween = DOTween.To(() => 0f, x => SetIntensity(x), _baseIntensity, 0.02f)
@@ -81,26 +83,51 @@ public class Props_FlickeringLight : Props_Light
             float sparkThreshold = 1.0f - _dutyCycle;
             if ((sparkThreshold * _sparkChance).Dice())
             {
-                _sparks.Emit(Random.Range(1, 5));
+                EmitSparks(Random.Range(1, 5));
             }
         }
         else
         {
-            // --- 消灯時 ---
-            _targetMaterial.SetInt("_Emit", 0);
-
-            // DOTweenで残光を表現（ジワッと消える）
-            _intensityTween = DOTween.To(() => _baseIntensity, x => SetIntensity(x), 0f, _fadeDuration)
-                .OnComplete(() => _light.enabled = false);
+            Fade();
         }
     }
 
-    protected override void EnterEmergencyMode()
+    private void Fade()
+    {
+        // 既存のTweenがあれば止める
+        _intensityTween?.Kill();
+
+        // --- 消灯時 ---
+        _targetMaterial.SetInt("_Emit", 0);
+
+        float intensity = _light.intensity;
+        // DOTweenで残光を表現（ジワッと消える）
+        _intensityTween = DOTween.To(() => intensity, x => SetIntensity(x), 0f, _fadeDuration)
+            .OnComplete(() => _light.enabled = false);
+    }
+    private void EmitSparks(int amount)
+    {
+        if (_sparks) _sparks.Emit(amount);
+    }
+
+    public override void Disable()
     {
         if (_isAvailable)
         {
-            _intensityTween?.Kill();
+            _isAvailable = false;
 
+            EmitSparks(Random.Range(8, 12));
+            SetIntensity(_baseIntensity * 2);
+            Fade();
+        }
+    }
+
+    protected override void ExitNormalMode()
+    {
+        if (_isAvailable)
+        {
+            _isAvailable = false;
+            Fade();
         }
     }
 

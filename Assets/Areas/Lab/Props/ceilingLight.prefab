@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9172897193957887638}
   - component: {fileID: 7567346310460390345}
+  - component: {fileID: 3515490335499862525}
   m_Layer: 6
   m_Name: ceilingLight
   m_TagString: Untagged
@@ -86,6 +87,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3515490335499862525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587388444974332834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a9749f3dd7768428aaec54af650ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 7567346310460390345}
+  _light: {fileID: 885309514905745398}
+  _sparks: {fileID: 8543193140516195451}
+  _dutyCycles:
+  - 0
+  - 0.1
+  - 0.9
+  - 0.95
+  - 0.99
+  - 1
+  FlickerSpeed: {x: 0.02, y: 0.2}
+  _sparkChance: 50
+  _fadeDuration: 0.1
 --- !u!1 &3307647370317089238
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +164,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 49ee74e600000000819f5b19256ba4abff146e92111b83d12d773ead
+  m_ApplyToSortingLayers: 49ee74e600000000819f5b19256ba4abff146e92111b83d12d773ead6fd61e9e
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -236,5 +262,10 @@ PrefabInstance:
 --- !u!4 &7949517922897173910 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2015853198179225236, guid: 5e9939e3223bc7944ab2b58fc657c13c, type: 3}
+  m_PrefabInstance: {fileID: 8479121013163807490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8543193140516195451 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 226419435264040825, guid: 5e9939e3223bc7944ab2b58fc657c13c, type: 3}
   m_PrefabInstance: {fileID: 8479121013163807490}
   m_PrefabAsset: {fileID: 0}

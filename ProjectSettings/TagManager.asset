@@ -48,6 +48,9 @@ TagManager:
   - name: BackWall
     uniqueID: 2906552109
     locked: 0
+  - name: BackProps
+    uniqueID: 2652821103
+    locked: 0
   - name: Ground
     uniqueID: 3866422857
     locked: 0
