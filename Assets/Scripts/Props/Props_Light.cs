@@ -9,7 +9,6 @@ public abstract class Props_Light : Props
     // 明るさ設定
     // -------------------------------------------------------
 
-    /// <summary>明るさを設定する　0で消灯、1で最大輝度</summary>
-    /// <param name="value">0～1</param>
+    /// <summary>明るさを設定する　0で消灯、1で通常輝度</summary>
     protected abstract void SetIntensity(float value);
 }
