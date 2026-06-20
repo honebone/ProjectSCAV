@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6954191730123615334}
   - component: {fileID: 5069805858952644275}
   m_Layer: 0
-  m_Name: EmergencyLight
+  m_Name: EmergencyRotateLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -1642146193
   m_SortingLayer: -2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: eb02a492a5d845942a61842fdd178767, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c5d3e6514d7649439c1b7e19f896e0c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: glow_white
-  m_Shader: {fileID: -6465566751694194690, guid: a3dcad74a6caaef43a0c4e5489ee5f7b, type: 3}
+  m_Name: TestShader
+  m_Shader: {fileID: -6465566751694194690, guid: 139946a69d055dd4681900f4555836dd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b9fe44a3cd7261c4ba4d2984e60a73ca, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1ac4d090d0ab47d4f878007f3d5eb569, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -41,11 +41,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Emit: 1
+    - _Active: 0
+    - _OutlineWidth: 0.01
     m_Colors:
-    - _Color: {r: 2, g: 2, b: 2, a: 0}
+    - _OutlineColor: {r: 1.059274, g: 1.059274, b: 1.059274, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &2602510429013062965
+--- !u!114 &462943507223390443
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
