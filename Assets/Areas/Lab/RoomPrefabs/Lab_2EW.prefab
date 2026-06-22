@@ -68,7 +68,7 @@ MonoBehaviour:
   - {x: -21.999971, y: 2, z: 0}
   m_ShapePathHash: -359342050
   m_Mesh: {fileID: 0}
-  m_InstanceId: 75612
+  m_InstanceId: 35858
   m_LocalBounds:
     m_Center: {x: 0, y: 7, z: 0}
     m_Extent: {x: 22, y: 5, z: 0}
@@ -10863,7 +10863,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1388415187
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -11251,7 +11251,7 @@ MonoBehaviour:
   - {x: -21.999971, y: -12, z: 0}
   m_ShapePathHash: -1765568146
   m_Mesh: {fileID: 0}
-  m_InstanceId: 75518
+  m_InstanceId: 35568
   m_LocalBounds:
     m_Center: {x: -0.000015258789, y: -4, z: 0}
     m_Extent: {x: 21.999985, y: 8, z: 0}
@@ -11319,7 +11319,7 @@ GameObject:
   - component: {fileID: 7634464534237094518}
   - component: {fileID: 6377605617639686467}
   - component: {fileID: 2159808759976901060}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

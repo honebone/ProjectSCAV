@@ -33,7 +33,7 @@ public class GunModel : HoldableItemModel
     public override void Use(EntityModel user)
     {
         if (_currentAmmo <= 0) return;
-        _currentAmmo--;
+        //_currentAmmo--;
 
         PjtlSnapshot snapshot = PjtlSnapshot.From(GunStats.PjtlStats);
 

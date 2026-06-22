@@ -7,8 +7,8 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     [Header("Ground Detection")]
     [SerializeField] private Collider2D _groundCheck;      // 足元のオブジェクト
     [SerializeField] private LayerMask _groundLayer;      // 地面とするレイヤー
-
-    [SerializeField] private Transform _centerPosition;      // 足元から0.5マス浮かせた空オブジェクト ポジションの基準
+    [SerializeField] private ParticleSystem _par_onArmorDMG;
+    [SerializeField] private ParticleSystem _par_onHPDMG;
 
     private Rigidbody2D _rb;
     private NavPathfinder _navPathfinder;
@@ -22,7 +22,7 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     private float _gravity;
     public float Gravity => _gravity;
 
-    public Vector2 Position => _centerPosition.position;
+    public Vector2 Position => transform.position;
 
     public virtual void Init(NavPathfinder pathfinder)
     {
@@ -35,6 +35,15 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     {
         //_isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, _groundLayer);
         _isGrounded = _groundCheck.IsTouchingLayers(_groundLayer);
+    }
+
+    public void OnArmorDamaged(int dmg)
+    {
+        _par_onArmorDMG.Emit(Constants.Instance.ParticlesOnDMG.Range());
+    }
+    public void OnHPDamaged(int dmg)
+    {
+        _par_onHPDMG.Emit(Constants.Instance.ParticlesOnDMG.Range());
     }
 
 

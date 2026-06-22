@@ -23,6 +23,7 @@ public class EntityModel
 
     public int Hp => _hp;
     public int Armor => _armor;
+    public bool Alive => _hp > 0;
 
     // アーマー再生タイマー（最後にダメージを受けてからの経過時間）
     private float _armorRegenTimer;
@@ -30,6 +31,10 @@ public class EntityModel
     private Vector2 _position;
     public Vector2 Position => _position;
     //public IProjectileSpawner ProjectileSpawner => _projectileSpawner;
+
+    public event Action<int> OnArmorDamaged;
+    public event Action OnArmorBreak;
+    public event Action<int> OnHPDamaged;
 
     // -------------------------------------------------------
     // コンストラクタ
@@ -57,7 +62,35 @@ public class EntityModel
     /// <summary>ダメージを受ける。Armorを先に削り、残りをHPへ</summary>
     public void Damage(float damage)
     {
-        
+        int remain = damage.ToInt();
+        if (remain == 0) return;
+
+        if (_armor > 0)
+        {
+            int armorDMG = _armor > remain ? remain : _armor;
+            _armor -= armorDMG;
+            remain -= armorDMG;
+            DevLog.Log($"ArmorDamage {armorDMG}");
+            OnArmorDamaged?.Invoke(armorDMG);
+            if (_armor == 0)
+            {
+                DevLog.Log("ArmorBreak");
+                OnArmorBreak?.Invoke();
+            }
+        }
+
+        if(remain > 0)
+        {
+            int hpDMG = _hp > remain ? remain : _hp;
+            _hp -= hpDMG;
+            DevLog.Log($"HPDamage {hpDMG}");
+            OnHPDamaged?.Invoke(hpDMG);
+
+            if (_hp < 0)
+            {
+                Die();
+            }
+        }
     }
 
     /// <summary>回復する</summary>
@@ -67,5 +100,8 @@ public class EntityModel
     protected void TickArmorRegen(float deltaTime) { }
 
     /// <summary>死亡処理</summary>
-    protected virtual void Die() { }
+    protected virtual void Die()
+    {
+        _hp = 0;
+    }
 }

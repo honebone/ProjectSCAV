@@ -5,12 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ConstantsData", fileName = "ConstantsData")]
 public class Constants : ScriptableObject
 {
+    [Header("Rooms")]
     [SerializeField] private float _tileSize;
     [SerializeField] private int _roomWidth = 44;
     [SerializeField] private int _roomheight = 24;
+
+    [Header("\n\n\nEntities")]
+    [SerializeField] private Vector2Int _particlesOnDMG;
     public float TileSize => _tileSize;
     public int RoomWidth => _roomWidth;
     public int RoomHeight => _roomheight;
+    public Vector2Int ParticlesOnDMG => _particlesOnDMG;
     // -------------------------------------------------------
     // ƒVƒ“ƒOƒ‹ƒgƒ“API
     // -------------------------------------------------------

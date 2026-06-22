@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4361856653806294804}
   - component: {fileID: 2755738856204757666}
   - component: {fileID: 1822373070753054383}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: emergencyLineLight
-  m_TagString: Untagged
+  m_TagString: Props
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5998916912287615381}
   - component: {fileID: 8184933490444320378}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -21,6 +21,8 @@ public class EntityPresenter : MonoBehaviour
     public virtual void Bind()
     {
         //_model.OnRequestMove += _view.Move;
+        _model.OnHPDamaged += _view.OnHPDamaged;
+        _model.OnArmorDamaged += _view.OnArmorDamaged;
     }
 
     private void Update()

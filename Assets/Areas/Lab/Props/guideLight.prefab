@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4399667362511351036}
   - component: {fileID: 3480325155815485564}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 6979714384011545075}
   - component: {fileID: 5816937463141094494}
   - component: {fileID: 5464873210360219653}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: guideLight
-  m_TagString: Untagged
+  m_TagString: Props
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
