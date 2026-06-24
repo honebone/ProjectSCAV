@@ -11,6 +11,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/ItemData")]
 public class ItemData : ScriptableObject
 {
+    [SerializeField] private string _id;
     [SerializeField] private string _itemName;
     [SerializeField] private Sprite _sprite;
     [SerializeField] private Rarity _rarity;
@@ -19,6 +20,7 @@ public class ItemData : ScriptableObject
     [SerializeField] private int _maxStack = 1;
     [SerializeField] private int _price;
 
+    public string Id => _id;
     public string ItemName => _itemName;
     public Sprite Sprite => _sprite;
     public Rarity Rarity => _rarity;

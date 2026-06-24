@@ -16,6 +16,8 @@ public class Constants : ScriptableObject
     public int RoomWidth => _roomWidth;
     public int RoomHeight => _roomheight;
     public Vector2Int ParticlesOnDMG => _particlesOnDMG;
+    //[Header("\n\n\nLootbox")]
+    //public List<ItemData> _Item
     // -------------------------------------------------------
     // ƒVƒ“ƒOƒ‹ƒgƒ“API
     // -------------------------------------------------------

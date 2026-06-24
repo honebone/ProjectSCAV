@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d55099fe117f03a4ca140b57ac6617bd, type: 3}
-  m_Name: ARES_V8
+  m_Name: G_ARES_V8
   m_EditorClassIdentifier: 
   _itemName: ARES_V8
   _sprite: {fileID: 21300000, guid: 034e56326f9ae3a4a96fae2260c17785, type: 3}
