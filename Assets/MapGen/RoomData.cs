@@ -4,7 +4,7 @@ using UnityEngine;
 /// 部屋1種類分のデータ
 /// 通路の組み合わせ(16パターン)とプレハブ、出現ウェイトを保持する
 /// </summary>
-[CreateAssetMenu(menuName = "MapGen/RoomData", fileName = "Room")]
+[CreateAssetMenu(menuName = "MapGen/RoomData")]
 public class RoomData : ScriptableObject
 {
     [SerializeField] private GameObject _prefab;

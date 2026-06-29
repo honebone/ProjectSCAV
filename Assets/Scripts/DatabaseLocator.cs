@@ -16,11 +16,11 @@ public class DatabaseLocator : ScriptableObject
         }
     }
 
-    //[SerializeField] private ItemDatabase _itemDatabase;
+    [SerializeField] private ItemDatabase _itemDatabase;
     //[SerializeField] private EnemyDatabase _enemyDatabase;
     //[SerializeField] private AreaDatabase _roomDatabase;
 
-    //public ItemDatabase ItemDatabase => _itemDatabase;
+    public ItemDatabase ItemDatabase => _itemDatabase;
     //public EnemyDatabase EnemyDatabase => _enemyDatabase;
     //public RoomDatabase AreaDatabase => _roomDatabase;
 }

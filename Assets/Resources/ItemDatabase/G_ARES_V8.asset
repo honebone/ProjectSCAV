@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d55099fe117f03a4ca140b57ac6617bd, type: 3}
   m_Name: G_ARES_V8
   m_EditorClassIdentifier: 
+  _id: 
   _itemName: ARES_V8
   _sprite: {fileID: 21300000, guid: 034e56326f9ae3a4a96fae2260c17785, type: 3}
   _rarity: 0
   _itemTags: 0200000003000000
-  _size: {x: 3, y: 1}
+  _size: {x: 6, y: 2}
   _maxStack: 1
   _price: 0
   _drawTime: 1.5

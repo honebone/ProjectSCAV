@@ -69,6 +69,19 @@ public static class Extensions
     //    return 
     //}
 
+    /// <summary>
+    /// 平均 mean、標準偏差 stdDev の正規分布に従う乱数を返す
+    /// 結果が 0 未満にならないようクランプする
+    /// </summary>
+    public static float NormalDistribution(float mean, float stdDev)
+    {
+        // Box-Muller変換
+        float u1 = 1f - UnityEngine.Random.value; // 0除算を避けるため1から引く
+        float u2 = UnityEngine.Random.value;
+        float normal = Mathf.Sqrt(-2f * Mathf.Log(u1)) * Mathf.Cos(2f * Mathf.PI * u2);
+        return Mathf.Max(0f, mean + stdDev * normal);
+    }
+
     public static int ChoiceWithWeight(this float[] weight)
     {
         float sum = 0;

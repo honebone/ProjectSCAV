@@ -7,9 +7,9 @@ using UnityEngine;
 public class PlayerData : EntityStatsData
 {
     [SerializeField] float _jetpackPower;
-    [SerializeField] Vector2Int _inventorySize;
+    [SerializeField] int _inventorySize;
 
-    public Vector2Int InventorySize => _inventorySize;
+    public int InventorySize => _inventorySize;
     public override EntityModel CreateModel(EntityView view)
     {
         if (view is IInputGetter inputGetter) return new PlayerModel(this, _jetpackPower, view, view, inputGetter, view);

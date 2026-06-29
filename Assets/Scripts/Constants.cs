@@ -12,10 +12,15 @@ public class Constants : ScriptableObject
 
     [Header("\n\n\nEntities")]
     [SerializeField] private Vector2Int _particlesOnDMG;
+
+    [Header("\n\n\nInventory")]
+    [SerializeField] private int _inventorySlotsPerRow = 10;
     public float TileSize => _tileSize;
     public int RoomWidth => _roomWidth;
     public int RoomHeight => _roomheight;
     public Vector2Int ParticlesOnDMG => _particlesOnDMG;
+
+    public int InventorySlotsPerRow => _inventorySlotsPerRow;    
     //[Header("\n\n\nLootbox")]
     //public List<ItemData> _Item
     // -------------------------------------------------------

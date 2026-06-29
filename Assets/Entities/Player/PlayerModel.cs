@@ -35,7 +35,7 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
         _looker = looker;
 
         _loadout = new LoadoutModel(data.GunSlot, data.GearSlot, data.ImplantSlot);
-        _inventory = new InventoryModel(data.InventorySize.x, data.InventorySize.y);
+        _inventory = new InventoryModel(Constants.Instance.InventorySlotsPerRow, data.InventorySize);
     }
 
     public override void Tick(float deltaTime, Vector2 position)
