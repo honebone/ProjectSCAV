@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaData : MonoBehaviour
+[CreateAssetMenu(menuName = "AreaData")]
+public class AreaData : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private RoomDatabase _roomDatabase;
+    [SerializeField] private int _totalLootCost;
+    [SerializeField] private int _baseCostPerLootbox;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public RoomDatabase RoomDatabase => _roomDatabase;
+    public int TotalLootCost => _totalLootCost;
+    public int BaseCostPerLootbox => _baseCostPerLootbox;
 }

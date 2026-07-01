@@ -12,11 +12,12 @@ public class Debugger : MonoBehaviour
     [SerializeField] MapSpawner _mapSpawner;
     [SerializeField] NavGraphScanner _scanner;
     [SerializeField] UIManager _uiManager;
+    [SerializeField] AreaManager _areaManager;
 
     [SerializeField] EntityStatsData _enemyData;
     [SerializeField] EntityPresenter _enemyPresenter;
 
-    [SerializeField] RoomDatabase roomDatabase;
+    [SerializeField] AreaData areaData;
     [SerializeField] List<GunData> gunData;
     [SerializeField] List<ItemData> itemData;
     [SerializeField] List<int> itemAmount;
@@ -24,8 +25,7 @@ public class Debugger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _mapSpawner.SpawnMap(roomDatabase);
-        _scanner.BuildNavGraph();
+        _areaManager.Init(areaData);
 
         _presenter.Init(_entityStatsData, _scanner.Pathfinder);
         _enemyPresenter.Init(_enemyData, _scanner.Pathfinder);  

@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65050c556e9b0fc4e8e02ecfa717ada8, type: 3}
-  m_Name: ConstantsData
+  m_Script: {fileID: 11500000, guid: 545238c659b6fb54597b55452c2f2520, type: 3}
+  m_Name: Lab
   m_EditorClassIdentifier: 
-  _tileSize: 1
-  _roomWidth: 44
-  _roomheight: 24
-  _particlesOnDMG: {x: 3, y: 10}
-  _inventorySlotsPerRow: 8
-  _itemCosts: 6400000090010000400600000019000000640000
+  _roomDatabase: {fileID: 11400000, guid: 0e8401670b8efc04fb25beac24543c0c, type: 2}
+  _totalLootCost: 5000
+  _baseCostPerLootbox: 0
