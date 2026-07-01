@@ -9,17 +9,24 @@ public class Debugger : MonoBehaviour
 
     [SerializeField] EntityStatsData _entityStatsData;
     [SerializeField] EntityPresenter _presenter;
+    [SerializeField] MapSpawner _mapSpawner;
     [SerializeField] NavGraphScanner _scanner;
+    [SerializeField] UIManager _uiManager;
 
     [SerializeField] EntityStatsData _enemyData;
     [SerializeField] EntityPresenter _enemyPresenter;
 
+    [SerializeField] RoomDatabase roomDatabase;
     [SerializeField] List<GunData> gunData;
-
+    [SerializeField] List<ItemData> itemData;
+    [SerializeField] List<int> itemAmount;
 
     // Start is called before the first frame update
     void Start()
     {
+        _mapSpawner.SpawnMap(roomDatabase);
+        _scanner.BuildNavGraph();
+
         _presenter.Init(_entityStatsData, _scanner.Pathfinder);
         _enemyPresenter.Init(_enemyData, _scanner.Pathfinder);  
         if (_presenter.Model is PlayerModel model)
@@ -30,11 +37,13 @@ public class Debugger : MonoBehaviour
                 model.Loadout.TryEquip(i, itemStack, model);
             }
 
-            //for (int i = 0; i < itemData.Count; i++)
-            //{
-            //    ItemStackModel itemStack = new ItemStackModel(itemData[i].CreateModel(), itemAmount[i]);
-            //    model.Inventory.TryAddAuto(itemStack);
-            //}
+            for (int i = 0; i < itemData.Count; i++)
+            {
+                ItemStackModel itemStack = new ItemStackModel(itemData[i].CreateModel(), itemAmount[i]);
+                model.Inventory.TryAddAuto(itemStack);
+            }
+
+            _uiManager.Init(model.Inventory);
         }
     }
 
@@ -43,6 +52,17 @@ public class Debugger : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             StartCoroutine(Emergency());
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (_presenter.Model is PlayerModel model)
+            {
+                for (int i = 0; i < itemData.Count; i++)
+                {
+                    ItemStackModel itemStack = new ItemStackModel(itemData[i].CreateModel(), itemAmount[i]);
+                    model.Inventory.TryAddAuto(itemStack);
+                }
+            }
         }
     }
 

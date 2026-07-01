@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb8162aef31c384f95c6822c997d300, type: 3}
+  m_Name: Musketeer_PJTL
+  m_EditorClassIdentifier: 
+  _bulletPrefab: {fileID: 7552571025130184120, guid: a26a8a088fb3a1747ab317dc3702f58d, type: 3}
+  _pelletPerShot: 1
+  _spread: 5
+  _equidistant: 0
+  _bulletSpeed: 75
+  _bulletLifeTime: 1
+  _penetration: 0

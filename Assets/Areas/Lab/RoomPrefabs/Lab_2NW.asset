@@ -17,4 +17,4 @@ MonoBehaviour:
   _hasSouth: 0
   _hasEast: 0
   _hasWest: 1
-  _weight: 1
+  _weight: 4

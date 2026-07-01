@@ -16,3 +16,4 @@ MonoBehaviour:
   _roomWidth: 44
   _roomheight: 24
   _particlesOnDMG: {x: 3, y: 10}
+  _inventorySlotsPerRow: 8

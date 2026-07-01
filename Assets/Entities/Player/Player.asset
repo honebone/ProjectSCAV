@@ -28,4 +28,4 @@ MonoBehaviour:
   _maxHeat: 100
   _heatRecovery: 10
   _jetpackPower: 8
-  _inventorySize: {x: 5, y: 4}
+  _inventorySize: 5

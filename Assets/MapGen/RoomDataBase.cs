@@ -19,25 +19,25 @@ public class RoomDatabase : ScriptableObject
     // シングルトンAPI
     // -------------------------------------------------------
 
-    private const string ResourcePath = "MapGen/RoomDataBase";
-    private static RoomDatabase _instance;
+    //private const string ResourcePath = "MapGen/RoomDataBase";
+    //private static RoomDatabase _instance;
 
-    public static RoomDatabase Instance
-    {
-        get
-        {
-            if (_instance != null) return _instance;
+    //public static RoomDatabase Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance != null) return _instance;
 
-            _instance = Resources.Load<RoomDatabase>(ResourcePath);
+    //        _instance = Resources.Load<RoomDatabase>(ResourcePath);
 
-            if (_instance == null)
-            {
-                DevLog.Error($"[RoomDatabase] Resources/{ResourcePath}.asset が見つかりません。");
-            }
+    //        if (_instance == null)
+    //        {
+    //            DevLog.Error($"[RoomDatabase] Resources/{ResourcePath}.asset が見つかりません。");
+    //        }
 
-            return _instance;
-        }
-    }
+    //        return _instance;
+    //    }
+    //}
 
     // -------------------------------------------------------
     // クエリ

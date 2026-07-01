@@ -8,15 +8,15 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int _targetRoomCount = 20;
     public int TargetRoomCount => _targetRoomCount;
 
-    public GeneratedLayout Generate()
+    public GeneratedLayout Generate(RoomDatabase roomDatabase)
     {
-        GeneratedLayout layout = TryGenerate();
-        while (layout.RoomCount < _targetRoomCount) { layout = TryGenerate(); }
+        GeneratedLayout layout = TryGenerate(roomDatabase);
+        while (layout.RoomCount < _targetRoomCount) { layout = TryGenerate(roomDatabase); }
         return layout;
     }
-    private GeneratedLayout TryGenerate()
+    private GeneratedLayout TryGenerate(RoomDatabase roomDatabase)
     {
         MapGeneratorModel model = new MapGeneratorModel(_targetRoomCount);
-        return model.Generate(RoomDatabase.Instance);
+        return model.Generate(roomDatabase);
     }
 }

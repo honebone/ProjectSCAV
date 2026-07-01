@@ -33,4 +33,4 @@ public class ItemData : ScriptableObject
 }
 
 public enum Rarity { common,uncommon,rare,epic,legendary}
-public enum ItemTag { junk, valuable, military, gun, ammo, implant, installer, tool, medical, electronics, buildingMaterials }
+public enum ItemTag { junk, valuable, military, gun, ammo, implant, installer, tool, medical, electronics, buildingMaterials, foods }

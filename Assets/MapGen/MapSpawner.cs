@@ -32,11 +32,11 @@ public class MapSpawner : MonoBehaviour
     // 外部からの生成エントリーポイント
     // -------------------------------------------------------
 
-    public void SpawnMap()
+    public void SpawnMap(RoomDatabase roomDatabase)
     {
         ClearRooms();
 
-        _currentLayout = _generator.Generate();
+        _currentLayout = _generator.Generate(roomDatabase);
         if (_currentLayout == null)
         {
             DevLog.Error("[MapSpawner] GeneratedLayout の生成に失敗しました。");

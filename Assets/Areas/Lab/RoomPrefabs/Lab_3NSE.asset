@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9eb7498ef2f9d84d9e30a4022253526, type: 3}
+  m_Name: Lab_3NSE
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4229023716493667394, guid: d108e8043aea25c43b638149bc41d8ab, type: 3}
+  _hasNorth: 1
+  _hasSouth: 1
+  _hasEast: 1
+  _hasWest: 0
+  _weight: 3
