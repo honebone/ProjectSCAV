@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roomDatabase: {fileID: 11400000, guid: 0e8401670b8efc04fb25beac24543c0c, type: 2}
   _totalLootCost: 5000
-  _baseCostPerLootbox: 0
+  _baseCostPerLootbox: 50

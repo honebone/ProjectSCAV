@@ -3,20 +3,15 @@ using UnityEngine;
 
 /// <summary>
 /// エリア全体の初期化・生成フローを統括する MonoBehaviour
-/// マップ生成・NavGraph構築・ルート生成の開始命令を担う
-/// 各生成ロジックは MapSpawner・NavGraphScanner・LootGeneratorModel が持つ
+/// ILootboxSpawner を実装し、LootGeneratorModel からのSpawn要求を処理する
 /// </summary>
-public class AreaManager : MonoBehaviour
+public class AreaManager : MonoBehaviour, ILootboxSpawner
 {
     [SerializeField] private MapSpawner _mapSpawner;
     [SerializeField] private NavGraphScanner _navGraphScanner;
+    [SerializeField] private Transform _rootBoxRoot;
 
     private AreaManagerModel _model;
-
-    //private void Start()
-    //{
-    //    Init();
-    //}
 
     public void Init(AreaData areaData)
     {
@@ -26,13 +21,27 @@ public class AreaManager : MonoBehaviour
         // NavGraph構築
         _navGraphScanner.BuildNavGraph();
 
-
-        _model = new AreaManagerModel(areaData);
+        // Model初期化（自身をILootboxSpawnerとして注入）
+        _model = new AreaManagerModel(DatabaseLocator.Instance.ItemDatabase, this);
 
         // ルート生成
         List<ILootboxSpawnPoint> spawnPoints = CollectSpawnPoints();
         _model.LootGenerator.GenerateLoot(spawnPoints, areaData.TotalLootCost, areaData.BaseCostPerLootbox);
     }
+
+    // -------------------------------------------------------
+    // ILootboxSpawner
+    // -------------------------------------------------------
+
+    public Lootbox Spawn(GameObject prefab, Vector2 position)
+    {
+        GameObject obj = Instantiate(prefab, position, Quaternion.identity, _rootBoxRoot);
+        return obj.GetComponent<Lootbox>();
+    }
+
+    // -------------------------------------------------------
+    // ヘルパー
+    // -------------------------------------------------------
 
     /// <summary>
     /// 生成済みの全部屋から ILootboxSpawnPoint を収集して返す
@@ -49,7 +58,7 @@ public class AreaManager : MonoBehaviour
             }
         }
 
-        DevLog.Log($"{result.Count} つのマーカーを取得");
+        DevLog.Log($"[AreaManager] {result.Count} つのマーカーを取得");
         return result;
     }
 }

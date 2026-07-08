@@ -5,12 +5,11 @@
 /// </summary>
 public class AreaManagerModel
 {
-    private AreaData _areaData;
     private readonly LootGeneratorModel _lootGenerator;
     public LootGeneratorModel LootGenerator => _lootGenerator;
 
-    public AreaManagerModel(AreaData areaData)
+    public AreaManagerModel(ItemDatabase itemDatabase, ILootboxSpawner spawner)
     {
-        _lootGenerator = new LootGeneratorModel();
+        _lootGenerator = new LootGeneratorModel(itemDatabase, spawner);
     }
 }

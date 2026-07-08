@@ -16,7 +16,7 @@ MonoBehaviour:
   _maxArmor: 50
   _armorRegenDelay: 3
   _armorRegenSpeed: 5
-  _moveSpeed: 7
+  _moveSpeed: 5
   _jumpPower: {x: 0, y: 18}
   _fovAngle: 30
   _sightRange: 12
@@ -27,5 +27,5 @@ MonoBehaviour:
   _implantSlot: 00000000010000000200000003000000
   _maxHeat: 100
   _heatRecovery: 10
-  _jetpackPower: 8
+  _jetpackPower: 6
   _inventorySize: 5
