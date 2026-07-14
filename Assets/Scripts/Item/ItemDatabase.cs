@@ -9,6 +9,7 @@ public class ItemDatabase : ScriptableObject
 {
     [SerializeField] private List<ItemData> _items;
 
+    public IReadOnlyList<ItemData> All => _items;
     public ItemData Get(string id)
     {
         ItemData result = _items.Find(item => item.Id == id);
