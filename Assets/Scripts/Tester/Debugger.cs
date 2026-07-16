@@ -23,8 +23,12 @@ public class Debugger : MonoBehaviour
     [SerializeField] List<int> itemAmount;
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        // データベースのロード完了を待つ
+        // （Bootstrapシーンを経由せず本シーンを直接再生した場合もここで担保される）
+        await GameBootstrapper.WaitForReadyAsync();
+
         _areaManager.Init(areaData);
 
         _presenter.Init(_entityStatsData, _scanner.Pathfinder);

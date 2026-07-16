@@ -22,7 +22,8 @@ public class AreaManager : MonoBehaviour, ILootboxSpawner
         _navGraphScanner.BuildNavGraph();
 
         // Model初期化（自身をILootboxSpawnerとして注入）
-        _model = new AreaManagerModel(DatabaseLocator.Instance.ItemDatabase, this);
+        // ItemDatabaseは起動時にGameBootstrapperがロード済みのものを参照する
+        _model = new AreaManagerModel(GameBootstrapper.ItemDatabase, this);
 
         // ルート生成
         List<ILootboxSpawnPoint> spawnPoints = CollectSpawnPoints();

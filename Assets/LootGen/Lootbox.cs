@@ -22,6 +22,7 @@ public class Lootbox : MonoBehaviour
 
     private InventoryModel _loot;
     public InventoryModel Loot => _loot;
+    public int IncludeAllChance => _incluideAllChance;
 
     /// <summary>
     /// LootGeneratorModel ‚ª¶¬‚µ‚½ƒCƒ“ƒxƒ“ƒgƒŠ‚ğó‚¯æ‚Á‚Ä‰Šú‰»‚·‚é

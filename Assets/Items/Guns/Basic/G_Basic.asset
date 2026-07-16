@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55099fe117f03a4ca140b57ac6617bd, type: 3}
+  m_Name: G_Basic
+  m_EditorClassIdentifier: 
+  _itemName: "\u30D9\u30FC\u30B7\u30C3\u30AF"
+  _sprite: {fileID: 21300000, guid: f71251c7ee417b049aa09e45e93174b1, type: 3}
+  _rarity: 1
+  _itemTags: 0200000003000000
+  _size: {x: 2, y: 2}
+  _maxStack: 1
+  _price: 0
+  _drawTime: 0.25
+  _visualPrefab: {fileID: 5232819595555721123, guid: 73061bc16072c1d4aa8ead8cafab9987, type: 3}
+  _useTime: 0
+  _magCap: 10
+  _reloadTime: 0.8
+  _fireRate: 3
+  _maxSpread: 50
+  _spreadPenalty_move: 8
+  _spreadPenalty_fire: 15
+  _spreadLoss: 30
+  _pjtlData: {fileID: 11400000, guid: a4161933a7ab27d499d8b0fb5bb0f121, type: 2}

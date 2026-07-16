@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53df9cb7c2fa92342ab6604a74c3ffd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _costMultiplier: 2
-  _inventorySize: 2
+  _costMultiplier: 6
+  _inventorySize: 5
   _incluideAllChance: 0
   _tagCandidates:
   - _itemTag: 2

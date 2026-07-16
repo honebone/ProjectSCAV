@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d55099fe117f03a4ca140b57ac6617bd, type: 3}
   m_Name: G_Musketeer
   m_EditorClassIdentifier: 
-  _id: G_Musketeer
   _itemName: "\u30DE\u30B9\u30B1\u30C6\u30A3\u30A2"
-  _sprite: {fileID: 21300000, guid: 23a38c66ef983a242a81c2e6396b892d, type: 3}
+  _sprite: {fileID: 21300000, guid: 3fcc20f082cbc614fa7fa7ae49d54349, type: 3}
   _rarity: 0
   _itemTags: 0200000003000000
   _size: {x: 6, y: 1}

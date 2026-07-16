@@ -316,6 +316,19 @@ public class InventoryModel
         return true;
     }
 
+    /// <summary>sizeが収まる空きスペースが存在するか（配置はしない、判定のみ）</summary>
+    public bool CanFitAnywhere(Vector2Int size)
+    {
+        for (int y = 0; y <= _height - size.y; y++)
+        {
+            for (int x = 0; x <= _width - size.x; x++)
+            {
+                if (CanPlace(new Vector2Int(x, y), size)) return true;
+            }
+        }
+        return false;
+    }
+
     // -------------------------------------------------------
     // 内部ヘルパー
     // -------------------------------------------------------

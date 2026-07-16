@@ -16,6 +16,6 @@ MonoBehaviour:
   _pelletPerShot: 1
   _spread: 10
   _equidistant: 0
-  _bulletSpeed: 50
+  _bulletSpeed: 75
   _bulletLifeTime: 1
   _penetration: 0

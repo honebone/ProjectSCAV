@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18341d0e25af484cb0211371889b241, type: 3}
+  m_Name: E_InferenceChip
+  m_EditorClassIdentifier: 
+  _itemName: "\u63A8\u8AD6\u30C1\u30C3\u30D7"
+  _sprite: {fileID: 21300000, guid: b38ff3d4aea783b4d85db74a5fe079ab, type: 3}
+  _rarity: 1
+  _itemTags: 09000000
+  _size: {x: 1, y: 1}
+  _maxStack: 8
+  _price: 0

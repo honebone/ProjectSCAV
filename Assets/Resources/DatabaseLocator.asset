@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9dc08fbb265a9d4d8fd0be8bfee4527, type: 3}
   m_Name: DatabaseLocator
   m_EditorClassIdentifier: 
+  _itemDatabase: {fileID: 11400000, guid: 98e723098f334134a8bc5cd84a673a1a, type: 2}

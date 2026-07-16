@@ -54,13 +54,11 @@ public class LoadoutModel
     }
     public void SwitchNext()
     {
-        DevLog.Log("SwitchNext");
         if (_holdIndex == _holdableSlots.Count - 1) { SwitchSlot(0); }
         else { SwitchSlot(_holdIndex + 1); }
     }
     public void SwitchBack()
     {
-        DevLog.Log("SwitchBack");
         if (_holdIndex == 0) { SwitchSlot(_holdableSlots.Count-1); }
         else { SwitchSlot(_holdIndex - 1); }
     }

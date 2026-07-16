@@ -7,6 +7,8 @@ public class EntityPresenter : MonoBehaviour
 
     [SerializeField] private protected EntityView _view;
 
+    private bool _initialized;
+
     /// <summary>
     /// pathfinderはNavGraphScanner.StageContextから取得してPresenterに渡す
     /// ナビゲーションが不要なエンティティ（プレイヤーなど）はnullを渡す
@@ -16,6 +18,8 @@ public class EntityPresenter : MonoBehaviour
         _view.Init(pathfinder);
         _model = data.CreateModel(_view);
         Bind();
+
+        _initialized = true;
     }
 
     public virtual void Bind()
@@ -27,7 +31,10 @@ public class EntityPresenter : MonoBehaviour
 
     private void Update()
     {
-        _model.Tick(Time.deltaTime, _view.Position);
-        _view.Tick(Time.deltaTime);
+        if(_initialized)
+        {
+            _model.Tick(Time.deltaTime, _view.Position);
+            _view.Tick(Time.deltaTime);
+        }
     }
 }

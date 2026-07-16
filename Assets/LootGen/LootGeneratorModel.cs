@@ -7,12 +7,12 @@ using UnityEngine;
 /// </summary>
 public class LootGeneratorModel
 {
-    private readonly ItemDatabase _itemDatabase;
+    private readonly LootItemGeneratorModel _itemGenerator;
     private readonly ILootboxSpawner _spawner;
 
-    public LootGeneratorModel(ItemDatabase itemDatabase, ILootboxSpawner spawner)
+    public LootGeneratorModel(LootItemGeneratorModel itemGenerator, ILootboxSpawner spawner)
     {
-        _itemDatabase = itemDatabase;
+        _itemGenerator = itemGenerator;
         _spawner = spawner;
     }
 
@@ -56,7 +56,8 @@ public class LootGeneratorModel
                 continue;
             }
 
-            // TODO: アイテム生成仕様確定後にアイテムを生成してlootbox.Init()を呼ぶ
+            InventoryModel loot = _itemGenerator.GenerateItems(lootbox, lootboxCost);
+            lootbox.Init(loot);
         }
 
         DevLog.Log($"[LootGeneratorModel] 生成完了 累計コスト:{accumulatedCost} / 目標:{totalCost}");

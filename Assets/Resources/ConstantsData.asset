@@ -16,5 +16,9 @@ MonoBehaviour:
   _roomWidth: 44
   _roomheight: 24
   _particlesOnDMG: {x: 3, y: 10}
-  _inventorySlotsPerRow: 8
   _itemCosts: 6400000090010000400600000019000000640000
+  _inventorySlotsPerRow: 8
+  _maxStack1CostMultiplier: 0.75
+  _lootCostStdDevRatio: 0.3
+  _lootItemCountMeanRatio: 0.3
+  _lootItemCountStdDevRatio: 0.3
