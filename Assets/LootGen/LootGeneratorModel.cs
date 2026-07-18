@@ -56,7 +56,7 @@ public class LootGeneratorModel
                 continue;
             }
 
-            InventoryModel loot = _itemGenerator.GenerateItems(lootbox, lootboxCost);
+            InventoryModel loot = _itemGenerator.GenerateItems(selected.Data, lootboxCost);
             lootbox.Init(loot);
         }
 

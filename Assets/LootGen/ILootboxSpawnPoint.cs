@@ -8,11 +8,12 @@ using UnityEngine;
 [System.Serializable]
 public struct LootboxCandidate
 {
-    [SerializeField] private GameObject _prefab;
+    [SerializeField] private LootBoxData _data;
     //[SerializeField] private float _costMultiplier;
 
-    public GameObject Prefab => _prefab;
-    public float CostMultiplier => _prefab.GetComponent<Lootbox>().CostMultiplier;
+    public LootBoxData Data => _data;
+    public GameObject Prefab => _data.Prefab;
+    public float CostMultiplier => _data.CostMultiplier;
 }
 
 /// <summary>

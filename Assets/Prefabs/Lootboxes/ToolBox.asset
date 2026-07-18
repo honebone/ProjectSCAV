@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fc4c45f39a6ed4d9b0ac93d95ae7de, type: 3}
+  m_Name: ToolBox
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 3869982227049515572, guid: ceac38bd991fa9b44b8f95db017b39e0, type: 3}
+  _costMultiplier: 1
+  _inventorySize: 4
+  _includeAllChance: 10
+  _tagCandidates:
+  - _itemTag: 7
+    _weight: 75
+  - _itemTag: 9
+    _weight: 25

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fc4c45f39a6ed4d9b0ac93d95ae7de, type: 3}
+  m_Name: PC
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 536786183053601939, guid: 29859b5aabf18fd409a2f67dd6b309aa, type: 3}
+  _costMultiplier: 1
+  _inventorySize: 5
+  _includeAllChance: 0
+  _tagCandidates:
+  - _itemTag: 9
+    _weight: 1

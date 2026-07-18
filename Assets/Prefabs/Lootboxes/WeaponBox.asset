@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fc4c45f39a6ed4d9b0ac93d95ae7de, type: 3}
+  m_Name: WeaponBox
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 8587977961660206211, guid: 125166515caf7d546aff43e2f96af806, type: 3}
+  _costMultiplier: 2
+  _inventorySize: 2
+  _includeAllChance: 0
+  _tagCandidates:
+  - _itemTag: 3
+    _weight: 75
+  - _itemTag: 4
+    _weight: 25

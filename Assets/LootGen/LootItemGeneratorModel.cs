@@ -48,15 +48,15 @@ public class LootItemGeneratorModel
     /// <summary>
     /// ロトボックス1つ分のアイテムを抽選・配置し、InventoryModelを返す
     /// </summary>
-    /// <param name="lootbox">タグ候補・includeAllChance・インベントリの高さを参照する対象</param>
+    /// <param name="lootboxData">タグ候補・includeAllChance・インベントリの高さを参照する対象</param>
     /// <param name="targetCost">このロトボックスに割り当てられたコスト(LootGeneratorModelが算出したlootboxCost)</param>
-    public InventoryModel GenerateItems(Lootbox lootbox, float targetCost)
+    public InventoryModel GenerateItems(LootBoxData lootboxData, float targetCost)
     {
         int width = Constants.Instance.InventorySlotsPerRow;
-        int height = lootbox.InventorySize;
+        int height = lootboxData.InventorySize;
         InventoryModel inventory = new InventoryModel(width, height);
 
-        List<ItemModel> pool = SelectPool(lootbox);
+        List<ItemModel> pool = SelectPool(lootboxData);
 
         float remainingCost = Extensions.NormalDistribution(
             targetCost,
@@ -98,15 +98,15 @@ public class LootItemGeneratorModel
     // プール決定
     // -------------------------------------------------------
 
-    private List<ItemModel> SelectPool(Lootbox lootbox)
+    private List<ItemModel> SelectPool(LootBoxData lootboxData)
     {
-        if (lootbox.IncludeAllChance.Dice())
+        if (lootboxData.IncludeAllChance.Dice())
         {
             DevLog.Log("[LootItemGeneratorModel] タグ抽選結果: 全アイテム対象");
             return new List<ItemModel>(_allItems);
         }
 
-        ItemTag selectedTag = SelectTag(lootbox.TagCandidates);
+        ItemTag selectedTag = SelectTag(lootboxData.TagCandidates);
         DevLog.Log($"[LootItemGeneratorModel] タグ抽選結果: {selectedTag}");
         return new List<ItemModel>(_itemsByTag[selectedTag]);
     }
