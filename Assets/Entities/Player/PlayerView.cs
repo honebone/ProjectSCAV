@@ -11,7 +11,13 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     [SerializeField] private Transform _headLight_tf;
 
     [SerializeField] private HoldingItemView _holdingItemView;
+    [Header("Interact")]
+    [SerializeField] private LayerMask _interactableLayer;
     public HoldingItemView HoldingItemView => _holdingItemView;
+
+    private readonly Dictionary<Collider2D, IInteractable> _interactCandidates = new();
+    private IInteractable _focusedInteractable;
+
     // -------------------------------------------------------
     // IInputGetter : キーバインド設定
     // -------------------------------------------------------
@@ -117,6 +123,8 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
             _swapItem_next = false;
             _swapItem_back = false;
         }
+
+        UpdateInteract();
     }
 
     public override void Look(Vector2 lookAt, float angle, float range)
@@ -142,5 +150,88 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     public void UpdateAim(Vector2 lookAt)
     {
         _holdingItemView.UpdateAim(lookAt);
+    }
+
+    // -------------------------------------------------------
+    // トリガー検出（Enter/Exit登録方式）
+    // -------------------------------------------------------
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!IsInteractableLayer(other.gameObject.layer)) return;
+
+        IInteractable interactable = other.GetComponent<IInteractable>();
+        if (interactable == null) return;
+
+        _interactCandidates[other] = interactable;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!_interactCandidates.TryGetValue(other, out IInteractable interactable)) return;
+
+        _interactCandidates.Remove(other);
+
+        // フォーカス中の対象が範囲外に出た場合はハイライト解除してフォーカスも外す
+        if (_focusedInteractable == interactable)
+        {
+            _focusedInteractable.SetHighlighted(false);
+            _focusedInteractable = null;
+        }
+    }
+
+    private bool IsInteractableLayer(int layer)
+    {
+        return (_interactableLayer.value & (1 << layer)) != 0;
+    }
+
+    // -------------------------------------------------------
+    // フォーカス選定・Interact呼び出し
+    // -------------------------------------------------------
+
+    /// <summary>候補からフォーカス対象を決定し、ハイライト切り替え・Interact呼び出しを行う</summary>
+    private void UpdateInteract()
+    {
+        IInteractable next = FindCursorTarget() ?? FindNearestTarget();
+
+        if (next != _focusedInteractable)
+        {
+            _focusedInteractable?.SetHighlighted(false);
+            _focusedInteractable = next;
+            _focusedInteractable?.SetHighlighted(true);
+        }
+
+        if (_interactDown)
+        {
+            _focusedInteractable?.Interact();
+        }
+    }
+
+    /// <summary>候補の中でマウスカーソルが重なっているものを返す</summary>
+    private IInteractable FindCursorTarget()
+    {
+        foreach (KeyValuePair<Collider2D, IInteractable> pair in _interactCandidates)
+        {
+            if (pair.Key.OverlapPoint(_mousePos)) return pair.Value;
+        }
+        return null;
+    }
+
+    /// <summary>候補の中でプレイヤーから最も近いものを返す</summary>
+    private IInteractable FindNearestTarget()
+    {
+        IInteractable nearest = null;
+        float minDistSq = float.MaxValue;
+
+        foreach (KeyValuePair<Collider2D, IInteractable> pair in _interactCandidates)
+        {
+            float distSq = ((Vector2)pair.Key.transform.position - Position).sqrMagnitude;
+            if (distSq < minDistSq)
+            {
+                minDistSq = distSq;
+                nearest = pair.Value;
+            }
+        }
+        return nearest;
     }
 }

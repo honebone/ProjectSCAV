@@ -30,7 +30,6 @@ Transform:
   m_LocalScale: {x: 0.67, y: 0.67, z: 0.67}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 697076438205416729}
   - {fileID: 4600761039262874147}
   - {fileID: 3800528896860690609}
   m_Father: {fileID: 1700927394630535619}
@@ -87,37 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2286911732829916592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 697076438205416729}
-  m_Layer: 0
-  m_Name: Muzzle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &697076438205416729
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2286911732829916592}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.499, y: 0.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5585269156277665778}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5232819595555721123
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,8 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f4233ae32ed9c4a8dabc79390c9330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzle: {fileID: 697076438205416729}
+  _muzzle: {fileID: 4600761039262874147}
   _muzzleFlash: {fileID: 7569339300130910710}
+  _spreadLines:
+  - {fileID: 1143155710440636282}
+  - {fileID: 2343767874814918410}
   _cartridgeParticle: {fileID: 8239157098688477862}
 --- !u!1001 &2534638099516221694
 PrefabInstance:
@@ -220,13 +191,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9111002228926017868, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
       propertyPath: m_Name
-      value: MuzzleFlash
+      value: Muzzle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
+--- !u!4 &1143155710440636282 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3238538811454527364, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
+  m_PrefabInstance: {fileID: 2534638099516221694}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2343767874814918410 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 264141841577105396, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
+  m_PrefabInstance: {fileID: 2534638099516221694}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4600761039262874147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2086846845294580445, guid: 946d801fb2177f14f842730006dba1d7, type: 3}

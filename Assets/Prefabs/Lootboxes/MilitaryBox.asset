@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MilitaryBox
   m_EditorClassIdentifier: 
   _prefab: {fileID: 1585738848881340944, guid: 2d9eefe9643ff0249bc058e082e57f14, type: 3}
-  _costMultiplier: 2
+  _costMultiplier: 3
   _inventorySize: 5
   _includeAllChance: 0
   _tagCandidates:

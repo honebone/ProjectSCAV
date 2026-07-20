@@ -18,8 +18,8 @@ TagManager:
   - Entity
   - Props
   - UI_RT
-  - 
-  - 
+  - Interactable
+  - Projectile
   - 
   - 
   - 

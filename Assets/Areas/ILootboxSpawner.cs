@@ -9,5 +9,5 @@ public interface ILootboxSpawner
     /// <summary>
     /// 指定したプレハブを指定した座標にインスタンス化し、Lootboxコンポーネントを返す
     /// </summary>
-    Lootbox Spawn(GameObject prefab, Vector2 position);
+    LootboxPresenter SpawnLootbox(GameObject prefab, Vector2 position);
 }

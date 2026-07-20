@@ -9,6 +9,7 @@ public class GunVisual : IItemVisual
 {
     [SerializeField] private Transform _muzzle;           // 銃口の位置
     [SerializeField] private Light2D _muzzleFlash;
+    [SerializeField] private List<Transform> _spreadLines;
     [SerializeField] private ParticleSystem _cartridgeParticle;
 
     private GunModel _model;
@@ -22,6 +23,7 @@ public class GunVisual : IItemVisual
 
         _baseIntensity = _muzzleFlash.intensity;
 
+        _model.OnSpreadChanged += OnSpreadChanged;
         _model.OnFired += HandleFired;
         _model.OnReloaded += HandleReloaded;
     }
@@ -29,6 +31,8 @@ public class GunVisual : IItemVisual
     public override void Unsubscribe()
     {
         if (_model == null) return;
+
+        _model.OnSpreadChanged -= OnSpreadChanged;
         _model.OnFired -= HandleFired;
         _model.OnReloaded -= HandleReloaded;
     }
@@ -49,6 +53,12 @@ public class GunVisual : IItemVisual
         //fire.FirePos = _muzzle.position;
         fireParams.SetFirePos(_muzzle.position);
         _projectileSpawner.SpawnProjectile(fireParams);
+    }
+
+    private void OnSpreadChanged(float spread)
+    {
+        _spreadLines[0].localRotation = Quaternion.Euler(0f, 0f, 45 + (spread / 2f) - 90);
+        _spreadLines[1].localRotation = Quaternion.Euler(0f, 0f, 45 - (spread / 2f) - 90);
     }
 
     private void HandleReloaded() { /* リロードアニメ再生など */ }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class LoadoutModel
 {
@@ -18,6 +19,16 @@ public class LoadoutModel
     public IReadOnlyList<ImplantSlot> ImplantSlots => _implantSlots;
 
     public event Action<HoldableItemModel> OnActiveItemChanged;
+
+    public void Tick(float deltaTime, EntityModel user)
+    {
+        _holdableSlots.ForEach(h =>
+        {
+            if (!h.IsEmpty) h.Tick(deltaTime, user);
+        });
+
+        //インプラントも同様
+    }
 
     public LoadoutModel(int guns,int gears,IReadOnlyList<ImplantPart> implants)
     {

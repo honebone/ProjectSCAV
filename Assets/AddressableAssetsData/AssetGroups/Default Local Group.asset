@@ -127,12 +127,61 @@ MonoBehaviour:
   - m_GUID: ebe0cb2101104564bb78457193cf7668
     m_Address: Assets/Items/Consumables/HealStim/Med_HealStim.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a464cb5076ce78c44b6b3d02e4dff2f5
     m_Address: Assets/Items/Guns/Basic/G_Basic.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6557bef499f94c74a90f9e7beda89aa7
+    m_Address: Assets/Items/Others/E_SmallBattery.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aceab324d61c109408f60d06c57ae377
+    m_Address: Assets/Items/Others/E_Fan.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8139c74da7f021348853dc54d05c0906
+    m_Address: Assets/Items/Others/Mat_IronPlate.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7ad543208397d84fb12f53e25cab598
+    m_Address: Assets/Items/Others/J_BrokenCog.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a97b679720e22448a02ecd7c2c410a0
+    m_Address: Assets/Items/Others/Mat_Gunpowder.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0ee4626965044145bb0459ee5e85821
+    m_Address: Assets/Items/Others/Mat_Lens.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84efb04ace2a2054b88a6654a257bfcf
+    m_Address: Assets/Items/Others/Mat_BioGel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1767e8ed250665448f4f9b7c3dc3f19
+    m_Address: Assets/Items/Guns/Pitbull/G_Pitbull.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3ff1327311e75b147882b31db114bbd1, type: 2}

@@ -8,17 +8,19 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
     private readonly ILooker _looker;
 
     private StatValue _jetpackPower;
-
     private bool _isJumping;
-    public bool IsJumping => _isJumping;
-
+    private bool _isUsingItem;
     private Vector2 _lootAt;
+    private readonly LoadoutModel _loadout;
+    private readonly InventoryModel _inventory;
+
+    public bool IsJumping => _isJumping;
+    public bool IsMoving => _inputGetter.MoveAxis != 0 || !_mover.IsGrounded;
+
     public Vector2 LookAt => _lootAt;
 
-    private readonly LoadoutModel _loadout;
     public LoadoutModel Loadout => _loadout;
 
-    private readonly InventoryModel _inventory;
     public InventoryModel Inventory => _inventory;
 
     public PlayerModel(
@@ -41,6 +43,8 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
     public override void Tick(float deltaTime, Vector2 position)
     {
         base.Tick(deltaTime, position);
+
+        _loadout.Tick(deltaTime, this);
 
         Walk(_inputGetter.MoveAxis * Stats.MoveSpeed.Value);
 
@@ -65,21 +69,39 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
             _isJumping = false;
         }
 
+        //マウスカーソルの方を向く
         _lootAt = _inputGetter.MousePos;
         Look(_lootAt, Stats.FOVAngle.Value, Stats.SightRange.Value);
 
-        if (_inputGetter.SwapItem_Next)
-        {
-            _loadout.SwitchNext();
-        }
-        else if (_inputGetter.SwapItem_Back)
-        {
-            _loadout.SwitchBack();
-        }
 
+        //手持ちアイテム切り替え(アイテム使用中は不可)
+        if (!_isUsingItem)
+        {
+            if (_inputGetter.SwapItem_Next)
+            {
+                _loadout.SwitchNext();
+            }
+            else if (_inputGetter.SwapItem_Back)
+            {
+                _loadout.SwitchBack();
+            }
+        }
+        
+
+        //アイテム使用/使用中止
         if (_inputGetter.UseDown)
         {
+            _isUsingItem = true;
             _loadout.HoldingItem?.Use(this);
+        }
+
+        if(_inputGetter.UseUp)
+        {
+            if (_isUsingItem)
+            {
+                _loadout.HoldingItem?.StopUsing(this);
+                _isUsingItem = false;
+            }
         }
     }
 

@@ -6,26 +6,27 @@ using UnityEngine;
 /// </summary>
 public class LootboxPresenter : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Lootbox _lootbox;
-    [SerializeField] private Renderer _renderer; // ハイライト用マテリアルを持つRenderer
+    [SerializeField] private SpriteRenderer _renderer; // ハイライト用マテリアルを持つRenderer
 
     private static readonly int ActiveProp = Shader.PropertyToID("Active");
 
+    private LootboxModel _model;
     private IInventoryUIOpener _inventoryUIOpener;
 
     /// <summary>外部（AreaManager等）から注入する</summary>
-    public void Init(IInventoryUIOpener inventoryUIOpener)
+    public void Init(InventoryModel inventoryModel, IInventoryUIOpener inventoryUIOpener)
     {
         _inventoryUIOpener = inventoryUIOpener;
+        _model = new LootboxModel(inventoryModel);
     }
 
     public void SetHighlighted(bool active)
     {
-        _renderer.material.SetFloat(ActiveProp, active ? 1f : 0f);
+        _renderer.material.SetInt(ActiveProp, active ? 1 : 0);
     }
 
     public void Interact()
     {
-        _inventoryUIOpener?.Open(_lootbox.Loot);
+        _inventoryUIOpener?.OpenInventoryUI(_model.Loot);
     }
 }

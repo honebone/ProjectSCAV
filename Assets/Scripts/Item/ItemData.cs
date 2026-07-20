@@ -17,7 +17,7 @@ public class ItemData : ScriptableObject
     [SerializeField] private List<ItemTag> _itemTags;
     [SerializeField] private Vector2Int _size = Vector2Int.one;
     [SerializeField] private int _maxStack = 1;
-    [SerializeField] private int _price;
+    [SerializeField] private float _costMultiplier = 1;
 
     public string ItemName => _itemName;
     public Sprite Sprite => _sprite;
@@ -25,7 +25,7 @@ public class ItemData : ScriptableObject
     public IReadOnlyList<ItemTag> ItemTags => _itemTags;
     public Vector2Int Size => _size;
     public int MaxStack => _maxStack;
-    public int Price => _price;
+    public float CostMultiplier => _costMultiplier;
 
     public virtual ItemModel CreateModel() { return new ItemModel(this); }
 }

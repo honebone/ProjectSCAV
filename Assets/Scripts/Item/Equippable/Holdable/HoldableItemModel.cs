@@ -20,6 +20,11 @@ public abstract class HoldableItemModel : EquippableItemModel,IUsable
         _holdableData = data;
     }
 
+    public virtual void Tick(float deltaTime,EntityModel user)
+    {
+
+    }
+
     /// <summary>è‚É‚Á‚½‚Æ‚«</summary>
     public virtual void OnHold() {  }
 

@@ -18,15 +18,18 @@ MonoBehaviour:
   _itemTags: 0200000003000000
   _size: {x: 6, y: 1}
   _maxStack: 1
-  _price: 0
+  _costMultiplier: 1
   _drawTime: 1.5
   _visualPrefab: {fileID: 706693874783756704, guid: f03bfd24d062866499d4e1337d982904, type: 3}
   _useTime: 0
   _magCap: 1
   _reloadTime: 3
   _fireRate: 1
-  _maxSpread: 60
+  _fireType: 0
+  _burstRounds: 0
+  _burstRate: 0
   _spreadPenalty_move: 35
   _spreadPenalty_fire: 25
+  _maxSpreadPenalty_fire: 25
   _spreadLoss: 5
   _pjtlData: {fileID: 11400000, guid: d456ae0f8aa711d49aaffbf8052f8a10, type: 2}

@@ -77,7 +77,7 @@ public class Layer2State
     /// <summary>Tabキー：PlayerInventoryの開閉トグル</summary>
     public void ToggleInventory()
     {
-        if (_current == Layer2UI.PlayerInventory) SetState(Layer2UI.None);
+        if (ShowPlayerInventory) SetState(Layer2UI.None);
         else SetState(Layer2UI.PlayerInventory);
     }
 

@@ -9,6 +9,14 @@ public abstract class HoldableSlot
     /// <summary>このスロットに装備できるか判定（サブクラスで型チェック）</summary>
     public abstract bool CanEquip(ItemStackModel stack);
 
+    public void Tick(float deltaTime, EntityModel user)
+    {
+        if (!IsEmpty&& _equipped.Item is HoldableItemModel holdable)
+        {
+            holdable.Tick(deltaTime, user);
+        }
+    }
+
     /// <summary>装備して以前持っていたアイテムを返す</summary>
     public ItemStackModel TryEquip(ItemStackModel item, EntityModel owner)
     {

@@ -107,7 +107,6 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
 
     public void SpawnProjectile(FireParams fireParams)
     {
-        Quaternion quat;
         float spreadRange = Mathf.Max(fireParams.Snapshot.Spread, 0);
         float spreadDelta = spreadRange / -2f;
 
@@ -121,8 +120,12 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
                 spreadDelta += spreadRange / (fireParams.Snapshot.PelletPerShot - 1);
             }
 
+            DevLog.Log($"spread {spread}");
+
 
             Vector2 target = fireParams.TargetPos - fireParams.FirePos;
+
+            Quaternion quat;
             if (Vector2.right == -target.normalized) quat = Quaternion.Euler(0, 0, 180f);
             else quat = Quaternion.FromToRotation(Vector3.right, target);
 

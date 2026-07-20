@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Locker
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4280961722655836329, guid: 83db77dec171dea408d63ce5f0c8c58e, type: 3}
-  _costMultiplier: 0.25
+  _costMultiplier: 0.75
   _inventorySize: 2
   _includeAllChance: 75
   _tagCandidates:

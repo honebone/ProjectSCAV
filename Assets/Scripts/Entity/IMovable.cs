@@ -15,4 +15,5 @@ public interface IMovable
     void Jump(Vector2 jump);
 
     bool IsJumping { get; }
+    bool IsMoving { get; }
 }

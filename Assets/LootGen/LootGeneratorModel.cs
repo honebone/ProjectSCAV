@@ -9,11 +9,13 @@ public class LootGeneratorModel
 {
     private readonly LootItemGeneratorModel _itemGenerator;
     private readonly ILootboxSpawner _spawner;
+    private readonly IInventoryUIOpener _uiOpener;
 
-    public LootGeneratorModel(LootItemGeneratorModel itemGenerator, ILootboxSpawner spawner)
+    public LootGeneratorModel(LootItemGeneratorModel itemGenerator, ILootboxSpawner spawner,IInventoryUIOpener uiOpener)
     {
         _itemGenerator = itemGenerator;
         _spawner = spawner;
+        _uiOpener = uiOpener;
     }
 
     /// <summary>
@@ -49,7 +51,7 @@ public class LootGeneratorModel
             accumulatedCost += lootboxCost;
 
             // ルートボックスをインスタンス化
-            Lootbox lootbox = _spawner.Spawn(selected.Prefab, marker.Position);
+            LootboxPresenter lootbox = _spawner.SpawnLootbox(selected.Prefab, marker.Position);
             if (lootbox == null)
             {
                 DevLog.Error("[LootGeneratorModel] Spawn が null を返しました");
@@ -57,7 +59,7 @@ public class LootGeneratorModel
             }
 
             InventoryModel loot = _itemGenerator.GenerateItems(selected.Data, lootboxCost);
-            lootbox.Init(loot);
+            lootbox.Init(loot, _uiOpener);
         }
 
         DevLog.Log($"[LootGeneratorModel] 生成完了 累計コスト:{accumulatedCost} / 目標:{totalCost}");

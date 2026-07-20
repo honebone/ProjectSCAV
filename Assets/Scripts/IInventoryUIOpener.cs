@@ -4,5 +4,5 @@
 /// </summary>
 public interface IInventoryUIOpener
 {
-    void Open(InventoryModel inventory);
+    void OpenInventoryUI(InventoryModel inventory);
 }

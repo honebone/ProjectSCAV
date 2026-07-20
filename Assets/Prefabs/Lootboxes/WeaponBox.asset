@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WeaponBox
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8587977961660206211, guid: 125166515caf7d546aff43e2f96af806, type: 3}
-  _costMultiplier: 2
+  _costMultiplier: 3
   _inventorySize: 2
   _includeAllChance: 0
   _tagCandidates:

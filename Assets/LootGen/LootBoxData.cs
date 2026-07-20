@@ -20,3 +20,14 @@ public class LootBoxData : ScriptableObject
     public int IncludeAllChance => _includeAllChance;
     public IReadOnlyList<ItemTagCandidate> TagCandidates => _tagCandidates;
 }
+
+
+[System.Serializable]
+public struct ItemTagCandidate
+{
+    [SerializeField] private ItemTag _itemTag;
+    [SerializeField] private int _weight;
+
+    public ItemTag ItemTag => _itemTag;
+    public int Weight => _weight;
+}

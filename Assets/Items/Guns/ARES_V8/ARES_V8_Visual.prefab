@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &381311171263251896
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8672096721224076414}
-  m_Layer: 0
-  m_Name: Muzzle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8672096721224076414
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381311171263251896}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3147245945673364014}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &706693874783756704
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,8 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f4233ae32ed9c4a8dabc79390c9330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzle: {fileID: 8672096721224076414}
+  _muzzle: {fileID: 881419573593600488}
   _muzzleFlash: {fileID: 6551031402309351997}
+  _spreadLines:
+  - {fileID: 4341205794740696241}
+  - {fileID: 1397520864554497217}
   _cartridgeParticle: {fileID: 2920927081547435067}
 --- !u!1 &2388844830266472210
 GameObject:
@@ -109,7 +81,6 @@ Transform:
   m_LocalScale: {x: 0.67, y: 0.67, z: 0.67}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8672096721224076414}
   - {fileID: 881419573593600488}
   - {fileID: 7953456908415790636}
   m_Father: {fileID: 3386077981379543128}
@@ -220,7 +191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9111002228926017868, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
       propertyPath: m_Name
-      value: MuzzleFlash
+      value: Muzzle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -230,6 +201,16 @@ PrefabInstance:
 --- !u!4 &881419573593600488 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2086846845294580445, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
+  m_PrefabInstance: {fileID: 1211070588281611061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1397520864554497217 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 264141841577105396, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
+  m_PrefabInstance: {fileID: 1211070588281611061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4341205794740696241 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3238538811454527364, guid: 946d801fb2177f14f842730006dba1d7, type: 3}
   m_PrefabInstance: {fileID: 1211070588281611061}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6551031402309351997 stripped

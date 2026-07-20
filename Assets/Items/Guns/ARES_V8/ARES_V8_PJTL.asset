@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 7552571025130184120, guid: a26a8a088fb3a1747ab317dc3702f58d, type: 3}
   _pelletPerShot: 1
-  _spread: 10
+  _spread: 5
   _equidistant: 0
   _bulletSpeed: 75
   _bulletLifeTime: 1

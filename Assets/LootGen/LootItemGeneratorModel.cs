@@ -67,9 +67,14 @@ public class LootItemGeneratorModel
         while (pool.Count > 0)
         {
             float minUnitCost = pool[0].UnitCost;
-            if (remainingCost < minUnitCost) break; // 終了条件：プール内最安値未満
+            if (remainingCost < minUnitCost) // 終了条件：プール内最安値未満
+            {
+                DevLog.Log($"[LootItemGeneratorModel] コストがプール内最安値未満 (最安値:{minUnitCost})");
+                break;
+            }
 
-            float roll = UnityEngine.Random.Range(minUnitCost, remainingCost);
+            //float roll = UnityEngine.Random.Range(minUnitCost, remainingCost);
+            float roll = remainingCost;
             DevLog.Log($"[LootItemGeneratorModel] コストロール: {roll} (残りコスト:{remainingCost})");
 
             int startIndex = FindCandidateIndex(pool, roll);
@@ -87,6 +92,9 @@ public class LootItemGeneratorModel
             remainingCost -= spent;
 
             DevLog.Log($"[LootItemGeneratorModel] 排出: {placedItem.Name} x{count} (消費コスト:{spent}, 残りコスト:{remainingCost})");
+            //DevLog.Log($"(スタック当たり価値:{placedItem.StackCost}, 1つ当たり価値:{placedItem.UnitCost})");
+
+            pool = SelectPool(lootboxData);
         }
 
         DevLog.Log($"[LootItemGeneratorModel] 生成完了 余りコスト:{remainingCost}");
@@ -122,16 +130,16 @@ public class LootItemGeneratorModel
     // アイテム選択・配置
     // -------------------------------------------------------
 
-    /// <summary>単価がroll以下となる最後（最大）のインデックスを返す</summary>
+    /// <summary>単価がroll以下となる最後（最大）のインデックスまでの乱数を返す</summary>
     private int FindCandidateIndex(List<ItemModel> pool, float roll)
     {
-        int index = 0;
+        int maxIndex = 0;
         for (int i = 0; i < pool.Count; i++)
         {
             if (pool[i].UnitCost > roll) break;
-            index = i;
+            maxIndex = i;
         }
-        return index;
+        return maxIndex.RandIndex();
     }
 
     /// <summary>

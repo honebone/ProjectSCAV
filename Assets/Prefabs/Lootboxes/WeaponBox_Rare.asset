@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fc4c45f39a6ed4d9b0ac93d95ae7de, type: 3}
   m_Name: WeaponBox_Rare
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 8587977961660206211, guid: 125166515caf7d546aff43e2f96af806, type: 3}
-  _costMultiplier: 2
+  _prefab: {fileID: 8587977961660206211, guid: 09b923389937c9c4c83305170fc1ad58, type: 3}
+  _costMultiplier: 6
   _inventorySize: 2
   _includeAllChance: 0
   _tagCandidates:

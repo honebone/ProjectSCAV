@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55099fe117f03a4ca140b57ac6617bd, type: 3}
+  m_Name: G_Pitbull
+  m_EditorClassIdentifier: 
+  _itemName: "\u30D4\u30C3\u30C8\u30D6\u30EB"
+  _sprite: {fileID: 21300000, guid: e63b548f64015d241a8e948c8c72f50d, type: 3}
+  _rarity: 2
+  _itemTags: 0200000003000000
+  _size: {x: 6, y: 2}
+  _maxStack: 1
+  _costMultiplier: 1
+  _drawTime: 2.25
+  _visualPrefab: {fileID: 9046221374723607273, guid: a8ce699caf01ef94dae3d54788ce8de9, type: 3}
+  _useTime: 0
+  _magCap: 12
+  _reloadTime: 3
+  _fireRate: 2
+  _fireType: 0
+  _burstRounds: 0
+  _burstRate: 0
+  _spreadPenalty_move: 25
+  _spreadPenalty_fire: 30
+  _maxSpreadPenalty_fire: 70
+  _spreadLoss: 25
+  _pjtlData: {fileID: 11400000, guid: f4c107ec677823d46a6c4586d3afddf1, type: 2}

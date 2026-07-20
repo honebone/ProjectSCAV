@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18341d0e25af484cb0211371889b241, type: 3}
   m_Name: E_Wire
   m_EditorClassIdentifier: 
-  _id: E_Wire
   _itemName: "\u30EF\u30A4\u30E4"
-  _sprite: {fileID: 21300000, guid: e318a3e5695ec9c45b7630097651c367, type: 3}
+  _sprite: {fileID: 21300000, guid: 98ce21c1a97ca6e41870e6d0022877ce, type: 3}
   _rarity: 0
   _itemTags: 09000000
   _size: {x: 1, y: 1}
   _maxStack: 30
-  _price: 0
+  _costMultiplier: 1

@@ -8,9 +8,9 @@ public class AreaManagerModel
     private readonly LootGeneratorModel _lootGenerator;
     public LootGeneratorModel LootGenerator => _lootGenerator;
 
-    public AreaManagerModel(ItemDatabaseModel itemDatabase, ILootboxSpawner spawner)
+    public AreaManagerModel(ItemDatabaseModel itemDatabase, ILootboxSpawner spawner, IInventoryUIOpener uiOpener)
     {
         LootItemGeneratorModel itemGenerator = new LootItemGeneratorModel(itemDatabase);
-        _lootGenerator = new LootGeneratorModel(itemGenerator, spawner);
+        _lootGenerator = new LootGeneratorModel(itemGenerator, spawner, uiOpener);
     }
 }

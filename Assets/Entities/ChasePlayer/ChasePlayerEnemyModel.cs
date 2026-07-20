@@ -16,6 +16,7 @@ public class ChasePlayerEnemyModel : EntityModel, IMovable, IEngagable
 
     private bool _isJumping;
     public bool IsJumping => _isJumping;
+    public bool IsMoving => false;//暫定処理　移動処理を別クラスに切り出して移動命令の有無を取り出せるようにしたらここを考える
 
     private readonly IEntityScanner _entityScanner;
     private readonly IPathfinder _pathfinder;

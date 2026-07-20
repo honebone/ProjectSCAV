@@ -5,8 +5,9 @@ using UnityEngine;
 /// エリア全体の初期化・生成フローを統括する MonoBehaviour
 /// ILootboxSpawner を実装し、LootGeneratorModel からのSpawn要求を処理する
 /// </summary>
-public class AreaManager : MonoBehaviour, ILootboxSpawner
+public class AreaManager : MonoBehaviour, ILootboxSpawner,IInventoryUIOpener
 {
+    [SerializeField] private Layer2Controller _layer2Controller;
     [SerializeField] private MapSpawner _mapSpawner;
     [SerializeField] private NavGraphScanner _navGraphScanner;
     [SerializeField] private Transform _rootBoxRoot;
@@ -23,7 +24,7 @@ public class AreaManager : MonoBehaviour, ILootboxSpawner
 
         // Model初期化（自身をILootboxSpawnerとして注入）
         // ItemDatabaseは起動時にGameBootstrapperがロード済みのものを参照する
-        _model = new AreaManagerModel(GameBootstrapper.ItemDatabase, this);
+        _model = new AreaManagerModel(GameBootstrapper.ItemDatabase, this, this);
 
         // ルート生成
         List<ILootboxSpawnPoint> spawnPoints = CollectSpawnPoints();
@@ -34,10 +35,17 @@ public class AreaManager : MonoBehaviour, ILootboxSpawner
     // ILootboxSpawner
     // -------------------------------------------------------
 
-    public Lootbox Spawn(GameObject prefab, Vector2 position)
+    public LootboxPresenter SpawnLootbox(GameObject prefab, Vector2 position)
     {
         GameObject obj = Instantiate(prefab, position, Quaternion.identity, _rootBoxRoot);
-        return obj.GetComponent<Lootbox>();
+        return obj.GetComponent<LootboxPresenter>();
+    }
+    // -------------------------------------------------------
+    // IInventoryUIOpener
+    // -------------------------------------------------------
+    public void OpenInventoryUI(InventoryModel inventory)
+    {
+        _layer2Controller.OpenLoot(inventory);
     }
 
     // -------------------------------------------------------
