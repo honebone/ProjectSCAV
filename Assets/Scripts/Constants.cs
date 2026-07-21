@@ -5,13 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ConstantsData", fileName = "ConstantsData")]
 public class Constants : ScriptableObject
 {
-    [Header("Rooms")]
+    [Header("Colors")]
+    [SerializeField] private Color _color_DMG;
+    [SerializeField] private Color _color_shieldDMG;
+
+    [Header("\n\n\nRooms")]
     [SerializeField] private float _tileSize;
     [SerializeField] private int _roomWidth = 44;
     [SerializeField] private int _roomheight = 24;
 
     [Header("\n\n\nEntities")]
     [SerializeField] private Vector2Int _particlesOnDMG;
+    [SerializeField] private EntityWorldText _worldTextPrefab;
 
     [Header("\n\n\nInventory")]
     [SerializeField] private List<int> _itemCosts;
@@ -24,10 +29,13 @@ public class Constants : ScriptableObject
     [SerializeField] private float _lootItemCountMeanRatio; // maxStack‚É‘Î‚·‚é”roŒÂ”•½‹Ï‚ÌŠ„‡
     [SerializeField] private float _lootItemCountStdDevRatio; // ŒÂ”•½‹Ï‚É‘Î‚·‚é•W€•Î·‚ÌŠ„‡
 
+    public Color Color_DMG => _color_DMG;
+    public Color Color_shieldDMG => _color_shieldDMG;
     public float TileSize => _tileSize;
     public int RoomWidth => _roomWidth;
     public int RoomHeight => _roomheight;
     public Vector2Int ParticlesOnDMG => _particlesOnDMG;
+    public EntityWorldText WorldTextPrefab => _worldTextPrefab;
     public int InventorySlotsPerRow => _inventorySlotsPerRow;
     public float MaxStack1CostMultiplier => _maxStack1CostMultiplier;
     public float SizeCostMultiplier => _sizeCostMultiplier;

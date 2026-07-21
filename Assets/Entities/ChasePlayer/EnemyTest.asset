@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689b7724999703349b205cc49354eea7, type: 3}
   m_Name: EnemyTest
   m_EditorClassIdentifier: 
-  _maxHp: 100
-  _maxArmor: 50
+  _maxHp: 10000
+  _maxArmor: 5000
   _armorRegenDelay: 3
   _armorRegenSpeed: 5
   _moveSpeed: 5

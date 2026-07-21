@@ -7,6 +7,7 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     [Header("Ground Detection")]
     [SerializeField] private Collider2D _groundCheck;      // 足元のオブジェクト
     [SerializeField] private LayerMask _groundLayer;      // 地面とするレイヤー
+    [SerializeField] private Transform _worldUI;
     [SerializeField] private ParticleSystem _par_onArmorDMG;
     [SerializeField] private ParticleSystem _par_onHPDMG;
 
@@ -40,10 +41,17 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     public void OnArmorDamaged(int dmg)
     {
         _par_onArmorDMG.Emit(Constants.Instance.ParticlesOnDMG.Range());
+        SpawnWorldText(dmg.ToString().ColorStr(Constants.Instance.Color_shieldDMG));
     }
     public void OnHPDamaged(int dmg)
     {
         _par_onHPDMG.Emit(Constants.Instance.ParticlesOnDMG.Range());
+        SpawnWorldText(dmg.ToString().ColorStr(Constants.Instance.Color_DMG));
+    }
+
+    private void SpawnWorldText(string str)
+    {
+        Instantiate(Constants.Instance.WorldTextPrefab, _worldUI).Init(str);
     }
 
 
