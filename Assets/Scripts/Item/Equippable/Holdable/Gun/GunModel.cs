@@ -14,7 +14,9 @@ public class GunModel : HoldableItemModel
     private int _currentAmmo;
     private float _spreadPenalty_fire;
     private float _spreadPenalty_move;
-    private float _fireIntervalTimer;
+    private float _fireIntervalTimer;//射撃間のタイマー
+    private int _burstCount;
+    private bool _isBursting => _burstCount > 0;
     private bool _isPullingTrigger;
     public int CurrentAmmo => _currentAmmo;
 
@@ -52,12 +54,18 @@ public class GunModel : HoldableItemModel
             }
         }
 
-        if (_isPullingTrigger && _fireIntervalTimer == 0)
+        if (_fireIntervalTimer == 0)
         {
-            if (_gunData.FireType == FireType.auto) TryFire(user);
+            if (_gunData.FireType == FireType.auto && _isPullingTrigger) TryFire(user);
+            if (_isBursting) TryFire(user);
         }
 
         OnSpreadChanged?.Invoke(GunStats.PjtlStats.Spread.Value + _spreadPenalty_fire + _spreadPenalty_move);
+    }
+
+    public override void OnUnhold()
+    {
+        base.OnUnhold();
     }
 
     // -------------------------------------------------------
@@ -67,6 +75,7 @@ public class GunModel : HoldableItemModel
     /// <summary>射撃</summary>
     public override void Use(EntityModel user)
     {
+        if (!_isBursting && _gunData.FireType == FireType.burst) _burstCount = _gunData.burstRounds;
         TryFire(user);
         _isPullingTrigger = true;
     }
@@ -94,12 +103,16 @@ public class GunModel : HoldableItemModel
             OnFired?.Invoke(fireParams);
             _spreadPenalty_fire += GunStats.SpreadPenalty_Fire.Value;
             if(_spreadPenalty_fire > GunStats.MaxSpreadPenalty_fire.Value) _spreadPenalty_fire = GunStats.MaxSpreadPenalty_fire.Value;
-            SetFireIntervalTimer();
+
+            if (_isBursting) _burstCount--;
+            float interval = _isBursting ? 1f/ _gunData.BurstRate : 1f / GunStats.FireRate.Value;
+            SetFireIntervalTimer(interval);
         }
         else DevLog.Error("userがILookableではありません");
     }
 
-    public void SetFireIntervalTimer() { 
-        _fireIntervalTimer = 1f / GunStats.FireRate.Value;
+    public void SetFireIntervalTimer(float interval)
+    {
+        _fireIntervalTimer = interval;
     }
 }

@@ -69,7 +69,7 @@ public class LootItemGeneratorModel
             float minUnitCost = pool[0].UnitCost;
             if (remainingCost < minUnitCost) // 終了条件：プール内最安値未満
             {
-                DevLog.Log($"[LootItemGeneratorModel] コストがプール内最安値未満 (最安値:{minUnitCost})");
+                DevLog.Log($"最安値未満 (最安値:{minUnitCost}の{pool[0].Data.ItemName})");
                 break;
             }
 

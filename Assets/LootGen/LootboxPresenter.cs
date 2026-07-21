@@ -8,7 +8,7 @@ public class LootboxPresenter : MonoBehaviour, IInteractable
 {
     [SerializeField] private SpriteRenderer _renderer; // ハイライト用マテリアルを持つRenderer
 
-    private static readonly int ActiveProp = Shader.PropertyToID("Active");
+    private static readonly int ActiveProp = Shader.PropertyToID("_Active");
 
     private LootboxModel _model;
     private IInventoryUIOpener _inventoryUIOpener;
@@ -22,7 +22,7 @@ public class LootboxPresenter : MonoBehaviour, IInteractable
 
     public void SetHighlighted(bool active)
     {
-        _renderer.material.SetInt(ActiveProp, active ? 1 : 0);
+        _renderer.material.SetFloat(ActiveProp, active ? 1f : 0f);
     }
 
     public void Interact()

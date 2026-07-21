@@ -25,11 +25,11 @@ MonoBehaviour:
   _magCap: 12
   _reloadTime: 3
   _fireRate: 2
-  _fireType: 0
-  _burstRounds: 0
-  _burstRate: 0
+  _fireType: 2
+  _burstRounds: 3
+  _burstRate: 8
   _spreadPenalty_move: 25
   _spreadPenalty_fire: 30
   _maxSpreadPenalty_fire: 70
-  _spreadLoss: 25
+  _spreadLoss: 60
   _pjtlData: {fileID: 11400000, guid: f4c107ec677823d46a6c4586d3afddf1, type: 2}

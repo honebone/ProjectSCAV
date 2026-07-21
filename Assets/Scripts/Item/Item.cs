@@ -19,7 +19,7 @@ public class ItemModel
             int tileCount = Size.x * Size.y;
             float stackCorrection = 1f - (1f - Constants.Instance.MaxStack1CostMultiplier) / MaxStack;
             float sizeCorrection = 1f + (tileCount - 1) * Constants.Instance.SizeCostMultiplier;
-            return tileCount * Constants.Instance.ItemCosts[(int)_data.Rarity] * stackCorrection * sizeCorrection * CostMultiplier;
+            return Constants.Instance.ItemCosts[(int)_data.Rarity] * stackCorrection * sizeCorrection * CostMultiplier;
         }
     }
 
