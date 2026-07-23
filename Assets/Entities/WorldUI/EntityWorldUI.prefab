@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5366917308908755610}
   - component: {fileID: 3443513677025862274}
   m_Layer: 7
-  m_Name: Gauge
+  m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,9 +69,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199035398532307527}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &923112640958882017
 GameObject:
@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 6552958464788409174}
   - component: {fileID: 2664718615688675426}
   - component: {fileID: 3322240273730943459}
+  - component: {fileID: 7765836365602864007}
   m_Layer: 7
   m_Name: EntityWorldUI
   m_TagString: Untagged
@@ -175,6 +176,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7765836365602864007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923112640958882017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d87a9ffa7533a4f9809efb73d3f4ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sliderUI: {fileID: 5366917308908755610}
+  _sliderFill: {fileID: 1930632967673218473}
+  _sliderImageAnim: {fileID: 6192633935403392171}
 --- !u!1 &1514551842127412047
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +203,7 @@ GameObject:
   - component: {fileID: 7581890892032698227}
   - component: {fileID: 1930632967673218473}
   m_Layer: 7
-  m_Name: Gauge_Fill
+  m_Name: Slider_Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +278,7 @@ GameObject:
   - component: {fileID: 3197825472926601297}
   - component: {fileID: 9040078844971743284}
   m_Layer: 7
-  m_Name: Gauge_Back
+  m_Name: Slider_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -337,8 +353,9 @@ GameObject:
   - component: {fileID: 7066124026421926419}
   - component: {fileID: 4358788719940124188}
   - component: {fileID: 3081279783502764842}
+  - component: {fileID: 6192633935403392171}
   m_Layer: 7
-  m_Name: Image
+  m_Name: SliderIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -401,3 +418,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &6192633935403392171
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8516284972513323638}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 55d9487db648db044bc549c0e4217e92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

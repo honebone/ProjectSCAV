@@ -45,6 +45,7 @@ public interface IInputGetter
 
     /// <summary>使用キーを離した瞬間</summary>
     bool UseUp { get; }
+    bool Reload { get; }
     bool SwapItem_Next { get; }
     bool SwapItem_Back { get; }
 

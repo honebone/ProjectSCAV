@@ -26,6 +26,7 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _interactKey = KeyCode.F;
     [SerializeField] private KeyCode _useKey = KeyCode.Mouse0;
+    [SerializeField] private KeyCode _reloadKey = KeyCode.R;
     [SerializeField] private KeyCode _jetpackKey = KeyCode.Space; // ジャンプと同キーが一般的だが変更可能
 
     // -------------------------------------------------------
@@ -43,6 +44,7 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     private bool _useDown;
     private bool _useHold;
     private bool _useUp;
+    private bool _reload;
     private bool _swapItem_next;
     private bool _swapItem_back;
     private bool _jetpackDown;
@@ -64,6 +66,7 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     public bool UseDown => _useDown;
     public bool UseHold => _useHold;
     public bool UseUp => _useUp;
+    public bool Reload => _reload;
     public bool SwapItem_Next => _swapItem_next;
     public bool SwapItem_Back => _swapItem_back;
     public bool JetpackDown => _jetpackDown;
@@ -98,6 +101,7 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
         _useDown = Input.GetKeyDown(_useKey);
         _useHold = Input.GetKey(_useKey);
         _useUp = Input.GetKeyUp(_useKey);
+        _reload = Input.GetKeyDown(_reloadKey);
 
         // ジェットパック
         _jetpackDown = Input.GetKeyDown(_jetpackKey);

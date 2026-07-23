@@ -103,6 +103,8 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
                 _isUsingItem = false;
             }
         }
+
+        if(_inputGetter.Reload) _loadout.HoldingItem?.Reload(this);
     }
 
     public void Walk(float walk)

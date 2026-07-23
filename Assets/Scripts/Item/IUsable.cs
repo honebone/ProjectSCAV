@@ -12,4 +12,5 @@ public interface IUsable
 
     /// <summary>使用終了（長押し系アイテムの解放など）</summary>
     void StopUsing(EntityModel user);
+    void Reload(EntityModel user);
 }

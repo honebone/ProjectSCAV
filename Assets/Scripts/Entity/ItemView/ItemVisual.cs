@@ -2,10 +2,10 @@ using UnityEngine;
 
 public abstract class IItemVisual : MonoBehaviour
 {
-    private protected IProjectileSpawner _projectileSpawner;
-    public void Init(IProjectileSpawner projectileSpawner)
+    private protected EntityView _entityView;
+    public void Init(EntityView entityView)
     {
-        _projectileSpawner = projectileSpawner;
+        _entityView = entityView;
     }
 
     public abstract void Subscribe(HoldableItemModel model);

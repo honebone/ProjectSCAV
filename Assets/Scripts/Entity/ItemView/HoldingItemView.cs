@@ -7,14 +7,14 @@ public class HoldingItemView : MonoBehaviour
     [SerializeField] private Transform _holdPoint;  // 手の位置
     [SerializeField] private Transform _lookPivot;  // 回転の中心
 
-    private IProjectileSpawner _projectileSpawner;
+    private EntityView _entityView;
 
     private GameObject _currentItemObject;
     private IItemVisual _currentVisual;   // 生成したItemObjectが持つインターフェース
 
-    public void init(IProjectileSpawner projectileSpawner)
+    public void init(EntityView entityView)
     {
-        _projectileSpawner = projectileSpawner;
+        _entityView = entityView;
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class HoldingItemView : MonoBehaviour
         // ItemDataに紐付いたPrefabを生成
         _currentItemObject = Instantiate(model.Prefab, _holdPoint);
         _currentVisual = _currentItemObject.GetComponent<IItemVisual>();
-        _currentVisual.Init(_projectileSpawner);
+        _currentVisual.Init(_entityView);
         _currentVisual?.Subscribe(model);
     }
 

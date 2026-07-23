@@ -10,6 +10,7 @@ public class GunData : HoldableItemData
 {
     [SerializeField] private int _magCap;
     [SerializeField] private float _reloadTime;
+    [SerializeField,Header("ƒŠƒ[ƒhŽž‚É•â[‚·‚é’e”(0‚Ìê‡‚Íƒ}ƒKƒWƒ“ŠÛ‚²‚Æ)")] private int _reloadAmount;
     [SerializeField] private float _fireRate;
     [SerializeField] private FireType _fireType;
     [SerializeField] private int _burstRounds;
@@ -22,6 +23,7 @@ public class GunData : HoldableItemData
 
     public int MagCap => _magCap;
     public float ReloadTime => _reloadTime;
+    public float ReloadAmount => _reloadAmount;
     public float FireRate => _fireRate;
     public FireType FireType => _fireType;
     public int burstRounds => _burstRounds;

@@ -39,4 +39,6 @@ public abstract class HoldableItemModel : EquippableItemModel,IUsable
     }
 
     public virtual void StopUsing(EntityModel user) { }
+
+    public virtual void Reload(EntityModel user) { }
 }

@@ -25,7 +25,10 @@ public class GunVisual : IItemVisual
 
         _model.OnSpreadChanged += OnSpreadChanged;
         _model.OnFired += HandleFired;
-        _model.OnReloaded += HandleReloaded;
+        _model.OnReloadStart += OnReloadStart;
+        _model.OnReloading += OnReloading;
+        _model.OnReloadCanceled += OnReloadCanceled;
+        _model.OnReloadCompleted += OnReloadComplete;
     }
 
     public override void Unsubscribe()
@@ -34,7 +37,10 @@ public class GunVisual : IItemVisual
 
         _model.OnSpreadChanged -= OnSpreadChanged;
         _model.OnFired -= HandleFired;
-        _model.OnReloaded -= HandleReloaded;
+        _model.OnReloadStart -= OnReloadStart;
+        _model.OnReloading -= OnReloading;
+        _model.OnReloadCanceled -= OnReloadCanceled;
+        _model.OnReloadCompleted -= OnReloadComplete;
     }
 
     private void HandleFired(FireParams fireParams)
@@ -52,7 +58,24 @@ public class GunVisual : IItemVisual
         //FireParams fire = fireParams;
         //fire.FirePos = _muzzle.position;
         fireParams.SetFirePos(_muzzle.position);
-        _projectileSpawner.SpawnProjectile(fireParams);
+        _entityView.SpawnProjectile(fireParams);
+    }
+
+    private void OnReloadStart(float reloadTime)
+    {
+        _entityView.OnReloadStart(reloadTime);
+    }
+    private void OnReloading(float currentTime,float reloadTime)
+    {
+        _entityView.OnReloading(currentTime,reloadTime);
+    }
+    public void OnReloadCanceled(float reloadTime)
+    {
+        _entityView.OnReloadCanceled(reloadTime);
+    }
+    private void OnReloadComplete(float reloadTime)
+    {
+        _entityView.OnReloadCompleted(reloadTime);
     }
 
     private void OnSpreadChanged(float spread)
@@ -61,7 +84,6 @@ public class GunVisual : IItemVisual
         _spreadLines[1].localRotation = Quaternion.Euler(0f, 0f, 45 - (spread / 2f) - 90);
     }
 
-    private void HandleReloaded() { /* リロードアニメ再生など */ }
 
     private void SetIntensity(float value)
     {

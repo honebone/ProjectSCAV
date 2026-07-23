@@ -1,13 +1,14 @@
 using DG.Tweening.Core.Easing;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPathfinder,IMover,ILooker
 {
     [Header("Ground Detection")]
     [SerializeField] private Collider2D _groundCheck;      // 足元のオブジェクト
     [SerializeField] private LayerMask _groundLayer;      // 地面とするレイヤー
-    [SerializeField] private Transform _worldUI;
+    [SerializeField] private EntityWorldUI _worldUI;
     [SerializeField] private ParticleSystem _par_onArmorDMG;
     [SerializeField] private ParticleSystem _par_onHPDMG;
 
@@ -49,9 +50,26 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
         SpawnWorldText(dmg.ToString().ColorStr(Constants.Instance.Color_DMG));
     }
 
+    public void OnReloadStart(float reloadTime)
+    {
+        _worldUI.SetSliderUI("Reload");
+    }
+    public void OnReloading(float currentTime, float reloadTime)
+    {
+        _worldUI.SetSliderFill(currentTime, reloadTime);    
+    }
+    public void OnReloadCanceled(float reloadTime)
+    {
+        _worldUI.ResetSliderUI();
+    }
+    public void OnReloadCompleted(float reloadTime)
+    {
+        _worldUI.ResetSliderUI();
+    }
+
     private void SpawnWorldText(string str)
     {
-        Instantiate(Constants.Instance.WorldTextPrefab, _worldUI).Init(str);
+        _worldUI.SpawnText(str);
     }
 
 
