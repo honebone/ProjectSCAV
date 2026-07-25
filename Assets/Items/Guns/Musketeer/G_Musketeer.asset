@@ -23,7 +23,8 @@ MonoBehaviour:
   _visualPrefab: {fileID: 706693874783756704, guid: f03bfd24d062866499d4e1337d982904, type: 3}
   _useTime: 0
   _magCap: 1
-  _reloadTime: 3
+  _reloadTime: 2.25
+  _reloadAmount: 0
   _fireRate: 1
   _fireType: 0
   _burstRounds: 0

@@ -17,7 +17,7 @@ MonoBehaviour:
   _tileSize: 1
   _roomWidth: 44
   _roomheight: 24
-  _particlesOnDMG: {x: 3, y: 10}
+  _particlesOnDMG: {x: 3, y: 5}
   _worldTextPrefab: {fileID: 1521928675625357252, guid: ff5bab8aadd002e4798ac9c9724192e8, type: 3}
   _itemCosts: 6400000090010000400600000019000000640000
   _inventorySlotsPerRow: 8

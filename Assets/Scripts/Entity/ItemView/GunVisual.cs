@@ -11,6 +11,8 @@ public class GunVisual : IItemVisual
     [SerializeField] private Light2D _muzzleFlash;
     [SerializeField] private List<Transform> _spreadLines;
     [SerializeField] private ParticleSystem _cartridgeParticle;
+    [SerializeField] private EjectType _ejectType;
+    enum EjectType { onFire, onReload, onFire_delay }
 
     private GunModel _model;
     private Tween _intensityTween;
@@ -53,7 +55,7 @@ public class GunVisual : IItemVisual
 
 
         // –òä°
-        _cartridgeParticle?.Emit(1);
+       if(_ejectType==EjectType.onFire) Eject();
 
         //FireParams fire = fireParams;
         //fire.FirePos = _muzzle.position;
@@ -61,9 +63,15 @@ public class GunVisual : IItemVisual
         _entityView.SpawnProjectile(fireParams);
     }
 
+    private void Eject()
+    {
+        _cartridgeParticle?.Emit(1);
+    }
+
     private void OnReloadStart(float reloadTime)
     {
         _entityView.OnReloadStart(reloadTime);
+        if (_ejectType == EjectType.onReload) Eject();
     }
     private void OnReloading(float currentTime,float reloadTime)
     {

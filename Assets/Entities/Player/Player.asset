@@ -22,7 +22,7 @@ MonoBehaviour:
   _sightRange: 12
   _faction: 1
   _hostiles: 02000000
-  _gunSlot: 2
+  _gunSlot: 4
   _gearSlot: 5
   _implantSlot: 00000000010000000200000003000000
   _maxHeat: 100
