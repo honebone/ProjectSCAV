@@ -23,7 +23,7 @@ public class EntityWorldUI : MonoBehaviour
 
     public void SetSliderFill(float value,float max)
     {
-        _sliderFill.fillAmount = value / max;
+        _sliderFill.fillAmount = 1f - value / max;
     }
 
     public void ResetSliderUI()

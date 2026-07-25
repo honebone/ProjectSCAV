@@ -21,7 +21,12 @@ public class GunModel : HoldableItemModel
     private int _burstCount;
     private bool _isBursting => _burstCount > 0;
     private bool _isPullingTrigger;
+    private bool _canFire => _fireIntervalTimer == 0 && _currentAmmo > 0;
+
+
     public int CurrentAmmo => _currentAmmo;
+
+    private int _magCap => GunStats.MagCap.IntValue;
 
     public event Action<float> OnSpreadChanged;
     public event Action<FireParams> OnFired;
@@ -35,7 +40,7 @@ public class GunModel : HoldableItemModel
         _gunData = data;
         GunStats = new GunStats(_gunData);
 
-        _currentAmmo = GunStats.MagCap.IntValue;//test
+        _currentAmmo = _magCap;//test
     }
 
     public override void Tick(float deltaTime, EntityModel user)
@@ -66,13 +71,15 @@ public class GunModel : HoldableItemModel
             if (_isBursting) TryFire(user);
         }
 
-        if(_reloadTimer > 0)
+        if (_reloadTimer > 0)
         {
             _reloadTimer -= deltaTime;
             OnReloading?.Invoke(_reloadTimer, _reloadTimeTemp);
             if (_reloadTimer < 0)
             {
                 _reloadTimer = 0;
+                PerformReload();
+                if (_currentAmmo < _magCap) StartReload();
             }
         }
 
@@ -82,6 +89,8 @@ public class GunModel : HoldableItemModel
     public override void OnUnhold()
     {
         base.OnUnhold();
+
+        if (_isReloading) CancelReload();
     }
 
     // -------------------------------------------------------
@@ -91,7 +100,7 @@ public class GunModel : HoldableItemModel
     /// <summary>射撃</summary>
     public override void Use(EntityModel user)
     {
-        if (!_isBursting && _gunData.FireType == FireType.burst) _burstCount = _gunData.burstRounds;
+        if (_canFire && !_isBursting && _gunData.FireType == FireType.burst) _burstCount = _gunData.burstRounds;
         TryFire(user);
         _isPullingTrigger = true;
     }
@@ -103,7 +112,7 @@ public class GunModel : HoldableItemModel
 
     public override void Reload(EntityModel user)
     {
-        if (!_isPullingTrigger && !_isBursting && _currentAmmo < GunStats.MagCap.IntValue)
+        if (!_isPullingTrigger && !_isBursting && !_isReloading && _currentAmmo < _magCap)
         {
             StartReload();
         }
@@ -111,9 +120,13 @@ public class GunModel : HoldableItemModel
 
     private void StartReload()
     {
+        //TODO:弾丸を持っているかチェック
+
         _reloadTimeTemp = GunStats.ReloadTime.Value;
         _reloadTimer = _reloadTimeTemp;
         DevLog.Log($"reload start:{_reloadTimeTemp}s");
+
+        OnReloadStart?.Invoke(_reloadTimeTemp);
     }
 
     private void CancelReload()
@@ -125,6 +138,15 @@ public class GunModel : HoldableItemModel
             _reloadTimer = 0;
             _reloadTimeTemp = 0;
         }
+    }
+
+    private void PerformReload()
+    {
+        int feeded = FeedAmmo(_gunData.ReloadAmount == 0 ? _magCap : _gunData.ReloadAmount);
+        DevLog.Log($"reload completed: feeeded {feeded} rounds");
+
+        OnReloadCompleted?.Invoke(_reloadTimeTemp);
+        _reloadTimeTemp = 0;
     }
 
     /// <summary>
@@ -159,12 +181,11 @@ public class GunModel : HoldableItemModel
 
     public void TryFire(EntityModel user)
     {
-        if (_currentAmmo <= 0) return;
-        if (_fireIntervalTimer > 0) return;
+        if (!_canFire) return;
 
         if (user is ILookable lookable)
         {
-            if(_isReloading)CancelReload();
+            if (_isReloading) CancelReload();
 
             PjtlSnapshot snapshot = PjtlSnapshot.From(GunStats.PjtlStats);
             snapshot.Spread += _spreadPenalty_fire + _spreadPenalty_move;
@@ -175,13 +196,19 @@ public class GunModel : HoldableItemModel
             FireParams fireParams = new FireParams(targetFactions, user.Position, lookable.LookAt, snapshot);
             OnFired?.Invoke(fireParams);
             _currentAmmo--;
+            DevLog.Log($"shots fired:{_currentAmmo} rounds remain");
 
             _spreadPenalty_fire += GunStats.SpreadPenalty_Fire.Value;
             if (_spreadPenalty_fire > GunStats.MaxSpreadPenalty_fire.Value) _spreadPenalty_fire = GunStats.MaxSpreadPenalty_fire.Value;
 
             if (_isBursting) _burstCount--;
             float interval = _isBursting ? 1f / _gunData.BurstRate : 1f / GunStats.FireRate.Value;
-            SetFireIntervalTimer(interval);
+
+            if (_currentAmmo > 0) SetFireIntervalTimer(interval);
+            else _burstCount = 0;
+
+            DevLog.Log($"burst count:{_burstCount}");
+
         }
         else DevLog.Error("userがILookableではありません");
     }

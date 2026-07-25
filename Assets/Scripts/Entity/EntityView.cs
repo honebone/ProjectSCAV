@@ -146,9 +146,6 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
                 spreadDelta += spreadRange / (fireParams.Snapshot.PelletPerShot - 1);
             }
 
-            DevLog.Log($"spread {spread}");
-
-
             Vector2 target = fireParams.TargetPos - fireParams.FirePos;
 
             Quaternion quat;

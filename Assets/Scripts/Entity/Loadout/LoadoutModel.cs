@@ -60,8 +60,10 @@ public class LoadoutModel
 
     public void SwitchSlot(int index)
     {
+        HoldingItem?.OnUnhold();
         _holdIndex = index;
         OnActiveItemChanged?.Invoke(HoldingItem);
+        HoldingItem?.OnHold();
     }
     public void SwitchNext()
     {

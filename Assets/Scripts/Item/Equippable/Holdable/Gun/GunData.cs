@@ -23,7 +23,7 @@ public class GunData : HoldableItemData
 
     public int MagCap => _magCap;
     public float ReloadTime => _reloadTime;
-    public float ReloadAmount => _reloadAmount;
+    public int ReloadAmount => _reloadAmount;
     public float FireRate => _fireRate;
     public FireType FireType => _fireType;
     public int burstRounds => _burstRounds;

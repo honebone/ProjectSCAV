@@ -70,11 +70,9 @@ public class EntityModel
             int armorDMG = _armor > remain ? remain : _armor;
             _armor -= armorDMG;
             remain -= armorDMG;
-            DevLog.Log($"ArmorDamage {armorDMG}");
             OnArmorDamaged?.Invoke(armorDMG);
             if (_armor == 0)
             {
-                DevLog.Log("ArmorBreak");
                 OnArmorBreak?.Invoke();
             }
         }
@@ -83,7 +81,6 @@ public class EntityModel
         {
             int hpDMG = _hp > remain ? remain : _hp;
             _hp -= hpDMG;
-            DevLog.Log($"HPDamage {hpDMG}");
             OnHPDamaged?.Invoke(hpDMG);
 
             if (_hp < 0)
