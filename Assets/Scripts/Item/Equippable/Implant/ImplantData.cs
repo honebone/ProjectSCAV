@@ -16,4 +16,4 @@ public class ImplantData : EquippableItemData
 /// インプラントの装着部位
 /// エンティティ全種共通
 /// </summary>
-public enum ImplantPart { Head, Body, Arm, Leg }
+public enum ImplantPart { Shield, Strage, Booster, Cooler }
