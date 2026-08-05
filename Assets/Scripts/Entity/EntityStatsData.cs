@@ -30,7 +30,7 @@ public class EntityStatsData : ScriptableObject
     [Header("EquipmentSlot")]
     [SerializeField] private int _gunSlot;
     [SerializeField] private int _gearSlot;
-    [SerializeField] private List<ImplantPart> _implantSlot = new List<ImplantPart> { ImplantPart.Head, ImplantPart.Body, ImplantPart.Arm, ImplantPart.Leg };
+    [SerializeField] private List<ImplantPart> _implantSlot = new List<ImplantPart> { ImplantPart.Shield, ImplantPart.Strage, ImplantPart.Booster, ImplantPart.Cooler };
 
     [Header("Heat（プレイヤー専用。敵には不要）")]
     [SerializeField] private float _maxHeat = 100f;
