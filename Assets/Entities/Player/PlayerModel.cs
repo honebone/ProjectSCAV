@@ -7,7 +7,6 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
     private readonly IInputGetter _inputGetter;
     private readonly ILooker _looker;
 
-    private StatValue _jetpackPower;
     private bool _isJumping;
     private bool _isUsingItem;
     private Vector2 _lootAt;
@@ -25,18 +24,16 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
 
     public PlayerModel(
         PlayerData data,
-        float jetpackPower,
         IProjectileSpawner projectileSpawner,
         IMover mover,
         IInputGetter inputGetter,
         ILooker looker) : base(data, projectileSpawner)
     {
-        _jetpackPower = new StatValue(jetpackPower);
         _mover = mover;
         _inputGetter = inputGetter;
         _looker = looker;
 
-        _loadout = new LoadoutModel(data.GunSlot, data.GearSlot, data.ImplantSlot);
+        _loadout = new LoadoutModel(data.GunSlot, data.GearSlot, data.ImplantSlot, this);
         _inventory = new InventoryModel(Constants.Instance.InventorySlotsPerRow, data.InventorySize);
     }
 
@@ -60,7 +57,7 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
         {
             if (_inputGetter.JetpackHold && !_isJumping)
             {
-                _mover.SetMoveY(_jetpackPower.Value);
+                _mover.SetMoveY(Stats.JetpackPower.Value);
             }
         }
 
@@ -69,12 +66,12 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
             _isJumping = false;
         }
 
-        //ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Ì•û‚ğŒü‚­
+        //ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         _lootAt = _inputGetter.MousePos;
         Look(_lootAt, Stats.FOVAngle.Value, Stats.SightRange.Value);
 
 
-        //è‚¿ƒAƒCƒeƒ€Ø‚è‘Ö‚¦(ƒAƒCƒeƒ€g—p’†‚Í•s‰Â)
+        //ï¿½èï¿½ï¿½ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½(ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½Í•sï¿½ï¿½)
         if (!_isUsingItem)
         {
             if (_inputGetter.SwapItem_Next)
@@ -88,7 +85,7 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
         }
         
 
-        //ƒAƒCƒeƒ€g—p/g—p’†~
+        //ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½gï¿½p/ï¿½gï¿½pï¿½ï¿½ï¿½~
         if (_inputGetter.UseDown)
         {
             _isUsingItem = true;

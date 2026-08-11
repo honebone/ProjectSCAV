@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// “¹‹ï‚ÌModel / IUsable, IPassive
-/// ‚Â‚¾‚¯‚ÅƒpƒbƒVƒuŒø‰ÊiIPassivej‚Ü‚½‚ÍUse()‚ÅƒAƒNƒeƒBƒuŒø‰ÊiIUsablej‚ğ‚Â
+/// é“å…·ã®Model / IUsable, IPassive
+/// æŒã¤ã ã‘ã§ãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœï¼ˆIPassiveï¼‰ã¾ãŸã¯Use()ã§ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŠ¹æœï¼ˆIUsableï¼‰ã‚’æŒã¤
+/// æ—¢å®šã§ã¯Dataã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è£œæ­£ã‚’è‡ªå‹•é©ç”¨ã™ã‚‹ã®ã¿ã€‚ãã‚Œä»¥å¤–ã®ç‹¬è‡ªåŠ¹æœã‚’æŒãŸã›ãŸã„å ´åˆã¯ã“ã®ã‚¯ãƒ©ã‚¹ã‚’ç¶™æ‰¿ã—overrideã™ã‚‹
 /// </summary>
 public class ToolModel : GearModel, IPassive
 {
@@ -19,27 +20,29 @@ public class ToolModel : GearModel, IPassive
     // IPassive
     // -------------------------------------------------------
 
-    public override void OnHold()
+    public override void OnHold(EntityModel owner)
     {
-        base.OnHold();
-        // ‚Á‚½‚Æ‚«‚ÉƒpƒbƒVƒuŒø‰Ê‚ğ•t—^‚·‚é
-        // ŠÒ‚ÍOnHold/OnUnhold‚Ìƒ^ƒCƒ~ƒ“ƒO‚ÅOnEquip/OnUnequip‚ğŒÄ‚Ô
+        base.OnHold(owner);
+        // æŒã£ãŸã¨ãã«ãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœã‚’ä»˜ä¸ã™ã‚‹
+        OnApply(owner);
     }
 
-    public override void OnUnhold()
+    public override void OnUnhold(EntityModel owner)
     {
-        base.OnUnhold();
+        base.OnUnhold(owner);
+        // æ”¾ã—ãŸã¨ãã«ãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœã‚’å–ã‚Šé™¤ã
+        OnRemove(owner);
     }
 
-    /// <summary>‘•”õFEntityModel‚ÖƒpƒbƒVƒuŒø‰Ê‚ğ•t—^‚·‚é</summary>
-    public void OnEquip(EntityModel owner)
+    /// <summary>æŒã£ãŸç¬é–“ï¼šEntityModelã¸ãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœã‚’ä»˜ä¸ã™ã‚‹</summary>
+    public virtual void OnApply(EntityModel owner)
     {
-        // ƒTƒuƒNƒ‰ƒX‚ÅƒXƒe[ƒ^ƒX•â³‚È‚Ç‚ğÀ‘•‚·‚é
+        _data.StatModifiers.ApplyTo(owner);
     }
 
-    /// <summary>æ‚èŠO‚µF•t—^‚µ‚½ƒpƒbƒVƒuŒø‰Ê‚ğœ‹‚·‚é</summary>
-    public void OnUnequip(EntityModel owner)
+    /// <summary>æ”¾ã—ãŸç¬é–“ï¼šä»˜ä¸ã—ãŸãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœã‚’å–ã‚Šé™¤ã</summary>
+    public virtual void OnRemove(EntityModel owner)
     {
-        // ƒTƒuƒNƒ‰ƒX‚ÅƒXƒe[ƒ^ƒX•â³‚Ìœ‹‚ğÀ‘•‚·‚é
+        _data.StatModifiers.RemoveFrom(owner);
     }
 }

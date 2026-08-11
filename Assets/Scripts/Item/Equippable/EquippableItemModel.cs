@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ‘•”õƒXƒƒbƒg‚É“ü‚ê‚ç‚ê‚éƒAƒCƒeƒ€‚ÌŠî’êModel
+/// è£…å‚™ã‚¹ãƒ­ãƒƒãƒˆã«å…¥ã‚Œã‚‰ã‚Œã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®åŸºåº•Model
 /// </summary>
 public abstract class EquippableItemModel : ItemModel
 {
     private bool _isEquipped;
     public bool IsEquipped => _isEquipped;
 
-    /// <summary>‘•”õŽž‚ÉŒÄ‚Î‚ê‚é</summary>
+    /// <summary>è£…å‚™æ™‚ã«å‘¼ã°ã‚Œã‚‹</summary>
     public virtual void Subscribe(EntityModel owner) { }
-    /// <summary>‘•”õ‰ðœŽž‚ÉŒÄ‚Î‚ê‚é</summary>
+    /// <summary>è£…å‚™è§£é™¤æ™‚ã«å‘¼ã°ã‚Œã‚‹</summary>
     public virtual void Unsubscribe(EntityModel owner) { }
 
     protected EquippableItemModel(EquippableItemData data) : base(data) { }

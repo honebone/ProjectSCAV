@@ -41,12 +41,12 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
 
     public void OnArmorDamaged(int dmg)
     {
-        _par_onArmorDMG.Emit(Constants.Instance.ParticlesOnDMG.Range());
+        _par_onArmorDMG?.Emit(Constants.Instance.ParticlesOnDMG.Range());
         SpawnWorldText(dmg.ToString().ColorStr(Constants.Instance.Color_shieldDMG));
     }
     public void OnHPDamaged(int dmg)
     {
-        _par_onHPDMG.Emit(Constants.Instance.ParticlesOnDMG.Range());
+        _par_onHPDMG?.Emit(Constants.Instance.ParticlesOnDMG.Range());
         SpawnWorldText(dmg.ToString().ColorStr(Constants.Instance.Color_DMG));
     }
 

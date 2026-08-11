@@ -2,7 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImplantModel : EquippableItemModel
+/// <summary>
+/// ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã®Model / IPassive
+/// è£…å‚™ã—ã¦ã„ã‚‹é–“ã€EntityModelã¸ãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœã‚’ä»˜ä¸ã™ã‚‹
+/// æ—¢å®šã§ã¯Dataã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è£œæ­£ã‚’è‡ªå‹•é©ç”¨ã™ã‚‹ã®ã¿ã€‚ãã‚Œä»¥å¤–ã®ç‹¬è‡ªåŠ¹æœã‚’æŒãŸã›ãŸã„å ´åˆã¯ã“ã®ã‚¯ãƒ©ã‚¹ã‚’ç¶™æ‰¿ã—overrideã™ã‚‹
+/// </summary>
+public class ImplantModel : EquippableItemModel, IPassive
 {
     private ImplantData _data;
     public ImplantPart ImplantPart => _data.ImplantPart;
@@ -11,17 +16,17 @@ public class ImplantModel : EquippableItemModel
         _data = data;
     }
 
-    /// <summary>ƒCƒ“ƒvƒ‰ƒ“ƒgƒXƒƒbƒg‚É‘•”õ‚µ‚½‚Æ‚«</summary>
-    public virtual void OnEquip(EntityModel owner)
+    /// <summary>ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã‚¹ãƒ­ãƒƒãƒˆã«è£…å‚™ã—ãŸã¨ã</summary>
+    public virtual void OnApply(EntityModel owner)
     {
         SetEquipped(true);
-        // ƒTƒuƒNƒ‰ƒX‚ÅƒXƒe[ƒ^ƒX•â³‚È‚Ç‚ğÀ‘•‚·‚é
+        _data.StatModifiers.ApplyTo(owner);
     }
 
-    /// <summary>ƒCƒ“ƒvƒ‰ƒ“ƒgƒXƒƒbƒg‚©‚çæ‚èŠO‚µ‚½‚Æ‚«</summary>
-    public virtual void OnUnequip(EntityModel owner)
+    /// <summary>ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã‚¹ãƒ­ãƒƒãƒˆã‹ã‚‰å¤–ã—ãŸã¨ã</summary>
+    public virtual void OnRemove(EntityModel owner)
     {
         SetEquipped(false);
-        // ƒTƒuƒNƒ‰ƒX‚ÅƒXƒe[ƒ^ƒX•â³‚Ìœ‹‚ğÀ‘•‚·‚é
+        _data.StatModifiers.RemoveFrom(owner);
     }
 }

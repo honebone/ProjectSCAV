@@ -21,6 +21,7 @@ public class EntityStats
     // --- Heat（プレイヤー専用。敵には不要だが基底クラスに定義しておく）---
     public StatValue MaxHeat { get; }
     public StatValue HeatRecovery { get; }
+    public StatValue JetpackPower { get; }
 
     public EntityStats(EntityStatsData data)
     {
@@ -38,5 +39,34 @@ public class EntityStats
 
         MaxHeat = new ClampedStatValue(data.MaxHeat);
         HeatRecovery = new ClampedStatValue(data.HeatRecovery);
+        JetpackPower = new ClampedStatValue(data.JetpackPower);
     }
+
+    /// <summary>種別を指定して対象のStatValueを取得する。バフ・パッシブ効果からの補正はこの窓口経由で行う</summary>
+    public StatValue Get(EntityStatType type)
+    {
+        switch (type)
+        {
+            case EntityStatType.MoveSpeed: return MoveSpeed;
+            case EntityStatType.MaxHp: return MaxHp;
+            case EntityStatType.MaxArmor: return MaxArmor;
+            case EntityStatType.ArmorRegenDelay: return ArmorRegenDelay;
+            case EntityStatType.ArmorRegenSpeed: return ArmorRegenSpeed;
+            case EntityStatType.JumpHeight: return JumpHeight;
+            case EntityStatType.JumpWidth: return JumpWidth;
+            case EntityStatType.FOVAngle: return FOVAngle;
+            case EntityStatType.SightRange: return SightRange;
+            case EntityStatType.MaxHeat: return MaxHeat;
+            case EntityStatType.HeatRecovery: return HeatRecovery;
+            case EntityStatType.JetpackPower: return JetpackPower;
+            default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
+    }
+}
+
+/// <summary>EntityStatsが保持するステータスの種別。バフ・パッシブ効果からの補正先を指定するキーとして使う</summary>
+public enum EntityStatType
+{
+    MoveSpeed, MaxHp, MaxArmor, ArmorRegenDelay, ArmorRegenSpeed,
+    JumpHeight, JumpWidth, FOVAngle, SightRange, MaxHeat, HeatRecovery,JetpackPower
 }

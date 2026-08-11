@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.VolumeComponent;
 
 public class EntityModel
 {
@@ -30,11 +29,26 @@ public class EntityModel
 
     private Vector2 _position;
     public Vector2 Position => _position;
-    //public IProjectileSpawner ProjectileSpawner => _projectileSpawner;
+
+    // -------------------------------------------------------
+    // バフ・デバフ
+    // -------------------------------------------------------
+
+    private readonly List<BuffModel> _buffs = new List<BuffModel>();
+    public IReadOnlyList<BuffModel> Buffs => _buffs;
 
     public event Action<int> OnArmorDamaged;
     public event Action OnArmorBreak;
     public event Action<int> OnHPDamaged;
+    public event Action<int> OnArmorHealed;
+    public event Action<int> OnHPHealed;
+    public event Action<BuffModel> OnBuffApplied;
+    public event Action<BuffModel> OnBuffRemoved;
+
+    /// <summary>このエンティティが他のエンティティを撃破したとき（victim=倒した相手）</summary>
+    public event Action<EntityModel> OnKill;
+    /// <summary>このエンティティが死亡したとき</summary>
+    public event Action OnDeath;
 
     // -------------------------------------------------------
     // コンストラクタ
@@ -53,45 +67,124 @@ public class EntityModel
     public virtual void Tick(float deltaTime,Vector2 position)
     {
         _position = position;
+        TickBuffs(deltaTime);
+    }
+
+    // -------------------------------------------------------
+    // 作用（EffectAction）の解決
+    // -------------------------------------------------------
+
+    /// <summary>
+    /// 自身に対して働く作用を解決する。ダメージ・回復・バフ付与はすべてこの窓口を経由する
+    /// （弾丸命中・パッシブ効果によるトリガーなど、発生源を問わない）
+    /// </summary>
+    public void Resolve(EffectAction action)
+    {
+        if (action.DamageAmount != 0f) ResolveDamage(action);
+        if (action.HealAmount != 0f) ResolveHeal(action);
+        for (int i = 0; i < action.Buffs.Count; i++) ResolveBuff(action.Buffs[i], action.Source);
+    }
+
+    /// <summary>パッシブ効果などから投射物を生成する</summary>
+    public void SpawnProjectile(FireParams fireParams)
+    {
+        _projectileSpawner?.SpawnProjectile(fireParams);
     }
 
     // -------------------------------------------------------
     // HP / Armor
     // -------------------------------------------------------
 
-    /// <summary>ダメージを受ける。Armorを先に削り、残りをHPへ</summary>
-    public void Damage(float damage)
+    private void ResolveDamage(EffectAction action)
     {
-        int remain = damage.ToInt();
-        if (remain == 0) return;
+        int remain = action.DamageAmount.ToInt();
+        if (remain <= 0) return;
 
-        if (_armor > 0)
+        switch (action.DamageTarget)
         {
-            int armorDMG = _armor > remain ? remain : _armor;
-            _armor -= armorDMG;
-            remain -= armorDMG;
-            OnArmorDamaged?.Invoke(armorDMG);
-            if (_armor == 0)
-            {
-                OnArmorBreak?.Invoke();
-            }
-        }
-
-        if(remain > 0)
-        {
-            int hpDMG = _hp > remain ? remain : _hp;
-            _hp -= hpDMG;
-            OnHPDamaged?.Invoke(hpDMG);
-
-            if (_hp < 0)
-            {
-                Die();
-            }
+            case DamageTarget.ArmorOnly:
+                DamageArmor(remain);
+                break;
+            case DamageTarget.HPOnly:
+                DamageHP(remain, action.Source);
+                break;
+            case DamageTarget.HPAndArmor:
+            default:
+                int overflow = DamageArmor(remain);
+                if (overflow > 0) DamageHP(overflow, action.Source);
+                break;
         }
     }
 
-    /// <summary>回復する</summary>
-    public void Heal(float amount) { }
+    /// <summary>Armorにダメージを与え、削り切れなかった分（オーバーフロー）を返す</summary>
+    private int DamageArmor(int amount)
+    {
+        if (_armor <= 0) return amount;
+
+        int armorDMG = _armor > amount ? amount : _armor;
+        _armor -= armorDMG;
+        OnArmorDamaged?.Invoke(armorDMG);
+        if (_armor == 0) OnArmorBreak?.Invoke();
+
+        return amount - armorDMG;
+    }
+
+    private void DamageHP(int amount, EntityModel source)
+    {
+        if (amount <= 0 || _hp <= 0) return;
+
+        int hpDMG = _hp > amount ? amount : _hp;
+        _hp -= hpDMG;
+        OnHPDamaged?.Invoke(hpDMG);
+
+        if (_hp <= 0)
+        {
+            Die();
+            OnDeath?.Invoke();
+            source?.OnKill?.Invoke(this);
+        }
+    }
+
+    private void ResolveHeal(EffectAction action)
+    {
+        int amount = action.HealAmount.ToInt();
+        if (amount <= 0) return;
+
+        switch (action.HealTarget)
+        {
+            case HealTarget.HPOnly:
+                HealHP(amount);
+                break;
+            case HealTarget.ArmorOnly:
+                HealArmor(amount);
+                break;
+            case HealTarget.HPAndArmor:
+            default:
+                HealHP(amount);
+                HealArmor(amount);
+                break;
+        }
+    }
+
+    private void HealHP(int amount)
+    {
+        if (!Alive) return;
+
+        int healed = Mathf.Min(amount, Stats.MaxHp.IntValue - _hp);
+        if (healed <= 0) return;
+
+        _hp += healed;
+        OnHPHealed?.Invoke(healed);
+    }
+
+    private void HealArmor(int amount)
+    {
+        int healed = Mathf.Min(amount, Stats.MaxArmor.IntValue - _armor);
+        if (healed <= 0) return;
+
+        _armor += healed;
+        OnArmorHealed?.Invoke(healed);
+    }
 
     /// <summary>アーマー再生処理。毎フレームEntityのUpdateから呼ぶ</summary>
     protected void TickArmorRegen(float deltaTime) { }
@@ -100,5 +193,57 @@ public class EntityModel
     protected virtual void Die()
     {
         _hp = 0;
+    }
+
+    // -------------------------------------------------------
+    // バフ・デバフ
+    // -------------------------------------------------------
+
+    private void ResolveBuff(BuffApplication application, EntityModel source)
+    {
+        BuffData data = application.Buff;
+        if (data == null) return;
+
+        BuffModel existing = _buffs.Find(b => b.BuffId == data.BuffId);
+        if (existing == null)// 同名のバフが既にあるなら
+        {
+            BuffModel buff = data.CreateModel(source, application.Stacks);
+            buff.OnApply(this);
+            _buffs.Add(buff);
+            OnBuffApplied?.Invoke(buff);
+            return;
+        }
+
+        //以下すでに同名のバフがある場合の処理
+        switch (data.StackPolicy)
+        {
+            case StackPolicy.StackMagnitude:
+                for (int i = 0; i < application.Stacks; i++) existing.AddStack(this,application.Duration);
+                break;
+            case StackPolicy.StackDuration:
+                BuffModel additional = data.CreateModel(source, application.Stacks);
+                additional.OnApply(this);
+                _buffs.Add(additional);
+                OnBuffApplied?.Invoke(additional);
+                break;
+            case StackPolicy.Refresh:
+            default:
+                existing.RefreshDuration(application.Duration);
+                break;
+        }
+    }
+
+    private void TickBuffs(float deltaTime)
+    {
+        for (int i = _buffs.Count - 1; i >= 0; i--)
+        {
+            _buffs[i].Tick(deltaTime, this);
+            if (_buffs[i].Expired)
+            {
+                _buffs[i].OnRemove(this);
+                OnBuffRemoved?.Invoke(_buffs[i]);
+                _buffs.RemoveAt(i);
+            }
+        }
     }
 }

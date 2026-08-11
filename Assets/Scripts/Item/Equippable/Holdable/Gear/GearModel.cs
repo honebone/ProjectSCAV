@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 道具スロット系アイテムの基底Model
+/// 謇区戟縺｡陬�蛯咏ｳｻ繧｢繧､繝�繝縺ｮ蝓ｺ蠎筆odel
 /// </summary>
 public abstract class GearModel : HoldableItemModel
 {

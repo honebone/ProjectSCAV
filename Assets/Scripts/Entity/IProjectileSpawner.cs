@@ -21,6 +21,7 @@ public class PjtlStats
     public StatValue BulletLifetime { get; }
     public float BulletSizeMultiplier { get; }
     public StatValue Penetration { get; }
+    public StatValue Damage { get; }
 
     public PjtlStats(PjtlData data)
     {
@@ -32,9 +33,8 @@ public class PjtlStats
         BulletLifetime = new ClampedStatValue(data.BulletLifetime);
         BulletSizeMultiplier = 1f;
         Penetration = new ClampedStatValue(data.Penetration);
+        Damage = new ClampedStatValue(data.Damage);
     }
-
-    //当たった時の効果(要検討)
 }
 
 public struct FireParams
@@ -43,19 +43,23 @@ public struct FireParams
 
     private Vector2 _firePos;
     private Vector2 _targetPos;
+    private EntityModel _source;
 
     public List<Faction> TargetFaction => _targetFactions;
     public Vector2 FirePos => _firePos;
     public Vector2 TargetPos => _targetPos;
+    /// <summary>発射元のエンティティ。命中時のEffectActionの発生源として使う</summary>
+    public EntityModel Source => _source;
 
     public PjtlSnapshot Snapshot;
 
-    public FireParams(List<Faction> targetFactions,Vector2 firePos, Vector2 targetPos, PjtlSnapshot snapshot)
+    public FireParams(List<Faction> targetFactions,Vector2 firePos, Vector2 targetPos, PjtlSnapshot snapshot, EntityModel source)
     {
         _targetFactions = targetFactions;
         _firePos = firePos;
         _targetPos = targetPos;
         Snapshot = snapshot;
+        _source = source;
     }
 
     public void SetFirePos(Vector2 pos) { _firePos = pos; }
@@ -72,9 +76,11 @@ public struct PjtlSnapshot
     public float BulletLifetime;
     public float BulletSizeMultiplier;
     public int Penetration;
+    public float Damage;
 
-    // PjtlStatsの現在値からスナップショットを生成
-    public static PjtlSnapshot From(PjtlStats stats)
+    // PjtlStatsの現在値からスナップショットを生成する
+    // mods（発射者の装備中パッシブによる補正）を渡すと、Pull型で都度補正を合成する
+    public static PjtlSnapshot From(PjtlStats stats, PassiveModifierSet mods = null)
     {
         return new PjtlSnapshot
         {
@@ -82,10 +88,11 @@ public struct PjtlSnapshot
             PelletPerShot = stats.PelletPerShot.IntValue,
             Spread = stats.Spread.Value,
             Equidistant = stats.Equidistant,
-            BulletSpeed = stats.BulletSpeed.Value,
-            BulletLifetime = stats.BulletLifetime.Value,
+            BulletSpeed = mods != null ? mods.ApplyPjtl(PjtlStatType.BulletSpeed, stats.BulletSpeed.Value) : stats.BulletSpeed.Value,
+            BulletLifetime = mods != null ? mods.ApplyPjtl(PjtlStatType.BulletLifetime, stats.BulletLifetime.Value) : stats.BulletLifetime.Value,
             BulletSizeMultiplier = stats.BulletSizeMultiplier,
-            Penetration = stats.Penetration.IntValue,
+            Penetration = mods != null ? Mathf.RoundToInt(mods.ApplyPjtl(PjtlStatType.Penetration, stats.Penetration.Value)) : stats.Penetration.IntValue,
+            Damage = mods != null ? mods.ApplyPjtl(PjtlStatType.Damage, stats.Damage.Value) : stats.Damage.Value,
         };
     }
 }

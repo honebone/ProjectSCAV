@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
             {
                 _hitList.Add(target);
 
-                target.Damage(15);
+                target.Resolve(new EffectAction(_fireParams.Source, damageAmount: _fireParams.Snapshot.Damage, damageTarget: DamageTarget.HPAndArmor));
 
                 if (_penetrations == 0) Destroy(gameObject);
                 else _penetrations--;

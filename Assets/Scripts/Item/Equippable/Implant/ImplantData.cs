@@ -1,19 +1,25 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒCƒ“ƒvƒ‰ƒ“ƒg‚ÌScriptableObject
-/// ‘•”õ‚ÉEntityModel‚ÖƒpƒbƒVƒuŒø‰Ê‚ğ•t—^‚·‚é
+/// ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã®ScriptableObject
+/// è£…å‚™ã™ã‚‹ã¨EntityModelã¸ãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœã‚’ä»˜ä¸ã™ã‚‹
+/// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è£œæ­£ã ã‘ã§è¡¨ç¾ã§ãã‚‹ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã¯ã€StatModifiersã‚’è¨­å®šã™ã‚‹ã ã‘ã§ã‚ˆã„ï¼ˆC#ã‚¯ãƒ©ã‚¹ã‚’åˆ†ã‘ã‚‹å¿…è¦ã¯ãªã„ï¼‰
 /// </summary>
 [CreateAssetMenu(menuName = "Item/ImplantData")]
 public class ImplantData : EquippableItemData
 {
     [SerializeField] private ImplantPart _implantPart;
+    [SerializeField, Header("è£…å‚™ã—ã¦ã„ã‚‹é–“ã€è‡ªèº«ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã¸åŠ ãˆã‚‹è£œæ­£")] private StatModifier[] _statModifiers;
+
     public ImplantPart ImplantPart => _implantPart;
+    public IReadOnlyList<StatModifier> StatModifiers => _statModifiers;
+
     public override ItemModel CreateModel() { return new ImplantModel(this); }
 }
 
 /// <summary>
-/// ƒCƒ“ƒvƒ‰ƒ“ƒg‚Ì‘•’…•”ˆÊ
-/// ƒGƒ“ƒeƒBƒeƒB‘Sí‹¤’Ê
+/// ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã®è£…å‚™éƒ¨ä½
+/// ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£å…¨ç¨®å…±é€š
 /// </summary>
 public enum ImplantPart { Shield, Strage, Booster, Cooler }

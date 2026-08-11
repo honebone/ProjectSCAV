@@ -15,7 +15,7 @@ public static class Extensions
         return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + value.ToString() + "</color>";
     }
 
-    /// <summary>New Line ‚·‚Å‚É•¶š‚ª‚ ‚é‚È‚ç‰üs‚ğA‰½‚à‚È‚¢‚È‚ç–³‚ğ•Ô‚·</summary>
+    /// <summary>New Line ï¿½ï¿½ï¿½Å‚É•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½È‚ç–³ï¿½ï¿½Ô‚ï¿½</summary>
     public static string NL(string current, int lines = 1, string lineStr = "\n")
     {
         if (string.IsNullOrEmpty(current)) return "";
@@ -47,7 +47,7 @@ public static class Extensions
         return dice < chance;
     }
 
-    /// <summary>x~y‚Ü‚Å</summary>
+    /// <summary>x~yï¿½Ü‚ï¿½</summary>
     public static int Range(this Vector2Int vector2)
     {
         return Random.Range(vector2.x, vector2.y + 1);
@@ -70,13 +70,13 @@ public static class Extensions
     //}
 
     /// <summary>
-    /// •½‹Ï meanA•W€•Î· stdDev ‚Ì³‹K•ª•z‚É]‚¤—”‚ğ•Ô‚·
-    /// Œ‹‰Ê‚ª 0 –¢–‚É‚È‚ç‚È‚¢‚æ‚¤ƒNƒ‰ƒ“ƒv‚·‚é
+    /// ï¿½ï¿½ï¿½ï¿½ meanï¿½Aï¿½Wï¿½ï¿½ï¿½Îï¿½ stdDev ï¿½Ìï¿½ï¿½Kï¿½ï¿½ï¿½zï¿½É]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½
+    /// ï¿½ï¿½ï¿½Ê‚ï¿½ 0 ï¿½ï¿½ï¿½ï¿½ï¿½É‚È‚ï¿½È‚ï¿½ï¿½æ‚¤ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public static float NormalDistribution(float mean, float stdDev)
     {
-        // Box-Muller•ÏŠ·
-        float u1 = 1f - UnityEngine.Random.value; // 0œZ‚ğ”ğ‚¯‚é‚½‚ß1‚©‚çˆø‚­
+        // Box-Mullerï¿½ÏŠï¿½
+        float u1 = 1f - UnityEngine.Random.value; // 0ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float u2 = UnityEngine.Random.value;
         float normal = Mathf.Sqrt(-2f * Mathf.Log(u1)) * Mathf.Cos(2f * Mathf.PI * u2);
         return Mathf.Max(0f, mean + stdDev * normal);
@@ -157,7 +157,7 @@ public static class Extensions
             return -1;
         }
     }
-    /// <summary>0~length-1‚Ü‚Å‚Ì—”</summary>
+    /// <summary>0~length-1ï¿½Ü‚Å‚Ì—ï¿½ï¿½ï¿½</summary>
     public static int RandIndex(this int length)
     {
         return Random.Range(0, length);
@@ -212,7 +212,7 @@ public static class Extensions
         return sum;
     }
 
-    /// <summary>d•¡‚È‚µ‚ÅList’Ç‰Á</summary>
+    /// <summary>ï¿½dï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½Listï¿½Ç‰ï¿½</summary>
     public static void AddRangeWithNoOverlap<T>(this List<T> list, List<T> add)
     {
         foreach (T t in add)
@@ -221,7 +221,7 @@ public static class Extensions
         }
     }
 
-    /// <summary>d•¡‚µ‚Ä‚é‚à‚Ì‚Ì‚İ•Ô‚·</summary>
+    /// <summary>ï¿½dï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ì‚Ì‚İ•Ô‚ï¿½</summary>
     public static List<T> AND<T>(this List<T> list1, List<T> list2)
     {
         List<T> list = new List<T>();
@@ -241,7 +241,7 @@ public static class Extensions
         }
     }
 
-    /// <summary>d•¡‚È‚µ‚Åw’è‚³‚ê‚½ŒÂ”‚Ì”z—ñ‚ğƒ‰ƒ“ƒ_ƒ€‚Éæ“¾@—v‘f”<=w’èŒÂ”‚Ì‚ÍƒŠƒXƒg‘S‘Ì‚ğ•Ô‚·</summary>
+    /// <summary>ï¿½dï¿½ï¿½ï¿½È‚ï¿½ï¿½Åwï¿½è‚³ï¿½ê‚½ï¿½Âï¿½ï¿½Ì”zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Éæ“¾ï¿½@ï¿½vï¿½fï¿½ï¿½<=ï¿½wï¿½ï¿½Âï¿½ï¿½Ìï¿½ï¿½Íƒï¿½ï¿½Xï¿½gï¿½Sï¿½Ì‚ï¿½Ô‚ï¿½</summary>
     public static List<T> Sample<T>(this List<T> list, int amount)
     {
         if (list.Count <= amount) { return new List<T>(list); }
@@ -276,5 +276,31 @@ public static class Extensions
         }
 
         return shuffle;
+    }
+
+    /// <summary>ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è£œæ­£ãƒªã‚¹ãƒˆã‚’å¯¾è±¡ã¸é©ç”¨ã™ã‚‹ï¼ˆstackså€ã—ãŸé‡ã‚’åŠ ç®—ã™ã‚‹ï¼‰</summary>
+    public static void ApplyTo(this IReadOnlyList<StatModifier> modifiers, EntityModel owner, int stacks = 1)
+    {
+        if (modifiers == null) return;
+        foreach (StatModifier mod in modifiers)
+        {
+            StatValue stat = owner.Stats.Get(mod.Stat);
+            float amount = mod.Amount * stacks;
+            if (mod.Kind == ModifierKind.Flat) stat.AddFlat(amount);
+            else stat.AddMultiplier(amount);
+        }
+    }
+
+    /// <summary>ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è£œæ­£ãƒªã‚¹ãƒˆã‚’å¯¾è±¡ã‹ã‚‰é™¤å»ã™ã‚‹ï¼ˆstackså€ã—ãŸé‡ã‚’æ¸›ç®—ã™ã‚‹ï¼‰</summary>
+    public static void RemoveFrom(this IReadOnlyList<StatModifier> modifiers, EntityModel owner, int stacks = 1)
+    {
+        if (modifiers == null) return;
+        foreach (StatModifier mod in modifiers)
+        {
+            StatValue stat = owner.Stats.Get(mod.Stat);
+            float amount = mod.Amount * stacks;
+            if (mod.Kind == ModifierKind.Flat) stat.RemoveFlat(amount);
+            else stat.RemoveMultiplier(amount);
+        }
     }
 }

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// è‚É‚Ä‚éƒAƒCƒeƒ€‚ÌŠî’êModel
-/// ‚¿‘Ö‚¦ŠÔE‚Á‚½‚Æ‚«/‚µ‚Ü‚Á‚½‚Æ‚«‚ÌƒR[ƒ‹ƒoƒbƒN‚ğ‚Â
+/// æ‰‹ã«æŒã¦ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã®åŸºåº•Model
+/// æŒã¡æ›¿ãˆã®ç¬é–“ãƒ»æŒã£ãŸã¨ã/æ”¾ã—ãŸã¨ãã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’æŒã¤
 /// </summary>
 public abstract class HoldableItemModel : EquippableItemModel,IUsable
 {
     private readonly HoldableItemData _holdableData;
 
-    /// <summary>‚¿‘Ö‚¦‚É‚©‚©‚éŠÔi•bj</summary>
+    /// <summary>æŒã¡æ›¿ãˆã«ã‹ã‹ã‚‹æ™‚é–“ï¼ˆç§’ï¼‰</summary>
     public float DrawTime => _holdableData.DrawTime;
     public GameObject Prefab => _holdableData.VisualPrefab;
     public float UseTime => _holdableData.UseTime;
@@ -25,17 +25,17 @@ public abstract class HoldableItemModel : EquippableItemModel,IUsable
 
     }
 
-    /// <summary>è‚É‚Á‚½‚Æ‚«</summary>
-    public virtual void OnHold() {  }
+    /// <summary>æ‰‹ã«æŒã£ãŸã¨ã</summary>
+    public virtual void OnHold(EntityModel owner) { }
 
-    /// <summary>‚µ‚Ü‚Á‚½‚Æ‚«</summary>
-    public virtual void OnUnhold() { }
+    /// <summary>æ”¾ã—ãŸã¨ã</summary>
+    public virtual void OnUnhold(EntityModel owner) { }
 
-    /// <summary>Œø‰Ê‚ğ”­“®‚µ‚ÄÁ”ï‚·‚é</summary>
+    /// <summary>åŠ¹æœã‚’ç™ºå‹•ã—ã¦æ¶ˆè²»ã™ã‚‹</summary>
     public virtual void Use(EntityModel user)
     {
-        // ƒTƒuƒNƒ‰ƒX‚ÅŒø‰Ê‚ğÀ‘•‚·‚é
-        // Á”ïˆ—‚ÍInventoryModel‘¤‚©‚çs‚¤
+        // ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã§åŠ¹æœã‚’å®Ÿè£…ã™ã‚‹
+        // æ¶ˆè²»ã¯InventoryModelã‹ã‚‰è¡Œã†
     }
 
     public virtual void StopUsing(EntityModel user) { }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// e‚ÌModel / IUsable
+/// éŠƒã®Model / IUsable
 /// </summary>
 public class GunModel : HoldableItemModel
 {
@@ -14,7 +14,7 @@ public class GunModel : HoldableItemModel
     private int _currentAmmo;
     private float _spreadPenalty_fire;
     private float _spreadPenalty_move;
-    private float _fireIntervalTimer;//ËŒ‚ŠÔ‚Ìƒ^ƒCƒ}[
+    private float _fireIntervalTimer;//å°„æ’ƒé–“éš”ã®ã‚¿ã‚¤ãƒãƒ¼
     private float _reloadTimeTemp;
     private float _reloadTimer;
     private bool _isReloading => _reloadTimer > 0;
@@ -25,8 +25,6 @@ public class GunModel : HoldableItemModel
 
 
     public int CurrentAmmo => _currentAmmo;
-
-    private int _magCap => GunStats.MagCap.IntValue;
 
     public event Action<float> OnSpreadChanged;
     public event Action<FireParams> OnFired;
@@ -40,20 +38,23 @@ public class GunModel : HoldableItemModel
         _gunData = data;
         GunStats = new GunStats(_gunData);
 
-        _currentAmmo = _magCap;//test
+        _currentAmmo = GunStats.MagCap.IntValue;//test
     }
 
     public override void Tick(float deltaTime, EntityModel user)
     {
+        PassiveModifierSet mods = GetPassiveModifiers(user);
+
         if (_spreadPenalty_fire > 0)
         {
-            _spreadPenalty_fire -= deltaTime * GunStats.SpreadLoss.Value;
+            float spreadLoss = ApplyGunStat(GunStatType.SpreadLoss, GunStats.SpreadLoss.Value, mods);
+            _spreadPenalty_fire -= deltaTime * spreadLoss;
             if (_spreadPenalty_fire < 0) _spreadPenalty_fire = 0;
         }
 
         if (user is IMovable movable)
         {
-            _spreadPenalty_move = movable.IsMoving ? GunStats.SpreadPenalty_Move.Value : 0;
+            _spreadPenalty_move = movable.IsMoving ? ApplyGunStat(GunStatType.SpreadPenalty_Move, GunStats.SpreadPenalty_Move.Value, mods) : 0;
         }
 
         if (_fireIntervalTimer > 0)
@@ -78,17 +79,17 @@ public class GunModel : HoldableItemModel
             if (_reloadTimer < 0)
             {
                 _reloadTimer = 0;
-                PerformReload();
-                if (_currentAmmo < _magCap) StartReload();
+                PerformReload(mods);
+                if (_currentAmmo < MagCap(mods)) StartReload(mods);
             }
         }
 
         OnSpreadChanged?.Invoke(GunStats.PjtlStats.Spread.Value + _spreadPenalty_fire + _spreadPenalty_move);
     }
 
-    public override void OnUnhold()
+    public override void OnUnhold(EntityModel owner)
     {
-        base.OnUnhold();
+        base.OnUnhold(owner);
 
         if (_isReloading) CancelReload();
     }
@@ -97,7 +98,7 @@ public class GunModel : HoldableItemModel
     // IUsable
     // -------------------------------------------------------
 
-    /// <summary>ËŒ‚</summary>
+    /// <summary>å°„æ’ƒ</summary>
     public override void Use(EntityModel user)
     {
         if (_canFire && !_isBursting && _gunData.FireType == FireType.burst) _burstCount = _gunData.burstRounds;
@@ -112,17 +113,18 @@ public class GunModel : HoldableItemModel
 
     public override void Reload(EntityModel user)
     {
-        if (!_isPullingTrigger && !_isBursting && !_isReloading && _currentAmmo < _magCap)
+        PassiveModifierSet mods = GetPassiveModifiers(user);
+        if (!_isPullingTrigger && !_isBursting && !_isReloading && _currentAmmo < MagCap(mods))
         {
-            StartReload();
+            StartReload(mods);
         }
     }
 
-    private void StartReload()
+    private void StartReload(PassiveModifierSet mods)
     {
-        //TODO:’eŠÛ‚ğ‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+        //TODO:å¼¾ãŒæ®‹ã£ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 
-        _reloadTimeTemp = GunStats.ReloadTime.Value;
+        _reloadTimeTemp = ApplyGunStat(GunStatType.ReloadTime, GunStats.ReloadTime.Value, mods);
         _reloadTimer = _reloadTimeTemp;
         DevLog.Log($"reload start:{_reloadTimeTemp}s");
 
@@ -140,9 +142,10 @@ public class GunModel : HoldableItemModel
         }
     }
 
-    private void PerformReload()
+    private void PerformReload(PassiveModifierSet mods)
     {
-        int feeded = FeedAmmo(_gunData.ReloadAmount == 0 ? _magCap : _gunData.ReloadAmount);
+        int magCap = MagCap(mods);
+        int feeded = FeedAmmo(_gunData.ReloadAmount == 0 ? magCap : _gunData.ReloadAmount, magCap);
         DevLog.Log($"reload completed: feeeded {feeded} rounds");
 
         OnReloadCompleted?.Invoke(_reloadTimeTemp);
@@ -150,14 +153,15 @@ public class GunModel : HoldableItemModel
     }
 
     /// <summary>
-    /// ƒ}ƒKƒWƒ“‚ğ•â[
+    /// ãƒã‚¬ã‚¸ãƒ³ã¸çµ¦å¼¾ã™ã‚‹
     /// </summary>
-    /// <param name="amount">ƒŠƒ[ƒh‚·‚é’e”</param>
-    /// <param name="exceedMagCap">ƒ}ƒKƒWƒ“—e—Ê‚ğ’´‚¦‚ÄƒŠƒ[ƒh‚·‚é‚©</param>
-    /// <returns>ÀÛ‚ÉƒŠƒ[ƒh‚µ‚½”</returns>
-    private int FeedAmmo(int amount, bool exceedMagCap = false)
+    /// <param name="amount">ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹å¼¾æ•°</param>
+    /// <param name="magCap">ç¾åœ¨æœ‰åŠ¹ãªãƒã‚¬ã‚¸ãƒ³å®¹é‡ï¼ˆãƒ‘ãƒƒã‚·ãƒ–è£œæ­£è¾¼ã¿ï¼‰</param>
+    /// <param name="exceedMagCap">ãƒã‚¬ã‚¸ãƒ³å®¹é‡ã‚’è¶…ãˆã¦ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‹</param>
+    /// <returns>å®Ÿéš›ã«ãƒªãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸæ•°</returns>
+    private int FeedAmmo(int amount, int magCap, bool exceedMagCap = false)
     {
-        // ’Ç‰Á‚·‚é’e”‚ª0ˆÈ‰º‚Ìê‡‚Íˆ—‚µ‚È‚¢
+        // è¿½åŠ ã™ã‚‹å¼¾æ•°ãŒ0ä»¥ä¸‹ã®å ´åˆã¯ä½•ã‚‚ã—ãªã„
         if (amount <= 0) return 0;
 
         int initialAmmo = _currentAmmo;
@@ -168,14 +172,14 @@ public class GunModel : HoldableItemModel
         }
         else
         {
-            // Œ»İ‚Ì’e”‚ª‚·‚Å‚Éƒ}ƒKƒWƒ“—e—Ê‚ğ’´‚¦‚Ä‚¢‚éê‡‚ÍAŒ»İ‚Ì’e”‚ğãŒÀ‚Æ‚µ‚Äˆµ‚¤i’e‚ªŒ¸‚é‚Ì‚ğ–h‚®‚½‚ßj
-            int maxCap = Mathf.Max(GunStats.MagCap.IntValue, _currentAmmo);
+            // ç¾åœ¨ã®å¼¾æ•°ãŒã™ã§ã«ãƒã‚¬ã‚¸ãƒ³å®¹é‡ã‚’è¶…ãˆã¦ã„ã‚‹å ´åˆã¯ã€ç¾åœ¨ã®å¼¾æ•°ã‚’ä¸Šé™ã¨ã—ã¦æ‰±ã†ï¼ˆå¼¾ãŒæ¶ˆãˆã‚‹ã®ã‚’é˜²ããŸã‚ï¼‰
+            int maxCap = Mathf.Max(magCap, _currentAmmo);
 
-            // ’e‚ğ’Ç‰Á‚µAãŒÀ‚ğ’´‚¦‚È‚¢‚æ‚¤‚ÉƒNƒ‰ƒ“ƒv‚·‚é
+            // å¼¾ã‚’è¿½åŠ ã—ã€ä¸Šé™ã‚’è¶…ãˆãªã„ã‚ˆã†ã«ã‚¯ãƒ©ãƒ³ãƒ—ã™ã‚‹
             _currentAmmo = Mathf.Min(_currentAmmo + amount, maxCap);
         }
 
-        // ÀÛ‚ÉƒŠƒ[ƒh‚³‚ê‚½’e”‚ğ•Ô‚·
+        // å®Ÿéš›ã«ãƒªãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸå¼¾æ•°ã‚’è¿”ã™
         return _currentAmmo - initialAmmo;
     }
 
@@ -187,22 +191,25 @@ public class GunModel : HoldableItemModel
         {
             if (_isReloading) CancelReload();
 
-            PjtlSnapshot snapshot = PjtlSnapshot.From(GunStats.PjtlStats);
+            PassiveModifierSet mods = GetPassiveModifiers(user);
+            PjtlSnapshot snapshot = PjtlSnapshot.From(GunStats.PjtlStats, mods);
             snapshot.Spread += _spreadPenalty_fire + _spreadPenalty_move;
 
             List<Faction> targetFactions = new List<Faction>(user.Hostiles);
             targetFactions.Add(Faction.obstacle);
 
-            FireParams fireParams = new FireParams(targetFactions, user.Position, lookable.LookAt, snapshot);
+            FireParams fireParams = new FireParams(targetFactions, user.Position, lookable.LookAt, snapshot, user);
             OnFired?.Invoke(fireParams);
             _currentAmmo--;
             DevLog.Log($"shots fired:{_currentAmmo} rounds remain");
 
-            _spreadPenalty_fire += GunStats.SpreadPenalty_Fire.Value;
-            if (_spreadPenalty_fire > GunStats.MaxSpreadPenalty_fire.Value) _spreadPenalty_fire = GunStats.MaxSpreadPenalty_fire.Value;
+            _spreadPenalty_fire += ApplyGunStat(GunStatType.SpreadPenalty_Fire, GunStats.SpreadPenalty_Fire.Value, mods);
+            float maxSpreadPenalty = ApplyGunStat(GunStatType.MaxSpreadPenalty_fire, GunStats.MaxSpreadPenalty_fire.Value, mods);
+            if (_spreadPenalty_fire > maxSpreadPenalty) _spreadPenalty_fire = maxSpreadPenalty;
 
             if (_isBursting) _burstCount--;
-            float interval = _isBursting ? 1f / _gunData.BurstRate : 1f / GunStats.FireRate.Value;
+            float fireRate = ApplyGunStat(GunStatType.FireRate, GunStats.FireRate.Value, mods);
+            float interval = _isBursting ? 1f / _gunData.BurstRate : 1f / fireRate;
 
             if (_currentAmmo > 0) SetFireIntervalTimer(interval);
             else _burstCount = 0;
@@ -210,11 +217,27 @@ public class GunModel : HoldableItemModel
             DevLog.Log($"burst count:{_burstCount}");
 
         }
-        else DevLog.Error("user‚ªILookable‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
+        else DevLog.Error("userã¯ILookableã§ã¯ã‚ã‚Šã¾ã›ã‚“");
     }
 
     public void SetFireIntervalTimer(float interval)
     {
         _fireIntervalTimer = interval;
+    }
+
+    // -------------------------------------------------------
+    // ãƒ‘ãƒƒã‚·ãƒ–åŠ¹æœã«ã‚ˆã‚‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è£œæ­£ï¼ˆPullå‹ï¼‰
+    // -------------------------------------------------------
+
+    private int MagCap(PassiveModifierSet mods) => Mathf.Max(1, ApplyGunStat(GunStatType.MagCap, GunStats.MagCap.Value, mods).ToInt());
+
+    private static PassiveModifierSet GetPassiveModifiers(EntityModel user)
+    {
+        return user is ILoadoutable loadoutable ? loadoutable.Loadout.PassiveModifiers : null;
+    }
+
+    private static float ApplyGunStat(GunStatType type, float baseValue, PassiveModifierSet mods)
+    {
+        return mods != null ? mods.ApplyGun(type, baseValue) : baseValue;
     }
 }

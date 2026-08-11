@@ -15,6 +15,7 @@ public class PjtlData : ScriptableObject
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _bulletLifeTime;
     [SerializeField] private int _penetration;
+    [SerializeField] private float _damage = 15f;
 
     public GameObject BulletPrefab => _bulletPrefab;
     public int PelletPerShot => _pelletPerShot;
@@ -23,4 +24,5 @@ public class PjtlData : ScriptableObject
     public float BulletSpeed => _bulletSpeed;
     public float BulletLifetime => _bulletLifeTime;
     public int Penetration => _penetration;
+    public float Damage => _damage;
 }

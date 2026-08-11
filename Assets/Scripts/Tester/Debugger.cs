@@ -22,11 +22,15 @@ public class Debugger : MonoBehaviour
     [SerializeField] List<ItemData> itemData;
     [SerializeField] List<int> itemAmount;
 
+    [Header("パッシブ効果・作用(EffectAction)の検証用")]
+    [SerializeField, Header("Alpha3キーでプレイヤーにダメージ+バフを同時付与するEffectActionを発火")] private BuffApplication _testBuff;
+    [SerializeField, Header("Alpha3キーで与えるダメージ量")] private float _testDamage = 10f;
+
     // Start is called before the first frame update
     async void Start()
     {
-        // �f�[�^�x�[�X�̃��[�h������҂�
-        // �iBootstrap�V�[�����o�R�����{�V�[���𒼐ڍĐ������ꍇ�������ŒS�ۂ����j
+        // �f�[�^�x�[�X�̃��[�h������҂�
+        // �iBootstrap�V�[�����o�R�����{�V�[���𒼐ڍĐ������ꍇ�������ŒS�ۂ����j
         await GameBootstrapper.WaitForReadyAsync();
 
         _areaManager.Init(areaData);
@@ -66,6 +70,16 @@ public class Debugger : MonoBehaviour
                     ItemStackModel itemStack = new ItemStackModel(itemData[i].CreateModel(), itemAmount[i]);
                     model.Inventory.TryAddAuto(itemStack);
                 }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            // ダメージとバフ付与を同時に持つEffectActionを1件発火し、複合効果が解決されることを確認する
+            if (_presenter.Model is PlayerModel model)
+            {
+                List<BuffApplication> buffs = new List<BuffApplication> { _testBuff };
+                model.Resolve(new EffectAction(model, damageAmount: _testDamage, damageTarget: DamageTarget.HPAndArmor, buffs: buffs));
+                DevLog.Log($"[Debugger] EffectActionテスト発火 damage:{_testDamage} buff:{(_testBuff.Buff != null ? _testBuff.Buff.name : "なし")}");
             }
         }
     }

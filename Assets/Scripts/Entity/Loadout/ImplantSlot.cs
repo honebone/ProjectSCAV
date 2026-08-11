@@ -17,30 +17,30 @@ public class ImplantSlot
     }
 
     /// <summary>
-    /// ‘•”õ‚·‚é
-    /// ‚·‚Å‚É‘•”õ’†‚ÌƒCƒ“ƒvƒ‰ƒ“ƒg‚ª‚ ‚ê‚Îæ‚èŠO‚µ‚Ä‚©‚çV‚µ‚¢ƒCƒ“ƒvƒ‰ƒ“ƒg‚ğ‘•”õ‚·‚é
+    /// è£…å‚™ã™ã‚‹
+    /// ã™ã§ã«è£…å‚™ä¸­ã®ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆãŒã‚ã‚Œã°å…ˆã«å¤–ã—ã¦ã‹ã‚‰æ–°ã—ã„ã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã‚’è£…å‚™ã™ã‚‹
     /// </summary>
     public bool TryEquip(ImplantModel implant, EntityModel owner)
     {
         if (implant == null) return false;
         if (implant.ImplantPart != _part) return false;
 
-        _equipped?.OnUnequip(owner);
+        _equipped?.OnRemove(owner);
         _equipped = implant;
-        _equipped.OnEquip(owner);
+        _equipped.OnApply(owner);
         return true;
     }
 
     /// <summary>
-    /// ‘•”õ‚ğŠO‚·
-    /// ŠO‚µ‚½ƒCƒ“ƒvƒ‰ƒ“ƒg‚ğ•Ô‚·iƒCƒ“ƒxƒ“ƒgƒŠ‚Ö‚Ì–ß‚µˆ—‚ÍŒÄ‚Ño‚µ‘¤‚ªs‚¤j
+    /// è£…å‚™ã‚’å¤–ã™
+    /// å¤–ã—ãŸã‚¤ãƒ³ãƒ—ãƒ©ãƒ³ãƒˆã‚’è¿”ã™ï¼ˆã‚¤ãƒ³ãƒ™ãƒ³ãƒˆãƒªã¸ã®æˆ»ã—å‡¦ç†ã¯å‘¼ã³å‡ºã—å´ãŒè¡Œã†ï¼‰
     /// </summary>
     public ImplantModel Unequip(EntityModel owner)
     {
         if (IsEmpty) return null;
 
         ImplantModel item = _equipped;
-        _equipped.OnUnequip(owner);
+        _equipped.OnRemove(owner);
         _equipped = null;
         return item;
     }

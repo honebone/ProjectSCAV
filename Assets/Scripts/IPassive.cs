@@ -1,12 +1,12 @@
 /// <summary>
-/// �������Ƀp�b�V�u���ʂ����A�C�e���̃C���^�[�t�F�[�X
-/// �C���v�����g�E����iToolModel�j����������
+/// 装備・付与されている間パッシブ効果を持つもののインターフェース
+/// インプラント・道具（ToolModel）・バフ（BuffModel）が実装する
 /// </summary>
 public interface IPassive
 {
-    /// <summary>���������Ƃ��iEntity�̃X�e�[�^�X�ւ̕␳�t�^�Ȃǁj</summary>
-    void OnEquip(EntityModel owner);
+    /// <summary>効果が付与されたとき（Entityのステータスへの補正付与など）</summary>
+    void OnApply(EntityModel owner);
 
-    /// <summary>���O�����Ƃ��i�␳�̏����Ȃǁj</summary>
-    void OnUnequip(EntityModel owner);
+    /// <summary>効果が取り除かれたとき（補正の除去など）</summary>
+    void OnRemove(EntityModel owner);
 }

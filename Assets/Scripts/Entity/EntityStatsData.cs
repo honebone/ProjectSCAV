@@ -35,6 +35,7 @@ public class EntityStatsData : ScriptableObject
     [Header("Heat（プレイヤー専用。敵には不要）")]
     [SerializeField] private float _maxHeat = 100f;
     [SerializeField] private float _heatRecovery = 10f;
+    [SerializeField] private float _jetpackPower = 6f;
 
     public float MaxHp => _maxHp;
     public float MaxArmor => _maxArmor;
@@ -46,6 +47,7 @@ public class EntityStatsData : ScriptableObject
     public float SightRange => _sightRange;
     public float MaxHeat => _maxHeat;
     public float HeatRecovery => _heatRecovery;
+    public float JetpackPower => _jetpackPower;
     public Faction Faction => _faction;
     public List<Faction> Hostiles => _hostiles;
     public int GunSlot => _gunSlot;
