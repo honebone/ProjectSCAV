@@ -286,8 +286,16 @@ public static class Extensions
         {
             StatValue stat = owner.Stats.Get(mod.Stat);
             float amount = mod.Amount * stacks;
-            if (mod.Kind == ModifierKind.Flat) stat.AddFlat(amount);
-            else stat.AddMultiplier(amount);
+            if(amount > 0)
+            {
+                if (mod.Kind == ModifierKind.Flat) stat.AddFlat(amount);
+                else stat.AddMultiplier(amount);
+            }
+            else
+            {
+                if (mod.Kind == ModifierKind.Flat) stat.RemoveFlat(-amount);
+                else stat.RemoveMultiplier(-amount);
+            }
         }
     }
 
@@ -299,8 +307,16 @@ public static class Extensions
         {
             StatValue stat = owner.Stats.Get(mod.Stat);
             float amount = mod.Amount * stacks;
-            if (mod.Kind == ModifierKind.Flat) stat.RemoveFlat(amount);
-            else stat.RemoveMultiplier(amount);
+            if(amount > 0)
+            {
+                if (mod.Kind == ModifierKind.Flat) stat.RemoveFlat(amount);
+                else stat.RemoveMultiplier(amount);
+            }
+            else
+            {
+                if (mod.Kind == ModifierKind.Flat) stat.AddFlat(-amount);
+                else stat.AddMultiplier(-amount);
+            }
         }
     }
 }
