@@ -207,7 +207,7 @@ public class EntityModel
         BuffModel existing = _buffs.Find(b => b.BuffId == data.BuffId);
         if (existing == null)// 同名のバフが既にあるなら
         {
-            BuffModel buff = data.CreateModel(source, application.Stacks);
+            BuffModel buff = data.CreateModel(source, application.Duration, application.Stacks);
             buff.OnApply(this);
             _buffs.Add(buff);
             OnBuffApplied?.Invoke(buff);

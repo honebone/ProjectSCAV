@@ -9,7 +9,7 @@ using UnityEngine;
 /// ステータス補正・継続ダメージ以外の独自効果を持たせたい場合は、BuffDataとBuffModelをそれぞれ継承する
 /// （ImplantData/ImplantModel、ToolData/ToolModelと同じパターン）
 /// </summary>
-[CreateAssetMenu(menuName = "Entity/BuffData")]
+[CreateAssetMenu(menuName = "BuffData/BuffData")]
 public class BuffData : ScriptableObject
 {
     [SerializeField, Header("重複・スタック判定に使う識別子")] private string _buffId;
@@ -18,17 +18,10 @@ public class BuffData : ScriptableObject
 
     [SerializeField, Header("ステータス補正（自身のStatValueへ加算する）")] private StatModifier[] _statModifiers;
 
-    [SerializeField, Header("継続ダメージ（0なら発生しない）")] private float _tickInterval;
-    [SerializeField] private float _tickDamage;
-    [SerializeField] private DamageTarget _tickDamageTarget = DamageTarget.ArmorOnly;
-
     public string BuffId => _buffId;
     public StackPolicy StackPolicy => _stackPolicy;
     public int MaxStacks => _maxStacks;
     public IReadOnlyList<StatModifier> StatModifiers => _statModifiers;
-    public float TickInterval => _tickInterval;
-    public float TickDamage => _tickDamage;
-    public DamageTarget TickDamageTarget => _tickDamageTarget;
 
     /// <summary>実行時インスタンスを生成する。独自の効果を持つバフはBuffModelを継承しoverrideする</summary>
     public virtual BuffModel CreateModel(EntityModel source,float duration, int initialStacks = 1)

@@ -184,13 +184,19 @@ MonoBehaviour:
     - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b324b0aa830067a43af3f69145ce7201
-    m_Address: Assets/Buffs/SpeedBoost.asset
+    m_Address: Assets/Buffs/ModifyEntityStat/SpeedBoost.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Buff
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a0d647c995abb644fab580bfe83c518d
-    m_Address: Assets/Buffs/Afterburner.asset
+    m_Address: Assets/Buffs/ModifyEntityStat/Afterburner.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Buff
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc40056958716884abe2c76e5bc3b787
+    m_Address: Assets/Buffs/DoT/Acid.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Buff

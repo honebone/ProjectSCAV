@@ -8,11 +8,10 @@ using UnityEngine;
 /// </summary>
 public class BuffModel : IPassive
 {
-    private readonly BuffData _data;
-    private readonly EntityModel _source;
-    private float _remainingTime;
-    private float _tickTimer;
-    private int _stacks;
+    private protected readonly BuffData _data;
+    private protected readonly EntityModel _source;
+    private protected float _remainingTime;
+    private protected int _stacks;
 
     public BuffData Data => _data;
     public string BuffId => _data.BuffId;
@@ -72,12 +71,6 @@ public class BuffModel : IPassive
     /// <summary>効果時間中、毎フレーム発生する処理。既定ではDataのTickInterval/TickDamage設定に従い継続ダメージを発生させる</summary>
     protected virtual void OnTick(float deltaTime, EntityModel owner)
     {
-        if (_data.TickInterval <= 0f) return;
-
-        _tickTimer += deltaTime;
-        if (_tickTimer < _data.TickInterval) return;
-
-        _tickTimer -= _data.TickInterval;
-        owner.Resolve(new EffectAction(_source, damageAmount: _data.TickDamage * _stacks, damageTarget: _data.TickDamageTarget));
+        
     }
 }
