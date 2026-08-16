@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3215810dc7ca40c42bd915f1c0e57e1a, type: 3}
-  m_Name: Shield1
+  m_Script: {fileID: 11500000, guid: af2ce67b040f601428912f3b617d8fed, type: 3}
+  m_Name: TestImplant
   m_EditorClassIdentifier: 
   _itemName: 
   _sprite: {fileID: 0}
@@ -20,4 +20,14 @@ MonoBehaviour:
   _maxStack: 1
   _costMultiplier: 1
   _implantPart: 0
-  _statModifiers: []
+  _modifiers:
+    _entityStatModifiers:
+    - _stat: 0
+      _kind: 1
+      _amount: 0.5
+    _gunStatModifiers: []
+    _pjtlStatModifiers: []
+  _gunStatModifiersOnStanding:
+  - _stat: 2
+    _kind: 1
+    _amount: 0.5

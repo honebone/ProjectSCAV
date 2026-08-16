@@ -9,7 +9,7 @@ public enum ModifierKind { Flat, Multiplier }
 /// 適用/除去はExtensions.ApplyTo/RemoveFromを使う
 /// </summary>
 [System.Serializable]
-public struct StatModifier
+public struct EntityStatModifier
 {
     [SerializeField] private EntityStatType _stat;
     [SerializeField] private ModifierKind _kind;

@@ -31,13 +31,13 @@ public class BuffModel : IPassive
     /// <summary>バフが付与された瞬間の効果。既定ではDataのステータス補正を適用する</summary>
     public virtual void OnApply(EntityModel owner)
     {
-        _data.StatModifiers.ApplyTo(owner, _stacks);
+        _data.Modifiers.ApplyTo(owner, _stacks);
     }
 
     /// <summary>バフが除去された瞬間の効果。既定ではDataのステータス補正を除去する</summary>
     public virtual void OnRemove(EntityModel owner)
     {
-        _data.StatModifiers.RemoveFrom(owner, _stacks);
+        _data.Modifiers.RemoveFrom(owner, _stacks);
     }
 
     /// <summary>残り時間を現在値と指定した時間から長いほうにリセットする（StackPolicy.Refresh等で使用）</summary>

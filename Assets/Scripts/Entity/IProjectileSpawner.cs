@@ -22,6 +22,8 @@ public class PjtlStats
     public float BulletSizeMultiplier { get; }
     public StatValue Penetration { get; }
     public StatValue Damage { get; }
+    /// <summary>命中時に対象へ付与するデバフ（酸弾等）。パッシブ補正の対象ではなく弾種固有のデータとしてそのまま転送する</summary>
+    public IReadOnlyList<BuffApplication> OnHitBuffs { get; }
 
     public PjtlStats(PjtlData data)
     {
@@ -34,6 +36,7 @@ public class PjtlStats
         BulletSizeMultiplier = 1f;
         Penetration = new ClampedStatValue(data.Penetration);
         Damage = new ClampedStatValue(data.Damage);
+        OnHitBuffs = data.OnHitBuffs;
     }
 }
 
@@ -77,6 +80,8 @@ public struct PjtlSnapshot
     public float BulletSizeMultiplier;
     public int Penetration;
     public float Damage;
+    /// <summary>命中時に対象へ付与するデバフ（酸弾等）</summary>
+    public IReadOnlyList<BuffApplication> OnHitBuffs;
 
     // PjtlStatsの現在値からスナップショットを生成する
     // mods（発射者の装備中パッシブによる補正）を渡すと、Pull型で都度補正を合成する
@@ -93,6 +98,7 @@ public struct PjtlSnapshot
             BulletSizeMultiplier = stats.BulletSizeMultiplier,
             Penetration = mods != null ? Mathf.RoundToInt(mods.ApplyPjtl(PjtlStatType.Penetration, stats.Penetration.Value)) : stats.Penetration.IntValue,
             Damage = mods != null ? mods.ApplyPjtl(PjtlStatType.Damage, stats.Damage.Value) : stats.Damage.Value,
+            OnHitBuffs = stats.OnHitBuffs,
         };
     }
 }

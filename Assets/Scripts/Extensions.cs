@@ -279,10 +279,10 @@ public static class Extensions
     }
 
     /// <summary>ステータス補正リストを対象へ適用する（stacks倍した量を加算する）</summary>
-    public static void ApplyTo(this IReadOnlyList<StatModifier> modifiers, EntityModel owner, int stacks = 1)
+    public static void ApplyTo(this IReadOnlyList<EntityStatModifier> modifiers, EntityModel owner, int stacks = 1)
     {
         if (modifiers == null) return;
-        foreach (StatModifier mod in modifiers)
+        foreach (EntityStatModifier mod in modifiers)
         {
             StatValue stat = owner.Stats.Get(mod.Stat);
             float amount = mod.Amount * stacks;
@@ -300,10 +300,10 @@ public static class Extensions
     }
 
     /// <summary>ステータス補正リストを対象から除去する（stacks倍した量を減算する）</summary>
-    public static void RemoveFrom(this IReadOnlyList<StatModifier> modifiers, EntityModel owner, int stacks = 1)
+    public static void RemoveFrom(this IReadOnlyList<EntityStatModifier> modifiers, EntityModel owner, int stacks = 1)
     {
         if (modifiers == null) return;
-        foreach (StatModifier mod in modifiers)
+        foreach (EntityStatModifier mod in modifiers)
         {
             StatValue stat = owner.Stats.Get(mod.Stat);
             float amount = mod.Amount * stacks;
@@ -318,5 +318,82 @@ public static class Extensions
                 else stat.AddMultiplier(-amount);
             }
         }
+    }
+
+    /// <summary>
+    /// 銃ステータス補正リストをLoadoutModel.PassiveModifiers（Pull型）へ登録する（stacks倍した量を加算する）
+    /// ownerがILoadoutableでない場合（銃を持たないEntity等）は何もしない
+    /// </summary>
+    public static void ApplyTo(this IReadOnlyList<GunStatModifier> modifiers, EntityModel owner, int stacks = 1)
+    {
+        if (modifiers == null || owner is not ILoadoutable loadoutable) return;
+        PassiveModifierSet mods = loadoutable.Loadout.PassiveModifiers;
+        foreach (GunStatModifier mod in modifiers)
+        {
+            float amount = mod.Amount * stacks;
+            if (mod.Kind == ModifierKind.Flat) mods.AddGunFlat(mod.Stat, amount);
+            else mods.AddGunMultiplier(mod.Stat, amount);
+        }
+    }
+
+    /// <summary>銃ステータス補正リストをLoadoutModel.PassiveModifiersから除去する（stacks倍した量を減算する）</summary>
+    public static void RemoveFrom(this IReadOnlyList<GunStatModifier> modifiers, EntityModel owner, int stacks = 1)
+    {
+        if (modifiers == null || owner is not ILoadoutable loadoutable) return;
+        PassiveModifierSet mods = loadoutable.Loadout.PassiveModifiers;
+        foreach (GunStatModifier mod in modifiers)
+        {
+            float amount = mod.Amount * stacks;
+            if (mod.Kind == ModifierKind.Flat) mods.RemoveGunFlat(mod.Stat, amount);
+            else mods.RemoveGunMultiplier(mod.Stat, amount);
+        }
+    }
+
+    /// <summary>
+    /// 投射物ステータス補正リストをLoadoutModel.PassiveModifiers（Pull型）へ登録する（stacks倍した量を加算する）
+    /// ownerがILoadoutableでない場合（銃を持たないEntity等）は何もしない
+    /// </summary>
+    public static void ApplyTo(this IReadOnlyList<PjtlStatModifier> modifiers, EntityModel owner, int stacks = 1)
+    {
+        if (modifiers == null || owner is not ILoadoutable loadoutable) return;
+        PassiveModifierSet mods = loadoutable.Loadout.PassiveModifiers;
+        foreach (PjtlStatModifier mod in modifiers)
+        {
+            float amount = mod.Amount * stacks;
+            if (mod.Kind == ModifierKind.Flat) mods.AddPjtlFlat(mod.Stat, amount);
+            else mods.AddPjtlMultiplier(mod.Stat, amount);
+        }
+    }
+
+    /// <summary>投射物ステータス補正リストをLoadoutModel.PassiveModifiersから除去する（stacks倍した量を減算する）</summary>
+    public static void RemoveFrom(this IReadOnlyList<PjtlStatModifier> modifiers, EntityModel owner, int stacks = 1)
+    {
+        if (modifiers == null || owner is not ILoadoutable loadoutable) return;
+        PassiveModifierSet mods = loadoutable.Loadout.PassiveModifiers;
+        foreach (PjtlStatModifier mod in modifiers)
+        {
+            float amount = mod.Amount * stacks;
+            if (mod.Kind == ModifierKind.Flat) mods.RemovePjtlFlat(mod.Stat, amount);
+            else mods.RemovePjtlMultiplier(mod.Stat, amount);
+        }
+    }
+
+    /// <summary>
+    /// 自身/銃/投射物の3種のステータス補正をまとめて対象へ適用する（stacks倍した量を加算する）
+    /// 中身は各単体版（EntityStatModifier/GunStatModifier/PjtlStatModifier）のApplyToを呼ぶだけ
+    /// </summary>
+    public static void ApplyTo(this StatModifiers modifiers, EntityModel owner, int stacks = 1)
+    {
+        modifiers.EntityStatModifiers.ApplyTo(owner, stacks);
+        modifiers.GunStatModifiers.ApplyTo(owner, stacks);
+        modifiers.PjtlStatModifiers.ApplyTo(owner, stacks);
+    }
+
+    /// <summary>自身/銃/投射物の3種のステータス補正をまとめて対象から除去する（stacks倍した量を減算する）</summary>
+    public static void RemoveFrom(this StatModifiers modifiers, EntityModel owner, int stacks = 1)
+    {
+        modifiers.EntityStatModifiers.RemoveFrom(owner, stacks);
+        modifiers.GunStatModifiers.RemoveFrom(owner, stacks);
+        modifiers.PjtlStatModifiers.RemoveFrom(owner, stacks);
     }
 }

@@ -207,6 +207,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Buff
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b417654220a3b649a83804a7b083b1f
+    m_Address: Assets/Buffs/ModifyEntityStat/Frenzy.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Buff
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3ff1327311e75b147882b31db114bbd1, type: 2}
   m_SchemaSet:

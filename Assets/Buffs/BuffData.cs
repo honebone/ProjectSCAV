@@ -16,12 +16,12 @@ public class BuffData : ScriptableObject
     [SerializeField] private StackPolicy _stackPolicy;
     [SerializeField] private int _maxStacks = 1;
 
-    [SerializeField, Header("ステータス補正（自身のStatValueへ加算する）")] private StatModifier[] _statModifiers;
+    [SerializeField, Header("自身/銃/投射物のステータスへ加える補正")] private StatModifiers _modifiers;
 
     public string BuffId => _buffId;
     public StackPolicy StackPolicy => _stackPolicy;
     public int MaxStacks => _maxStacks;
-    public IReadOnlyList<StatModifier> StatModifiers => _statModifiers;
+    public StatModifiers Modifiers => _modifiers;
 
     /// <summary>実行時インスタンスを生成する。独自の効果を持つバフはBuffModelを継承しoverrideする</summary>
     public virtual BuffModel CreateModel(EntityModel source,float duration, int initialStacks = 1)

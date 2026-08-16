@@ -14,6 +14,10 @@ public class Projectile : MonoBehaviour
     private List<EntityModel> _hitList=new List<EntityModel>();
     private int _penetrations;
 
+    // 命中時のEffectAction動的補正（IProjectileHitModifier）用に、飛翔距離・経過時間を追跡する
+    private Vector2 _spawnPosition;
+    private float _timeAlive;
+
     public void Init(FireParams fireParams)
     {
         _fireParams = fireParams;
@@ -23,8 +27,14 @@ public class Projectile : MonoBehaviour
         _rb.velocity = velocity;
 
         _penetrations = _fireParams.Snapshot.Penetration;
+        _spawnPosition = _rb.position;
 
         Destroy(gameObject, fireParams.Snapshot.BulletLifetime);
+    }
+
+    private void Update()
+    {
+        _timeAlive += Time.deltaTime;
     }
 
     //private void OnTriggerEnter2D(Collider2D other)
@@ -49,9 +59,21 @@ public class Projectile : MonoBehaviour
             EntityModel target = collision.gameObject.GetComponent<EntityPresenter>().Model;
             if (target != null && target.Alive && _fireParams.TargetFaction.Contains(target.Faction) && !_hitList.Contains(target))
             {
+                int hitIndex = _hitList.Count;
                 _hitList.Add(target);
 
-                target.Resolve(new EffectAction(_fireParams.Source, damageAmount: _fireParams.Snapshot.Damage, damageTarget: DamageTarget.HPAndArmor));
+                EffectAction baseAction = new EffectAction(_fireParams.Source, damageAmount: _fireParams.Snapshot.Damage,
+                    damageTarget: DamageTarget.HPAndArmor, buffs: _fireParams.Snapshot.OnHitBuffs);
+
+                EffectAction finalAction = baseAction;
+                if (_fireParams.Source is ILoadoutable loadoutable)
+                {
+                    float distanceTraveled = Vector2.Distance(_spawnPosition, _rb.position);
+                    ProjectileHitContext context = new ProjectileHitContext(target, _fireParams.Source, distanceTraveled, _timeAlive, hitIndex, _fireParams.Snapshot);
+                    finalAction = loadoutable.Loadout.PassiveModifiers.ApplyHitModifiers(baseAction, context);
+                }
+
+                target.Resolve(finalAction);
 
                 if (_penetrations == 0) Destroy(gameObject);
                 else _penetrations--;

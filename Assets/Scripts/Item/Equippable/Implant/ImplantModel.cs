@@ -20,13 +20,19 @@ public class ImplantModel : EquippableItemModel, IPassive
     public virtual void OnApply(EntityModel owner)
     {
         SetEquipped(true);
-        _data.StatModifiers.ApplyTo(owner);
+        _data.Modifiers.ApplyTo(owner);
     }
 
     /// <summary>インプラントスロットから外したとき</summary>
     public virtual void OnRemove(EntityModel owner)
     {
         SetEquipped(false);
-        _data.StatModifiers.RemoveFrom(owner);
+        _data.Modifiers.RemoveFrom(owner);
     }
+
+    /// <summary>
+    /// 装備している間、毎フレーム呼ばれる（既定では何もしない）
+    /// 「立ち止まっている間だけ拡散ペナルティが低下する」のような、常時条件判定が必要なパッシブはこれをoverrideする
+    /// </summary>
+    public virtual void OnTick(float deltaTime, EntityModel owner) { }
 }

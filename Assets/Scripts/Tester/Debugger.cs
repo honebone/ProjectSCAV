@@ -19,6 +19,7 @@ public class Debugger : MonoBehaviour
 
     [SerializeField] AreaData areaData;
     [SerializeField] List<GunData> gunData;
+    [SerializeField] List<ImplantData> implantData;
     [SerializeField] List<ItemData> itemData;
     [SerializeField] List<int> itemAmount;
 
@@ -43,6 +44,12 @@ public class Debugger : MonoBehaviour
             {
                 ItemStackModel itemStack = new ItemStackModel(gunData[i].CreateModel(), 1);
                 model.Loadout.TryEquip(i, itemStack, model);
+            }
+
+            for (int i = 0; i < implantData.Count; i++)
+            {
+                ItemStackModel itemStack = new ItemStackModel(implantData[i].CreateModel(), 1);
+                model.Loadout.TryEquipImplant(i, itemStack, model);
             }
 
             for (int i = 0; i < itemData.Count; i++)

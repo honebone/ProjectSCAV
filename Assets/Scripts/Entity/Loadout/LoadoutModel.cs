@@ -37,7 +37,11 @@ public class LoadoutModel
             if (!h.IsEmpty) h.Tick(deltaTime, user);
         });
 
-        //インプラントは装備/解除時にステータス補正を適用するのみで、現状Tickは不要
+        // 装備中のインプラントも毎フレームTickする（常時条件判定が必要なパッシブ効果のため）
+        _implantSlots.ForEach(s =>
+        {
+            if (!s.IsEmpty) s.Tick(deltaTime, user);
+        });
     }
 
     public LoadoutModel(int guns,int gears,IReadOnlyList<ImplantPart> implants, EntityModel owner)
@@ -83,20 +87,20 @@ public class LoadoutModel
         if (index == _holdIndex) SwitchSlot(index);
     }
 
-    /// <summary>指定した部位のインプラントスロットへ装備する</summary>
-    public bool TryEquipImplant(int index, ImplantModel implant, EntityModel owner)
+    /// <summary>指定した部位のインプラントスロットへ装備する。以前装備していたインプラントを返す</summary>
+    public ItemStackModel TryEquipImplant(int index, ItemStackModel itemStack, EntityModel owner)
     {
         if (index < 0 || index >= _implantSlots.Count)
         {
             DevLog.Error($"[LoadoutModel] implant indexは範囲外です:{index}");
-            return false;
+            return null;
         }
 
-        return _implantSlots[index].TryEquip(implant, owner);
+        return _implantSlots[index].TryEquip(itemStack, owner);
     }
 
     /// <summary>指定した部位のインプラントスロットから外す</summary>
-    public ImplantModel UnequipImplant(int index, EntityModel owner)
+    public ItemStackModel UnequipImplant(int index, EntityModel owner)
     {
         if (index < 0 || index >= _implantSlots.Count)
         {

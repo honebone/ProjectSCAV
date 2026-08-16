@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// インプラント用装備スロット
+/// コンストラクタで指定した部位(ImplantPart)に一致するインプラントのみ装備できる
+/// </summary>
 public class ImplantSlot
 {
     private readonly ImplantPart _part;
-    private ImplantModel _equipped;
+    private ItemStackModel _equipped;
 
     public ImplantPart Part => _part;
-    public ImplantModel Equipped => _equipped;
+    public ItemStackModel Equipped => _equipped;
     public bool IsEmpty => _equipped == null;
 
     public ImplantSlot(ImplantPart part)
@@ -16,32 +16,52 @@ public class ImplantSlot
         _part = part;
     }
 
-    /// <summary>
-    /// 装備する
-    /// すでに装備中のインプラントがあれば先に外してから新しいインプラントを装備する
-    /// </summary>
-    public bool TryEquip(ImplantModel implant, EntityModel owner)
-    {
-        if (implant == null) return false;
-        if (implant.ImplantPart != _part) return false;
+    /// <summary>このスロットに装備できるか判定（部位が一致するImplantModelのみ可）</summary>
+    public bool CanEquip(ItemStackModel stack) => stack.Item is ImplantModel implant && implant.ImplantPart == _part;
 
-        _equipped?.OnRemove(owner);
-        _equipped = implant;
-        _equipped.OnApply(owner);
-        return true;
+    /// <summary>装備中のインプラントのパッシブ効果を毎フレーム更新する</summary>
+    public void Tick(float deltaTime, EntityModel user)
+    {
+        if (!IsEmpty && _equipped.Item is ImplantModel implant)
+        {
+            implant.OnTick(deltaTime, user);
+        }
+    }
+
+    /// <summary>
+    /// 装備して以前装備していたインプラントを返す
+    /// </summary>
+    public ItemStackModel TryEquip(ItemStackModel stack, EntityModel owner)
+    {
+        if (stack == null) return null;
+        if (!CanEquip(stack)) return null;
+
+        ItemStackModel prev = _equipped;
+
+        GetImplant()?.OnRemove(owner);
+        _equipped = stack;
+        GetImplant()?.OnApply(owner);
+
+        return prev;
     }
 
     /// <summary>
     /// 装備を外す
     /// 外したインプラントを返す（インベントリへの戻し処理は呼び出し側が行う）
     /// </summary>
-    public ImplantModel Unequip(EntityModel owner)
+    public ItemStackModel Unequip(EntityModel owner)
     {
         if (IsEmpty) return null;
 
-        ImplantModel item = _equipped;
-        _equipped.OnRemove(owner);
+        ItemStackModel stack = _equipped;
+        GetImplant()?.OnRemove(owner);
         _equipped = null;
-        return item;
+        return stack;
+    }
+
+    private ImplantModel GetImplant()
+    {
+        if (_equipped == null || _equipped.Item is not ImplantModel) return null;
+        return _equipped.Item as ImplantModel;
     }
 }

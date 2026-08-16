@@ -17,6 +17,7 @@ public class PassiveModifierSet
     private readonly Dictionary<GunStatType, float> _gunMultiplier = new Dictionary<GunStatType, float>();
     private readonly Dictionary<PjtlStatType, float> _pjtlFlat = new Dictionary<PjtlStatType, float>();
     private readonly Dictionary<PjtlStatType, float> _pjtlMultiplier = new Dictionary<PjtlStatType, float>();
+    private readonly List<IProjectileHitModifier> _hitModifiers = new List<IProjectileHitModifier>();
 
     public void AddGunFlat(GunStatType type, float amount) => _gunFlat[type] = Get(_gunFlat, type) + amount;
     public void RemoveGunFlat(GunStatType type, float amount) => AddGunFlat(type, -amount);
@@ -35,4 +36,19 @@ public class PassiveModifierSet
     public float ApplyPjtl(PjtlStatType type, float baseValue) => (baseValue + Get(_pjtlFlat, type)) * (1f + Get(_pjtlMultiplier, type));
 
     private static float Get<T>(Dictionary<T, float> dict, T key) => dict.TryGetValue(key, out float value) ? value : 0f;
+
+    // -------------------------------------------------------
+    // 命中時のEffectAction動的補正（IProjectileHitModifier）
+    // スカラー値の加算では表現できない、命中相手・弾自身の状態に応じた補正はこちらへ登録する
+    // -------------------------------------------------------
+
+    public void AddHitModifier(IProjectileHitModifier modifier) => _hitModifiers.Add(modifier);
+    public void RemoveHitModifier(IProjectileHitModifier modifier) => _hitModifiers.Remove(modifier);
+
+    /// <summary>登録中のIProjectileHitModifierを順に適用し、補正後のEffectActionを返す</summary>
+    public EffectAction ApplyHitModifiers(EffectAction baseAction, ProjectileHitContext context)
+    {
+        foreach (IProjectileHitModifier modifier in _hitModifiers) baseAction = modifier.Modify(baseAction, context);
+        return baseAction;
+    }
 }

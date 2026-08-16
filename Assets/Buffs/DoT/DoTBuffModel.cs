@@ -11,17 +11,14 @@ public class DoTBuffModel : BuffModel
     private DamageTarget _tickDamageTarget;
 
     public DoTBuffModel(
-        BuffData data,
+        DoTBuffData data,
         EntityModel source,
         float duration,
-        float tickInterval,
-        float tickDamage,
-        DamageTarget tickDamageTarget,
         int initialStacks = 1) : base(data, source, duration, initialStacks)
     {
-        _tickInterval = tickInterval;
-        _tickDamage = tickDamage;
-        _tickDamageTarget = tickDamageTarget;
+        _tickInterval = data.TickInterval;
+        _tickDamage = data.TickDamage;
+        _tickDamageTarget = data.TickDamageTarget;
     }
 
     protected override void OnTick(float deltaTime, EntityModel owner)

@@ -15,7 +15,9 @@ public class PjtlData : ScriptableObject
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _bulletLifeTime;
     [SerializeField] private int _penetration;
-    [SerializeField] private float _damage = 15f;
+    [SerializeField] private float _damage;
+
+    [SerializeField, Header("命中時に対象へ付与するデバフ（酸弾等）")] private BuffApplication[] _onHitBuffs;
 
     public GameObject BulletPrefab => _bulletPrefab;
     public int PelletPerShot => _pelletPerShot;
@@ -25,4 +27,5 @@ public class PjtlData : ScriptableObject
     public float BulletLifetime => _bulletLifeTime;
     public int Penetration => _penetration;
     public float Damage => _damage;
+    public IReadOnlyList<BuffApplication> OnHitBuffs => _onHitBuffs;
 }

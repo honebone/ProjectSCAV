@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: SpeedBoost
   m_EditorClassIdentifier: 
   _buffId: speedBoost
-  _duration: 10
   _stackPolicy: 0
   _maxStacks: 1
-  _statModifiers:
-  - _stat: 0
-    _kind: 1
-    _amount: 0.3
-  _tickInterval: 0
-  _tickDamage: 0
-  _tickDamageTarget: 2
+  _modifiers:
+    _entityStatModifiers:
+    - _stat: 0
+      _kind: 1
+      _amount: 0.3
+    _gunStatModifiers: []
+    _pjtlStatModifiers: []

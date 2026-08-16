@@ -19,3 +19,5 @@ MonoBehaviour:
   _bulletSpeed: 75
   _bulletLifeTime: 1
   _penetration: 0
+  _damage: 20
+  _onHitBuffs: []
