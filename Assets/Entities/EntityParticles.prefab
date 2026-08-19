@@ -29,8 +29,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5666018265713122104}
   - {fileID: 691992466541336453}
+  - {fileID: 5666018265713122104}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1325127800784394513
@@ -127,7 +127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352171178542450357, guid: 5e9939e3223bc7944ab2b58fc657c13c, type: 3}
       propertyPath: m_Name
-      value: Par_ArmorDMG
+      value: Par_ShieldDMG
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

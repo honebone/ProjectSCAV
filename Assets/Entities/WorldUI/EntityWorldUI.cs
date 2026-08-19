@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class EntityWorldUI : MonoBehaviour
 {
@@ -12,6 +11,10 @@ public class EntityWorldUI : MonoBehaviour
     public void SpawnText(string str)
     {
         Instantiate(Constants.Instance.WorldTextPrefab, transform).Init(str);
+    }
+    public void SpawnImage(GameObject image)
+    {
+        Instantiate(image, transform);
     }
 
     public void SetSliderUI(string value)

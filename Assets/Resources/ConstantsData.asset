@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65050c556e9b0fc4e8e02ecfa717ada8, type: 3}
   m_Name: ConstantsData
   m_EditorClassIdentifier: 
-  _color_DMG: {r: 0.6226415, g: 0, b: 0, a: 1}
-  _color_shieldDMG: {r: 0, g: 0.33531135, b: 0.5283019, a: 1}
-  _tileSize: 1
-  _roomWidth: 44
-  _roomheight: 24
-  _particlesOnDMG: {x: 3, y: 5}
-  _worldTextPrefab: {fileID: 1521928675625357252, guid: ff5bab8aadd002e4798ac9c9724192e8, type: 3}
-  _itemCosts: 6400000090010000400600000019000000640000
-  _inventorySlotsPerRow: 8
-  _maxStack1CostMultiplier: 0.75
-  _sizeCostMultiplier: 0.2
-  _lootCostStdDevRatio: 0.5
-  _lootItemCountMeanRatio: 0.15
-  _lootItemCountStdDevRatio: 0.5
+  Color_DMG: {r: 0.62352943, g: 0, b: 0, a: 1}
+  Color_shieldDMG: {r: 0, g: 0.3372549, b: 0.5294118, a: 1}
+  TileSize: 1
+  RoomWidth: 44
+  RoomHeight: 24
+  JumpInterval: 0.1
+  ParticlesOnDMG: {x: 3, y: 5}
+  WorldTextPrefab: {fileID: 1521928675625357252, guid: ff5bab8aadd002e4798ac9c9724192e8, type: 3}
+  VE_Die: {fileID: 3827170278920999233, guid: 51318e399dc9c2b40961d59633d8c496, type: 3}
+  VE_ShieldBreak: {fileID: 8657385814270822554, guid: a49e5bfd0187a394cbf1b25827879958, type: 3}
+  InventorySlotsPerRow: 8
+  MaxStack1CostMultiplier: 0.75
+  SizeCostMultiplier: 0.2
+  LootCostStdDevRatio: 0.5
+  LootItemCountMeanRatio: 0.15
+  LootItemCountStdDevRatio: 0.5
+  ItemCosts: 6400000090010000400600000019000000640000

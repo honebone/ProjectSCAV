@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface IMover
 {
+    void Walk(float moveX);
+    void Jump(Vector2 jump);
     void SetMove(Vector2 move);
     void SetMoveX(float moveX);
     void SetMoveY(float moveY);

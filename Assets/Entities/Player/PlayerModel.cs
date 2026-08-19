@@ -106,12 +106,12 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
 
     public void Walk(float walk)
     {
-        _mover.SetMoveX(walk);
+        _mover.Walk(walk);
     }
 
     public void Jump(Vector2 jump)
     {
-        _mover.SetMoveY(jump.y);
+        _mover.Jump(jump);
     }
 
     public void Look(Vector2 lookAt, float angle, float range)

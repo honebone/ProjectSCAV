@@ -16,6 +16,7 @@ public class Debugger : MonoBehaviour
 
     [SerializeField] EntityStatsData _enemyData;
     [SerializeField] EntityPresenter _enemyPresenter;
+    [SerializeField] EntityWorldUI _worldUI;
 
     [SerializeField] AreaData areaData;
     [SerializeField] List<GunData> gunData;
@@ -88,6 +89,10 @@ public class Debugger : MonoBehaviour
                 model.Resolve(new EffectAction(model, damageAmount: _testDamage, damageTarget: DamageTarget.HPAndArmor, buffs: buffs));
                 DevLog.Log($"[Debugger] EffectActionテスト発火 damage:{_testDamage} buff:{(_testBuff.Buff != null ? _testBuff.Buff.name : "なし")}");
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            _worldUI.SpawnImage(Constants.Instance.VE_ShieldBreak);
         }
     }
 

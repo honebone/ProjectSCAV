@@ -3,28 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPathfinder,IMover,ILooker
+public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPathfinder, IMover, ILooker
 {
     [Header("Ground Detection")]
     [SerializeField] private Collider2D _groundCheck;      // 足元のオブジェクト
     [SerializeField] private LayerMask _groundLayer;      // 地面とするレイヤー
-    [SerializeField] private EntityWorldUI _worldUI;
-    [SerializeField] private ParticleSystem _par_onArmorDMG;
-    [SerializeField] private ParticleSystem _par_onHPDMG;
+    [SerializeField] private EntityEffectController _entityEffectController;
+    [SerializeField] private protected SpriteRenderer _spriteRenderer;
 
-    private Rigidbody2D _rb;
+    private EntityWorldUI _worldUI => _entityEffectController.WorldUI;
+    private ParticleSystem _par_onShieldDMG => _entityEffectController.Par_onShieldDMG;
+    private ParticleSystem _par_onHPDMG => _entityEffectController.Par_onHPDMG;
+
+    private protected Rigidbody2D _rb;
+
     private NavPathfinder _navPathfinder;
     public NavPathfinder NavPathfinder => _navPathfinder;
     private NavPath _navPath;
     public NavPath NavPath => _navPath;
 
-    private bool _isGrounded;
+    private protected bool _isGrounded;
     public bool IsGrounded => _isGrounded;
 
     private float _gravity;
     public float Gravity => _gravity;
 
     public Vector2 Position => transform.position;
+
+    private float _jumpTimer;
 
     public virtual void Init(NavPathfinder pathfinder)
     {
@@ -36,18 +42,30 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     public virtual void Tick(float deltaTime)
     {
         //_isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, _groundLayer);
-        _isGrounded = _groundCheck.IsTouchingLayers(_groundLayer);
+        if (_jumpTimer > 0) _jumpTimer -= deltaTime;
+        if (_jumpTimer < 0) _jumpTimer = 0;
+        _isGrounded = _jumpTimer == 0 && _groundCheck.IsTouchingLayers(_groundLayer);
     }
 
-    public void OnArmorDamaged(int dmg)
+    public void OnShieldDamaged(int dmg)
     {
-        _par_onArmorDMG?.Emit(Constants.Instance.ParticlesOnDMG.Range());
+        _par_onShieldDMG?.Emit(Constants.Instance.ParticlesOnDMG.Range());
         SpawnWorldText(dmg.ToString().ColorStr(Constants.Instance.Color_shieldDMG));
+    }
+    public void OnShieldBreak()
+    {
+        _worldUI.SpawnImage(Constants.Instance.VE_ShieldBreak);
     }
     public void OnHPDamaged(int dmg)
     {
         _par_onHPDMG?.Emit(Constants.Instance.ParticlesOnDMG.Range());
         SpawnWorldText(dmg.ToString().ColorStr(Constants.Instance.Color_DMG));
+    }
+    public void OnDeath()
+    {
+        _entityEffectController.transform.parent = null;
+        _entityEffectController.DeathEffect();
+        Destroy(gameObject);
     }
 
     public void OnReloadStart(float reloadTime)
@@ -56,7 +74,7 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     }
     public void OnReloading(float currentTime, float reloadTime)
     {
-        _worldUI.SetSliderFill(currentTime, reloadTime);    
+        _worldUI.SetSliderFill(currentTime, reloadTime);
     }
     public void OnReloadCanceled(float reloadTime)
     {
@@ -92,6 +110,15 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     // IMover
     // -------------------------------------------------------
 
+    public virtual void Walk(float moveX)
+    {
+        SetMoveX(moveX);
+    }
+    public virtual void Jump(Vector2 jump)
+    {
+        _jumpTimer = Constants.Instance.JumpInterval;
+        SetMove(jump);
+    }
     public void SetMove(Vector2 move)
     {
         _rb.velocity = move;

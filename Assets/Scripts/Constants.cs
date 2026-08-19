@@ -6,43 +6,29 @@ using UnityEngine;
 public class Constants : ScriptableObject
 {
     [Header("Colors")]
-    [SerializeField] private Color _color_DMG;
-    [SerializeField] private Color _color_shieldDMG;
+    public Color Color_DMG;
+    public Color Color_shieldDMG;
 
     [Header("\n\n\nRooms")]
-    [SerializeField] private float _tileSize;
-    [SerializeField] private int _roomWidth = 44;
-    [SerializeField] private int _roomheight = 24;
+    public float TileSize;
+    public int RoomWidth;
+    public int RoomHeight;
 
     [Header("\n\n\nEntities")]
-    [SerializeField] private Vector2Int _particlesOnDMG;
-    [SerializeField] private EntityWorldText _worldTextPrefab;
+    public float JumpInterval = 0.1f;
+    public Vector2Int ParticlesOnDMG;
+    public EntityWorldText WorldTextPrefab;
+    public GameObject VE_Die;
+    public GameObject VE_ShieldBreak;
 
     [Header("\n\n\nInventory")]
-    [SerializeField] private List<int> _itemCosts;
-
-    [SerializeField] private int _inventorySlotsPerRow = 10;
-    // 既存の _inventorySlotsPerRow に加えて
-    [SerializeField] private float _maxStack1CostMultiplier = 0.75f; // maxStackが1のときの倍率補正
-    [SerializeField] private float _sizeCostMultiplier = 0.5f; // sizeが1を超えた時、超えたサイズ辺りの倍率補正
-    [SerializeField] private float _lootCostStdDevRatio;    // ロトボックス目標コストに対する標準偏差の割合
-    [SerializeField] private float _lootItemCountMeanRatio; // maxStackに対する排出個数平均の割合
-    [SerializeField] private float _lootItemCountStdDevRatio; // 個数平均に対する標準偏差の割合
-
-    public Color Color_DMG => _color_DMG;
-    public Color Color_shieldDMG => _color_shieldDMG;
-    public float TileSize => _tileSize;
-    public int RoomWidth => _roomWidth;
-    public int RoomHeight => _roomheight;
-    public Vector2Int ParticlesOnDMG => _particlesOnDMG;
-    public EntityWorldText WorldTextPrefab => _worldTextPrefab;
-    public int InventorySlotsPerRow => _inventorySlotsPerRow;
-    public float MaxStack1CostMultiplier => _maxStack1CostMultiplier;
-    public float SizeCostMultiplier => _sizeCostMultiplier;
-    public float LootCostStdDevRatio => _lootCostStdDevRatio;
-    public float LootItemCountMeanRatio => _lootItemCountMeanRatio;
-    public float LootItemCountStdDevRatio => _lootItemCountStdDevRatio;
-    public List<int> ItemCosts => _itemCosts;
+    public int InventorySlotsPerRow;
+    public float MaxStack1CostMultiplier;
+    public float SizeCostMultiplier;
+    public float LootCostStdDevRatio;
+    public float LootItemCountMeanRatio;
+    public float LootItemCountStdDevRatio;
+    public List<int> ItemCosts;
     //[Header("\n\n\nLootbox")]
     //public List<ItemData> _Item
     // -------------------------------------------------------

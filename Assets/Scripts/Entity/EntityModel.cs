@@ -25,7 +25,7 @@ public class EntityModel
     public bool Alive => _hp > 0;
 
     // アーマー再生タイマー（最後にダメージを受けてからの経過時間）
-    private float _armorRegenTimer;
+    private float _shieldRegenTimer;
 
     private Vector2 _position;
     public Vector2 Position => _position;
@@ -38,9 +38,9 @@ public class EntityModel
     public IReadOnlyList<BuffModel> Buffs => _buffs;
 
     public event Action<int> OnArmorDamaged;
-    public event Action OnArmorBreak;
+    public event Action OnShieldBreak;
     public event Action<int> OnHPDamaged;
-    public event Action<int> OnArmorHealed;
+    public event Action<int> OnShieldHealed;
     public event Action<int> OnHPHealed;
     public event Action<BuffModel> OnBuffApplied;
     public event Action<BuffModel> OnBuffRemoved;
@@ -124,7 +124,7 @@ public class EntityModel
         int armorDMG = _armor > amount ? amount : _armor;
         _armor -= armorDMG;
         OnArmorDamaged?.Invoke(armorDMG);
-        if (_armor == 0) OnArmorBreak?.Invoke();
+        if (_armor == 0) OnShieldBreak?.Invoke();
 
         return amount - armorDMG;
     }
@@ -183,7 +183,7 @@ public class EntityModel
         if (healed <= 0) return;
 
         _armor += healed;
-        OnArmorHealed?.Invoke(healed);
+        OnShieldHealed?.Invoke(healed);
     }
 
     /// <summary>アーマー再生処理。毎フレームEntityのUpdateから呼ぶ</summary>
@@ -193,6 +193,7 @@ public class EntityModel
     protected virtual void Die()
     {
         _hp = 0;
+        OnDeath?.Invoke();
     }
 
     // -------------------------------------------------------

@@ -201,14 +201,14 @@ public class ChasePlayerEnemyModel : EntityModel, IMovable, IEngagable
     // IMovable
     // -------------------------------------------------------
 
-    public void Walk(float move) { _mover.SetMoveX(move); }
+    public void Walk(float move) { _mover.Walk(move); }
     public void Jump(Vector2 jump)
     {
         if (!_isJumping)
         {
             _isJumping = true;
             _jumpTimer = 0.1f;
-            _mover.SetMove(jump);
+            _mover.Jump(jump);
         }
     }
 

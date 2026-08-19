@@ -11,9 +11,11 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     [SerializeField] private Transform _headLight_tf;
 
     [SerializeField] private HoldingItemView _holdingItemView;
+    [SerializeField] private Animator _animator;
     [Header("Interact")]
     [SerializeField] private LayerMask _interactableLayer;
     public HoldingItemView HoldingItemView => _holdingItemView;
+    private Vector2 _lookDirection;
 
     private readonly Dictionary<Collider2D, IInteractable> _interactCandidates = new();
     private IInteractable _focusedInteractable;
@@ -128,17 +130,30 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
             _swapItem_back = false;
         }
 
+        _animator.SetBool("Walk", _rb.velocity.x != 0);
+        _animator.SetBool("WalkingForward", Mathf.Sign(_rb.velocity.x) == Mathf.Sign(_lookDirection.x));
+        _animator.SetBool("IsGrounded",_isGrounded);
+        _animator.SetBool("Fall", !_isGrounded && _rb.velocity.y < 0);
+        _spriteRenderer.flipX = _lookDirection.x < 0;
+
         UpdateInteract();
+    }
+
+    public override void Jump(Vector2 jump)
+    {
+        base.Jump(jump);
+
+        _animator.SetTrigger("Jump");
     }
 
     public override void Look(Vector2 lookAt, float angle, float range)
     {
-        Vector2 direction = new Vector2(
+        _lookDirection = new Vector2(
             lookAt.x - transform.position.x,
             lookAt.y - transform.position.y
         );
 
-        float lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float lookAngle = Mathf.Atan2(_lookDirection.y, _lookDirection.x) * Mathf.Rad2Deg;
 
         _headLight_tf.rotation = Quaternion.Euler(0, 0, lookAngle);
         _headLight.pointLightInnerAngle = angle/2;
@@ -147,6 +162,7 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
 
         _holdingItemView.UpdateAim(lookAt);
     }
+
     public void OnItemHeld(HoldableItemModel model)
     {
         _holdingItemView.OnItemHeld(model);

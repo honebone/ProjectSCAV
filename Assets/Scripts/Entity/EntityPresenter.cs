@@ -26,7 +26,9 @@ public class EntityPresenter : MonoBehaviour
     {
         //_model.OnRequestMove += _view.Move;
         _model.OnHPDamaged += _view.OnHPDamaged;
-        _model.OnArmorDamaged += _view.OnArmorDamaged;
+        _model.OnArmorDamaged += _view.OnShieldDamaged;
+        _model.OnShieldBreak += _view.OnShieldBreak;
+        _model.OnDeath += _view.OnDeath;
     }
 
     private void Update()
