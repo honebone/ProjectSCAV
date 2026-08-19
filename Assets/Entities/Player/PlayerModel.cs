@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
 {
@@ -21,6 +22,8 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
     public LoadoutModel Loadout => _loadout;
 
     public InventoryModel Inventory => _inventory;
+
+    public event Action OnJetpack;
 
     public PlayerModel(
         PlayerData data,
@@ -57,6 +60,7 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
         {
             if (_inputGetter.JetpackHold && !_isJumping)
             {
+                OnJetpack?.Invoke();
                 _mover.SetMoveY(Stats.JetpackPower.Value);
             }
         }

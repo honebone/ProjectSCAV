@@ -15,7 +15,9 @@ public class Debugger : MonoBehaviour
     [SerializeField] AreaManager _areaManager;
 
     [SerializeField] EntityStatsData _enemyData;
-    [SerializeField] EntityPresenter _enemyPresenter;
+    [SerializeField] List<EntityPresenter> _enemyPresenters;
+    [SerializeField] EntityPresenter _enemyPrefab;
+    [SerializeField] Vector2 _enemySpawnPos;
     [SerializeField] EntityWorldUI _worldUI;
 
     [SerializeField] AreaData areaData;
@@ -38,7 +40,7 @@ public class Debugger : MonoBehaviour
         _areaManager.Init(areaData);
 
         _presenter.Init(_entityStatsData, _scanner.Pathfinder);
-        _enemyPresenter.Init(_enemyData, _scanner.Pathfinder);  
+        _enemyPresenters.ForEach(e=> e.Init(_enemyData, _scanner.Pathfinder));  
         if (_presenter.Model is PlayerModel model)
         {
             for (int i = 0; i < gunData.Count; i++)
@@ -93,6 +95,11 @@ public class Debugger : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             _worldUI.SpawnImage(Constants.Instance.VE_ShieldBreak);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            var e = Instantiate(_enemyPrefab, _enemySpawnPos, Quaternion.identity);
+            e.Init(_enemyData, _scanner.Pathfinder);
         }
     }
 

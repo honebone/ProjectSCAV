@@ -7,8 +7,14 @@ public class EntityEffectController : MonoBehaviour
     [SerializeField] private EntityWorldUI _worldUI;
     [SerializeField] private ParticleSystem _par_onShieldDMG;
     [SerializeField] private ParticleSystem _par_onHPDMG;
+    [SerializeField] private ParticleSystem _par_onDeath;
     [SerializeField] private Transform _bodyParts;
     [SerializeField] private float _explodeBodyPartsForce = 5f;
+    [SerializeField] private int _sparkEmissionsOnDeath;
+    [SerializeField] private int _partsEmissionsOnDeath;
+    [SerializeField] private float _hitStopTimeScale;
+    [SerializeField] private float _hitStopDelay;
+    [SerializeField] private float _hitStopDuration;
 
     public EntityWorldUI WorldUI => _worldUI;
     public ParticleSystem Par_onShieldDMG => _par_onShieldDMG;
@@ -25,7 +31,10 @@ public class EntityEffectController : MonoBehaviour
         }
 
         _worldUI.SpawnImage(Constants.Instance.VE_Die);
-
+        _par_onHPDMG.Emit(_sparkEmissionsOnDeath);
+        _par_onDeath.Emit(_partsEmissionsOnDeath);
+        TimeScaleManager.SetScaleThenRecover(_hitStopTimeScale, _hitStopDelay, _hitStopDuration);
+        
         Destroy(gameObject, 10f);
     }
 }

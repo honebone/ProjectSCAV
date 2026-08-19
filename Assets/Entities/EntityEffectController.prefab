@@ -81,7 +81,14 @@ MonoBehaviour:
   _worldUI: {fileID: 612081497539308597}
   _par_onShieldDMG: {fileID: 6508389741541301328}
   _par_onHPDMG: {fileID: 2119435175322996973}
+  _par_onDeath: {fileID: 6620135820779953775}
   _bodyParts: {fileID: 1454566099879787954}
+  _explodeBodyPartsForce: 5
+  _sparkEmissionsOnDeath: 12
+  _partsEmissionsOnDeath: 20
+  _hitStopTimeScale: 0.2
+  _hitStopDelay: 0.3
+  _hitStopDuration: 0.1
 --- !u!1001 &5410470275429587512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -152,6 +159,11 @@ Transform:
 --- !u!198 &6508389741541301328 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1245152869784995432, guid: cff9f1c992c9f8d45b0d7bcb902b6f16, type: 3}
+  m_PrefabInstance: {fileID: 5410470275429587512}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6620135820779953775 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1209964685544637527, guid: cff9f1c992c9f8d45b0d7bcb902b6f16, type: 3}
   m_PrefabInstance: {fileID: 5410470275429587512}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7186416685882726322
