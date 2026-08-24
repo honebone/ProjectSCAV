@@ -20,6 +20,11 @@ public class Constants : ScriptableObject
     public EntityWorldText WorldTextPrefab;
     public GameObject VE_Die;
     public GameObject VE_ShieldBreak;
+    public GameObject VE_Engage;
+    public GameObject VE_LostSight;
+    public LayerMask GroundLayer;
+    public LayerMask EntityLayer;
+    public LayerMask ObstacleLayer;
 
     [Header("\n\n\nInventory")]
     public int InventorySlotsPerRow;
@@ -32,7 +37,7 @@ public class Constants : ScriptableObject
     //[Header("\n\n\nLootbox")]
     //public List<ItemData> _Item
     // -------------------------------------------------------
-    // ƒVƒ“ƒOƒ‹ƒgƒ“API
+    // ï¿½Vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½gï¿½ï¿½API
     // -------------------------------------------------------
 
     private const string ResourcePath = "ConstantsData";
@@ -48,7 +53,7 @@ public class Constants : ScriptableObject
 
             if (_instance == null)
             {
-                DevLog.Error($"[Costants] Resources/{ResourcePath}.asset ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB");
+                DevLog.Error($"[Costants] Resources/{ResourcePath}.asset ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B");
             }
 
             return _instance;

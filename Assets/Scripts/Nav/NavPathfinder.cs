@@ -247,6 +247,22 @@ public class NavPathfinder
         return cell;
     }
 
+    /// <summary>
+    /// ワールド座標が空中（下にタイルがない）の場合、真下を走査して足場上のワールド座標を返す
+    /// maxScanはjumpHeightを流用
+    /// </summary>
+    public Vector2 ResolveGroundPos(Vector2 pos)
+    {
+        Vector2Int cell = ResolveGroundCell(WorldToCell(pos));
+
+        float tileSize = Constants.Instance.TileSize;
+        Vector2 cellWorldPos = new Vector2(cell.x + 0.5f, cell.y + 0.5f) * tileSize;
+
+        Vector2 groundPos = new Vector2(pos.x, cellWorldPos.y);
+        //DevLog.Log($"ワールド座標：{pos}, グラウンド座標：{groundPos}");
+        return groundPos;
+    }
+
     private bool IsWalkable(Vector2Int cell)
         => _hasTile(cell + Vector2Int.down) && !_hasTile(cell);
 

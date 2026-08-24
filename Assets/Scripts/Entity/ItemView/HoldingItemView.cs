@@ -36,6 +36,8 @@ public class HoldingItemView : MonoBehaviour
         _currentVisual = _currentItemObject.GetComponent<IItemVisual>();
         _currentVisual.Init(_entityView);
         _currentVisual?.Subscribe(model);
+
+       if(_entityView is ChasePlayerEnemyView) DevLog.Log("held");
     }
 
     /// <summary>毎フレームPresenterから呼ぶ（向きの更新）</summary>

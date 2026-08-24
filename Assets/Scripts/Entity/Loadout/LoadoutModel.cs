@@ -115,6 +115,10 @@ public class LoadoutModel
     {
         HoldingItem?.OnUnhold(_owner);
         _holdIndex = index;
+        if (_owner is ChasePlayerEnemyModel&& HoldingItem != null)
+        {
+            DevLog.Log($"switch{HoldingItem != null}");
+        }
         OnActiveItemChanged?.Invoke(HoldingItem);
         HoldingItem?.OnHold(_owner);
     }

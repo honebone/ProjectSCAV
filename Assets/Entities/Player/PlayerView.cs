@@ -15,7 +15,6 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     [Header("Interact")]
     [SerializeField] private LayerMask _interactableLayer;
     public HoldingItemView HoldingItemView => _holdingItemView;
-    private Vector2 _lookDirection;
 
     private readonly Dictionary<Collider2D, IInteractable> _interactCandidates = new();
     private IInteractable _focusedInteractable;
@@ -134,7 +133,6 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
         _animator.SetBool("WalkingForward", Mathf.Sign(_rb.velocity.x) == Mathf.Sign(_lookDirection.x));
         _animator.SetBool("IsGrounded",_isGrounded);
         _animator.SetBool("Fall", !_isGrounded && _rb.velocity.y < 0);
-        _spriteRenderer.flipX = _lookDirection.x < 0;
 
         UpdateInteract();
     }
@@ -148,10 +146,7 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
 
     public override void Look(Vector2 lookAt, float angle, float range)
     {
-        _lookDirection = new Vector2(
-            lookAt.x - transform.position.x,
-            lookAt.y - transform.position.y
-        );
+        base.Look(lookAt, angle, range);
 
         float lookAngle = Mathf.Atan2(_lookDirection.y, _lookDirection.x) * Mathf.Rad2Deg;
 

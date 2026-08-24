@@ -16,15 +16,23 @@ MonoBehaviour:
   _maxArmor: 15
   _armorRegenDelay: 3
   _armorRegenSpeed: 5
-  _moveSpeed: 5
+  _moveSpeed: 4.5
   _jumpPower: {x: 5, y: 10}
   _fovAngle: 30
-  _sightRange: 0
+  _sightRange: 18
   _faction: 2
   _hostiles: 01000000
-  _gunSlot: 0
+  _gunSlot: 1
   _gearSlot: 0
   _implantSlot: 00000000010000000200000003000000
   _maxHeat: 100
   _heatRecovery: 10
   _jetpackPower: 6
+  _startingGun: {fileID: 11400000, guid: f7264ed05fad51446a9b83c8731dd1ec, type: 2}
+  _patrolRadius: 10
+  _patrolPauseTime: {x: 3, y: 6}
+  _patrolWalkSpeed: 0.5
+  _freezeTimeOnEngage: 0.75
+  _engageStopDistance: 3
+  _loseSightAlertDelay: 5
+  _alertLookDuration: 6

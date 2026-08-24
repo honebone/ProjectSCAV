@@ -201,7 +201,6 @@ public class GunModel : HoldableItemModel
             FireParams fireParams = new FireParams(targetFactions, user.Position, lookable.LookAt, snapshot, user);
             OnFired?.Invoke(fireParams);
             _currentAmmo--;
-            DevLog.Log($"shots fired:{_currentAmmo} rounds remain");
 
             _spreadPenalty_fire += ApplyGunStat(GunStatType.SpreadPenalty_Fire, GunStats.SpreadPenalty_Fire.Value, mods);
             float maxSpreadPenalty = ApplyGunStat(GunStatType.MaxSpreadPenalty_fire, GunStats.MaxSpreadPenalty_fire.Value, mods);
@@ -213,8 +212,6 @@ public class GunModel : HoldableItemModel
 
             if (_currentAmmo > 0) SetFireIntervalTimer(interval);
             else _burstCount = 0;
-
-            DevLog.Log($"burst count:{_burstCount}");
 
         }
         else DevLog.Error("userはILookableではありません");

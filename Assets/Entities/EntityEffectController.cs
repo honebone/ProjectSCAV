@@ -20,6 +20,11 @@ public class EntityEffectController : MonoBehaviour
     public ParticleSystem Par_onShieldDMG => _par_onShieldDMG;
     public ParticleSystem Par_onHPDMG => _par_onHPDMG;
 
+    public void SpawnEffectObject(GameObject gameObject)
+    {
+        Instantiate(gameObject, transform);
+    }
+
     public void DeathEffect()
     {
         _bodyParts.gameObject.SetActive(true);

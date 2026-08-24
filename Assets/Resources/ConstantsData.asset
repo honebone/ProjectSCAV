@@ -22,6 +22,17 @@ MonoBehaviour:
   WorldTextPrefab: {fileID: 1521928675625357252, guid: ff5bab8aadd002e4798ac9c9724192e8, type: 3}
   VE_Die: {fileID: 3827170278920999233, guid: 51318e399dc9c2b40961d59633d8c496, type: 3}
   VE_ShieldBreak: {fileID: 8657385814270822554, guid: a49e5bfd0187a394cbf1b25827879958, type: 3}
+  VE_Engage: {fileID: 4268928767763362077, guid: 3a2613fa43da66543b872b170983f957, type: 3}
+  VE_LostSight: {fileID: 5961428627726887920, guid: 3f99e4bf908af7944b61fa7ecf38e0ad, type: 3}
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  EntityLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  ObstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
   InventorySlotsPerRow: 8
   MaxStack1CostMultiplier: 0.75
   SizeCostMultiplier: 0.2

@@ -7,9 +7,11 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
 {
     [Header("Ground Detection")]
     [SerializeField] private Collider2D _groundCheck;      // 足元のオブジェクト
-    [SerializeField] private LayerMask _groundLayer;      // 地面とするレイヤー
-    [SerializeField] private EntityEffectController _entityEffectController;
+    [SerializeField] private protected EntityEffectController _entityEffectController;
     [SerializeField] private protected SpriteRenderer _spriteRenderer;
+
+    [Header("Scan")]
+    [SerializeField] private Transform _eyePosition;      // 視線の始点（子オブジェクト）
 
     private EntityWorldUI _worldUI => _entityEffectController.WorldUI;
     private ParticleSystem _par_onShieldDMG => _entityEffectController.Par_onShieldDMG;
@@ -20,16 +22,18 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     private NavPathfinder _navPathfinder;
     public NavPathfinder NavPathfinder => _navPathfinder;
     private NavPath _navPath;
-    public NavPath NavPath => _navPath;
-
-    private protected bool _isGrounded;
-    public bool IsGrounded => _isGrounded;
+    public NavPath NavPath => _navPath;    
 
     private float _gravity;
     public float Gravity => _gravity;
 
+
+    private protected bool _isGrounded;
+    public bool IsGrounded => _isGrounded;
+
     public Vector2 Position => transform.position;
 
+    private protected Vector2 _lookDirection;
     private float _jumpTimer;
 
     public virtual void Init(NavPathfinder pathfinder)
@@ -41,10 +45,12 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     }
     public virtual void Tick(float deltaTime)
     {
-        //_isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, _groundLayer);
+        //_isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, Constants.Instance.GroundLayer);
         if (_jumpTimer > 0) _jumpTimer -= deltaTime;
         if (_jumpTimer < 0) _jumpTimer = 0;
-        _isGrounded = _jumpTimer == 0 && _groundCheck.IsTouchingLayers(_groundLayer);
+        _isGrounded = _jumpTimer == 0 && _groundCheck.IsTouchingLayers(Constants.Instance.GroundLayer);
+
+        _spriteRenderer.flipX = _lookDirection.x < 0;
     }
 
     public void OnShieldDamaged(int dmg)
@@ -147,12 +153,48 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     public IReadOnlyList<EntityModel> Scan(Vector2 toward, float fovAngle, float range, bool ignoreWall)
     {
         // towardの方向、角度fovAngle、半径rangeの扇状にいるエンティティを返す
-        return null;
+        Vector2 origin = GetEyeOrigin();
+        Vector2 dir = toward - origin;
+
+        List<EntityModel> result = new List<EntityModel>();
+        Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, Constants.Instance.EntityLayer);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.attachedRigidbody == _rb) continue;// 自分自身は除外
+
+            EntityPresenter presenter = hit.GetComponentInParent<EntityPresenter>();
+            EntityModel candidate = presenter?.Model;
+            if (candidate == null || !candidate.Alive) continue;
+
+            Vector2 toCandidate = candidate.Position - origin;
+            if (dir != Vector2.zero && Vector2.Angle(dir, toCandidate) > fovAngle / 2f) continue;
+
+            if (!ignoreWall && Physics2D.Linecast(origin, candidate.Position, Constants.Instance.ObstacleLayer)) continue;// 障害物に遮られている
+
+            result.Add(candidate);
+        }
+
+        return result;
+    }
+
+    private Vector2 GetEyeOrigin()
+    {
+        if (_eyePosition != null) return _eyePosition.position;
+
+        DevLog.Warning("[EntityView] _eyePositionが設定されていません。Positionを代わりに使用します。");
+        return Position;
     }
     // -------------------------------------------------------
     // ILooker
     // -------------------------------------------------------
-    public virtual void Look(Vector2 lookAt, float angle, float range) { }
+    public virtual void Look(Vector2 lookAt, float angle, float range)
+    {
+        _lookDirection = new Vector2(
+            lookAt.x - transform.position.x,
+            lookAt.y - transform.position.y
+        );
+    }
 
     // -------------------------------------------------------
     // IProjectileSpawner
