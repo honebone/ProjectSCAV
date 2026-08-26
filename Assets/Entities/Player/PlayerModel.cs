@@ -10,6 +10,7 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
 
     private bool _isJumping;
     private bool _isUsingItem;
+    private bool _isUsingJetpack;
     private Vector2 _lootAt;
     private readonly LoadoutModel _loadout;
     private readonly InventoryModel _inventory;
@@ -23,7 +24,8 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
 
     public InventoryModel Inventory => _inventory;
 
-    public event Action OnJetpack;
+    public event Action OnJetpackStart;
+    public event Action OnJetpackEnd;
 
     public PlayerModel(
         PlayerData data,
@@ -58,12 +60,20 @@ public class PlayerModel : EntityModel, IMovable, ILookable, ILoadoutable
         }
         else
         {
-            if (_inputGetter.JetpackHold && !_isJumping)
+            if (!_isJumping && _inputGetter.JetpackHold && !_isUsingJetpack)//TODO:ジェットパックが使用可能かのチェック(オーバーヒートしていないか)
             {
-                OnJetpack?.Invoke();
-                _mover.SetMoveY(Stats.JetpackPower.Value);
+                _isUsingJetpack = true;
+                OnJetpackStart?.Invoke();
             }
         }
+
+        if (_isUsingJetpack && _inputGetter.JetpackUp)
+        {
+            _isUsingJetpack = false;
+            OnJetpackEnd?.Invoke();
+        }
+
+        if(_isUsingJetpack) _mover.SetMoveY(Stats.JetpackPower.Value);
 
         if (_inputGetter.JumpUp)
         {

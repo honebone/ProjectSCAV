@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -84,16 +85,27 @@ public class ChasePlayerEnemyModel : EntityModel, IMovable, IEngagable, ILookabl
         _looker = looker;
 
         _loadout = new LoadoutModel(data.GunSlot, data.GearSlot, data.ImplantSlot, this);
-        if (data.StartingGun != null)
-        {
-            ItemStackModel gunStack = new ItemStackModel(data.StartingGun.CreateModel(), 1);
-            _loadout.TryEquip(0, gunStack, this);
-        }
-    }
+        //if (data.StartingGun != null)
+        //{
+        //    ItemStackModel gunStack = new ItemStackModel(data.StartingGun.CreateModel(), 1);
+        //    _loadout.TryEquip(0, gunStack, this);
+        //}
 
+        OnDamaged += CheckDamagedByHostile;
+    }
+    bool test;
     public override void Tick(float deltaTime, Vector2 position)
     {
         base.Tick(deltaTime, position);
+        if (!test)
+        {
+            test = true;
+            if (_data.StartingGun != null)
+            {
+                ItemStackModel gunStack = new ItemStackModel(_data.StartingGun.CreateModel(), 1);
+                _loadout.TryEquip(0, gunStack, this);
+            }
+        }
 
         if (!_homeSet)
         {
@@ -129,6 +141,11 @@ public class ChasePlayerEnemyModel : EntityModel, IMovable, IEngagable, ILookabl
             case EnemyState.Alert: TickAlert(deltaTime, position); break;
             case EnemyState.Return: TickReturn(deltaTime, position); break;
         }       
+    }
+
+    private void CheckDamagedByHostile(OnDamagedContext context)
+    {
+        if (context.TotalDamage > 0 && IsHostile(context.Source) && _state != EnemyState.Engage) Engage(context.Source); 
     }
 
     // -------------------------------------------------------
@@ -251,7 +268,7 @@ public class ChasePlayerEnemyModel : EntityModel, IMovable, IEngagable, ILookabl
 
         foreach (EntityModel candidate in visible)
         {
-            if (Hostiles.Contains(candidate.Faction)) return candidate;
+            if (IsHostile(candidate)) return candidate;
         }
         return null;
     }

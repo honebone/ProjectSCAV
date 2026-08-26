@@ -8,13 +8,18 @@ public class PlayerPresenter : EntityPresenter
     public override void Bind()
     {
         base.Bind();
-        if (_model is ILoadoutable loadoutable)
+
+        if (_model is PlayerModel model)
         {
-            if (_view is IItemVisualizer visualizer)
+            if (_view is PlayerView view)
             {
-                loadoutable.Loadout.OnActiveItemChanged += visualizer.OnItemHeld;
+                model.Loadout.OnActiveItemChanged += view.OnItemHeld;
+                model.OnJetpackStart += view.OnJetpackStart;
+                model.OnJetpackEnd += view.OnJetpackEnd;
             }
-            else DevLog.Error("[PlayerPresenter] View‚ªIItemVisualizer‚ðŽÀ‘•‚µ‚Ä‚¢‚Ü‚¹‚ñ");
+            else DevLog.Error("[PlayerPresenter] View‚ªPlayerView‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
+
+            
         }
     }
 }

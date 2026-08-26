@@ -9,6 +9,8 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
 {
     [SerializeField] private Light2D _headLight;
     [SerializeField] private Transform _headLight_tf;
+    [SerializeField] private List<ParticleSystem> _jetpackPars;
+    [SerializeField] private Light2D _jetpackLight;
 
     [SerializeField] private HoldingItemView _holdingItemView;
     [SerializeField] private Animator _animator;
@@ -78,7 +80,7 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     public override void Init(NavPathfinder pathfinder)
     {
         base.Init(pathfinder);
-        _holdingItemView.init(this);
+        _holdingItemView.Init(this);
     }
 
     public override void Tick(float deltaTime)
@@ -165,6 +167,18 @@ public class PlayerView : EntityView,IInputGetter,IItemVisualizer
     public void UpdateAim(Vector2 lookAt)
     {
         _holdingItemView.UpdateAim(lookAt);
+    }
+
+    public void OnJetpackStart()
+    {
+        _jetpackPars.ForEach(par => par.Play());
+        _jetpackLight.enabled = true;
+    }
+
+    public void OnJetpackEnd()
+    {
+        _jetpackPars.ForEach(par => par.Stop());
+        _jetpackLight.enabled = false;
     }
 
     // -------------------------------------------------------

@@ -12,7 +12,7 @@ public class HoldingItemView : MonoBehaviour
     private GameObject _currentItemObject;
     private IItemVisual _currentVisual;   // 生成したItemObjectが持つインターフェース
 
-    public void init(EntityView entityView)
+    public void Init(EntityView entityView)
     {
         _entityView = entityView;
     }

@@ -7,22 +7,29 @@ using static ChasePlayerEnemyModel;
 public class ChasePlayerEnemyView : EntityView, IItemVisualizer
 {
     [SerializeField] private HoldingItemView _holdingItemView;
+    [SerializeField] private Animator _engageLampAnim;
     public HoldingItemView HoldingItemView => _holdingItemView;
 
     public override void Init(NavPathfinder pathfinder)
     {
         base.Init(pathfinder);
 
-        _holdingItemView.init(this);
+        _holdingItemView.Init(this);
     }
 
     public void OnStateChanged(EnemyState state)
     {
-        DevLog.Log($"ステート遷移:{state}");
         switch (state)
         {
-            case EnemyState.Engage: _entityEffectController.SpawnEffectObject(Constants.Instance.VE_Engage); break;
-            case EnemyState.Alert: _entityEffectController.SpawnEffectObject(Constants.Instance.VE_LostSight); break;
+            case EnemyState.Engage:
+                _entityEffectController.SpawnEffectObject(Constants.Instance.VE_Engage);
+                _engageLampAnim.SetTrigger("Engage");
+                break;
+            case EnemyState.Alert:
+                _entityEffectController.SpawnEffectObject(Constants.Instance.VE_LostSight);
+                _engageLampAnim.SetTrigger("Alert");
+                break;
+            default: _engageLampAnim.SetTrigger("Normal"); break;
         }
     }
 

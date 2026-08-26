@@ -42,11 +42,11 @@ public class Debugger : MonoBehaviour
         _presenter.Init(_entityStatsData, _scanner.Pathfinder);
         _enemyPresenters.ForEach(e=> e.Init(_enemyData, _scanner.Pathfinder));
 
-        if (_enemyPresenters[0].Model is ILoadoutable loadoutable)
-        {
-            ItemStackModel itemStack = new ItemStackModel(gunData[0].CreateModel(), 1);
-            loadoutable.Loadout.TryEquip(0, itemStack, _enemyPresenters[0].Model);
-        }
+        //if (_enemyPresenters[0].Model is ILoadoutable loadoutable)
+        //{
+        //    ItemStackModel itemStack = new ItemStackModel(gunData[0].CreateModel(), 1);
+        //    loadoutable.Loadout.TryEquip(0, itemStack, _enemyPresenters[0].Model);
+        //}
 
         if (_presenter.Model is PlayerModel model)
         {

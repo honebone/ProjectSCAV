@@ -13,6 +13,7 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
     [Header("Scan")]
     [SerializeField] private Transform _eyePosition;      // 視線の始点（子オブジェクト）
 
+    [SerializeField] private Transform _flipHandler;
     private EntityWorldUI _worldUI => _entityEffectController.WorldUI;
     private ParticleSystem _par_onShieldDMG => _entityEffectController.Par_onShieldDMG;
     private ParticleSystem _par_onHPDMG => _entityEffectController.Par_onHPDMG;
@@ -50,7 +51,13 @@ public class EntityView : MonoBehaviour, IEntityScanner, IProjectileSpawner, IPa
         if (_jumpTimer < 0) _jumpTimer = 0;
         _isGrounded = _jumpTimer == 0 && _groundCheck.IsTouchingLayers(Constants.Instance.GroundLayer);
 
-        _spriteRenderer.flipX = _lookDirection.x < 0;
+        SetFlip(_lookDirection.x < 0);
+    }
+
+    public virtual void SetFlip(bool set)
+    {
+        _spriteRenderer.flipX = set;
+        _flipHandler.localScale = new Vector3(set ? -1 : 1, 1, 1);
     }
 
     public void OnShieldDamaged(int dmg)
